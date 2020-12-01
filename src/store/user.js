@@ -1,12 +1,16 @@
 const userModule = {
   state: {
     authUser: {},
-    userData: {}
+    userData: {},
   },
 
-  mutations: {},
+  mutations: {
+    SET_AUTH_USER(state, user) {
+      state.authUser = user;
+    },
+  },
   actions: {},
-  getters: {}
+  getters: {},
 };
 
 export default userModule;

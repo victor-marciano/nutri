@@ -1,11 +1,19 @@
 <template>
   <div>
+    <Sidebar></Sidebar>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-export default {};
+const Sidebar = () => import("@/components/Dashboard/Sidebar.vue");
+
+export default {
+  name: "Dashboard",
+  components: {
+    Sidebar,
+  },
+};
 </script>
 
 <style></style>

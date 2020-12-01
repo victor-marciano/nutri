@@ -1,10 +1,27 @@
 <template>
-  <div class="home"></div>
+  <div class="home">
+    <v-btn @click="logout">
+      Logout
+    </v-btn>
+  </div>
 </template>
 
 <script>
+import { auth } from "../firebase";
+
 export default {
   name: "Home",
-  components: {}
+  components: {},
+
+  methods: {
+    async logout() {
+      try {
+        await auth.signOut();
+        this.$router.replace({ name: "landing" });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
 };
 </script>
