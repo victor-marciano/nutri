@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="landing p-3">
     <Navbar></Navbar>
-    
+
     <v-fab-transition>
       <v-btn
         fab
@@ -17,21 +17,48 @@
       </v-btn>
     </v-fab-transition>
 
-    <v-img src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg" :height="500"></v-img>
+    <!-- <v-img src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg" :height="500"></v-img> -->
+    <div class="presentation d-flex align-center">
+      <v-container>
+        <v-row>
+          <v-col cols="12" md="6">
+            <v-sheet light height="25vh" color="transparent">
+              <p class="title">Teste</p>
+              <p class="subtitle">Subtitulo</p>
+            </v-sheet>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-img src="../assets/cellphone.png" width="10vw"></v-img>
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
 
-    <v-container>
-      <v-row>
-        <v-col cols="12" md="6">
-          <v-card light outlined v-for="(resource, index) in resources" :key="index" class="mb-4">
-            <v-card-title>{{ resource.title }}</v-card-title>
-            <v-card-text>{{ resource.description }}</v-card-text>
-          </v-card>
-        </v-col>
-        <v-col cols="12" md="6">
-          <v-img src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"></v-img>
-        </v-col>
-      </v-row>
-    </v-container>
+    <div class="section">
+      <v-container>
+        <v-row>
+          <v-col
+            cols="12"
+            md="3"
+            v-for="(resource, index) in resources"
+            :key="index"
+            class="mx-auto"
+          >
+            <v-sheet>
+              <v-img
+                :src="require(`../assets/svg/${resource.icon}.svg`)"
+                width="5vw"
+                class="mb-4 mx-auto"
+              ></v-img>
+              <p class="title text-center">{{ resource.title }}</p>
+              <p class="body-2 font-weight-light text-center text--secondary">
+                {{ resource.description }}
+              </p>
+            </v-sheet>
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
 
     <v-parallax
       height="300"
@@ -49,31 +76,61 @@ export default {
   name: "Landing",
   components: {
     Navbar,
-    Footer
+    Footer,
   },
 
   data: () => ({
     resources: [
-      { title: 'Gerenciamento de Dietas e Treinos', description: 'Crie e manipule dietas e treinos com os alimentos/treinos da nossa base de dados', icon: '' },
-      { title: '2', description: 'Teste', icon: '' },
-      { title: '3', description: 'Teste 2', icon: '' },
+      {
+        title: "Dietas",
+        description:
+          "Crie e manipule dietas e treinos com os alimentos/treinos da nossa base de dados",
+        icon: "021-diet",
+      },
+      {
+        title: "Calculadoras Fit",
+        description:
+          "Obtenha dados precisos sobre seu corpo, e sobre como proceder com sua alimentação e atividades físicas",
+        icon: "001-scale",
+      },
+      {
+        title: "Guia Nutricional",
+        description:
+          "Alimentos e seus valores nutricionais detalhados, contendo informações adicionais",
+        icon: "011-apple-1",
+      },
+      {
+        title: "Treinos",
+        description: "Gerencie seus treinos",
+        icon: "002-heart-rate",
+      },
     ],
-    
+
     offsetTop: 0,
   }),
 
   methods: {
-    onScroll () {
-      this.offsetTop = window.scrollY
+    onScroll() {
+      this.offsetTop = window.scrollY;
     },
   },
 
   computed: {
-    getScroll () {
-      return this.offsetTop
-    }
-  }
+    getScroll() {
+      return this.offsetTop;
+    },
+  },
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.section {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.presentation {
+  height: 75vh;
+  background: whitesmoke;
+}
+</style>
