@@ -9,8 +9,9 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
-          outlined
-          light
+          solo
+          dark
+          color="green lighten-3"
           v-on="on"
           v-bind="attrs"
           v-if="$vuetify.breakpoint.mdAndUp"
