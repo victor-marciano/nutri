@@ -18,7 +18,7 @@
 
         <v-spacer></v-spacer>
 
-        <v-btn text small>
+        <v-btn text small to="/dashboard/profile">
           Editar perfil
         </v-btn>
       </v-list-item>
@@ -27,11 +27,18 @@
         <v-subheader>Opções</v-subheader>
           <v-list-item class="px-2">
               <v-list-item-icon>
+                <v-icon>mdi-cog</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title v-text="'Configurações'"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          <v-list-item class="px-2">
+              <v-list-item-icon>
                 <v-icon>mdi-logout</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-              <v-list-item-title v-text="'Logout'"></v-list-item-title>
-
+                <v-list-item-title v-text="'Sair da conta'"></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
       </v-list>
