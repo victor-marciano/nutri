@@ -3,22 +3,48 @@
     <v-navigation-drawer
       v-model="sidebar"
       floating
-      :mini-variant="$vuetify.breakpoint.mobile"
+      :mini-variant="$vuetify.breakpoint.mdAndUp"
       app
       light
       :bottom="$vuetify.breakpoint.mobile"
       dense
-      v-if="$vuetify.breakpoint.mdAndUp"
     >
-      <v-list>
+       <v-list-item class="px-2">
+        <v-list-item-avatar>
+          <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
+        </v-list-item-avatar>
+
+        <v-list-item-title>Victor Marciano</v-list-item-title>
+
+        <v-spacer></v-spacer>
+
+        <v-btn text small>
+          Editar perfil
+        </v-btn>
+      </v-list-item>
+
+      <v-list flat>
+        <v-subheader>Opções</v-subheader>
+          <v-list-item class="px-2">
+              <v-list-item-icon>
+                <v-icon>mdi-logout</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+              <v-list-item-title v-text="'Logout'"></v-list-item-title>
+
+              </v-list-item-content>
+            </v-list-item>
+      </v-list>
+
+      <v-list v-if="!$vuetify.breakpoint.mobile">
         <v-list-item v-for="item in items" :key="item.title" :to="item.path">
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
-          <v-list-content>
-            <v-list-title>{{ item.title }}</v-list-title>
-          </v-list-content>
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -26,23 +52,48 @@
     <v-bottom-navigation
       dark
       hide-on-scroll
-      horizontal
-      v-else
+      v-if="$vuetify.breakpoint.mobile"
       app
       shift
       grow
       mandatory
     >
-      <v-btn
-        x-small
-        v-for="(item, index) in items"
-        :key="index"
-        :to="item.path"
-        @click="item.action"
-      >
-        <span class="green--text">{{ item.title }}</span>
-        <v-icon color="green">{{ item.icon }}</v-icon>
-      </v-btn>
+      <template v-slot:default>
+        <v-btn
+          x-small
+          to="/dashboard/home"
+        >
+          <span class="green--text">Inicio</span>
+          <v-icon size="20" color="green">mdi-home</v-icon>
+        </v-btn>
+        <v-btn
+          x-small
+          to="/dashboard/calculadoras"
+        >
+          <span class="green--text">Calculadora</span>
+          <v-icon size="20" color="green">mdi-calculator</v-icon>
+        </v-btn>
+        <v-btn
+          x-small
+          to="/dashboard/dietas"
+        >
+          <span class="green--text">Dieta</span>
+          <v-icon size="20" color="green">mdi-food-apple</v-icon>
+        </v-btn>
+        <v-btn
+          x-small
+          to="/dashboard/treinos"
+        >
+          <span class="green--text">Treino</span>
+          <v-icon size="20" color="green">mdi-weight-lifter</v-icon>
+        </v-btn>
+        <v-btn
+          x-small
+          @click="teste"
+        >
+          <v-icon size="20" color="green">mdi-dots-vertical</v-icon>
+        </v-btn>
+      </template>
     </v-bottom-navigation>
   </div>
 </template>
@@ -55,21 +106,31 @@ export default {
     items: [
       { title: "Inicio", icon: "mdi-home", path: "/dashboard/home" },
       {
-        title: "Calculadoras",
+        title: "Calculadora",
         icon: "mdi-calculator",
         path: "/dashboard/calculadoras",
       },
       { title: "Dietas", icon: "mdi-food-apple", path: "/dashboard/dietas" },
-      { title: "Treinos", icon: "mdi-weight-lifter", path: "/dashboard/treinos" },
+      { title: "Treinos", icon: "mdi-weight-lifter", path: "/dashboard/treinos" }
     ],
   }),
 
   methods: {
-    activateDrawer() {
+    teste() {
       this.sidebar = true;
-    },
+    }
   },
 };
 </script>
 
-<style></style>
+<style lang="scss">
+  .v-item-group.v-bottom-navigation .v-btn {
+    min-width: 70px;
+  }
+
+  @media (max-width: 990px) {
+    .v-navigation-drawer {
+      height: auto !important;
+    }
+  }
+</style>
