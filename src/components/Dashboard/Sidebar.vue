@@ -56,11 +56,11 @@ export default {
       { title: "Inicio", icon: "mdi-home", path: "/dashboard/home" },
       {
         title: "Calculadoras",
-        icon: "mdi-home",
+        icon: "mdi-calculator",
         path: "/dashboard/calculadoras",
       },
-      { title: "Dietas", icon: "mdi-home", path: "/dashboard/dietas" },
-      { title: "Treinos", icon: "mdi-home", path: "/dashboard/treinos" },
+      { title: "Dietas", icon: "mdi-food-apple", path: "/dashboard/dietas" },
+      { title: "Treinos", icon: "mdi-weight-lifter", path: "/dashboard/treinos" },
     ],
   }),
 

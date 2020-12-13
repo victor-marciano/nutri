@@ -1,8 +1,6 @@
 <template>
   <div class="home">
-    <v-btn @click="logout">
-      Logout
-    </v-btn>
+    
   </div>
 </template>
 
