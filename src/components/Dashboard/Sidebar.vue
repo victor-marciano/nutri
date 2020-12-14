@@ -14,13 +14,11 @@
           <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
         </v-list-item-avatar>
 
-        <v-list-item-title>Victor Marciano</v-list-item-title>
+        <v-list-item-title>{{ user.displayName }}</v-list-item-title>
 
         <v-spacer></v-spacer>
 
-        <v-btn text small to="/dashboard/profile">
-          Editar perfil
-        </v-btn>
+        <ProfileDialog></ProfileDialog>
       </v-list-item>
 
       <v-list flat>
@@ -33,7 +31,7 @@
                 <v-list-item-title v-text="'Configurações'"></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-          <v-list-item class="px-2">
+          <v-list-item class="px-2" @click="logout">
               <v-list-item-icon>
                 <v-icon>mdi-logout</v-icon>
               </v-list-item-icon>
@@ -106,8 +104,17 @@
 </template>
 
 <script>
+import { auth } from "../../firebase";
+import { mapGetters } from "vuex";
+
+const ProfileDialog = () => import('@/components/Dashboard/Dialogs/ProfileDialog.vue')
+
 export default {
   name: "Sidebar",
+  components: {
+    ProfileDialog
+  },
+
   data: () => ({
     sidebar: false,
     items: [
@@ -125,8 +132,23 @@ export default {
   methods: {
     teste() {
       this.sidebar = true;
-    }
+    },
+
+    async logout() {
+      try {
+        await auth.signOut();
+        this.$router.replace({ name: "landing" });
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
+
+  computed: {
+    ...mapGetters([
+      'user'
+    ])
+  }
 };
 </script>
 

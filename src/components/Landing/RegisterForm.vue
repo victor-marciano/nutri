@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { auth, db } from "../../firebase";
+import { auth } from "../../firebase";
 
 export default {
   name: "RegisterForm",
@@ -37,30 +37,19 @@ export default {
   }),
 
   methods: {
-    submit() {
+    async submit() {
       this.loading = true;
+      const that = this
 
-      auth
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(async (response) => {
-          await Promise.all([
-            response.user.updateProfile({ displayName: name }),
-            db
-              .collection("users")
-              .doc(response.user.uid)
-              .set({
-                name: name,
-              }),
-          ]);
-
-          this.$router.push({ path: "/dashboard/home" });
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+      try {  
+        const response = await auth.createUserWithEmailAndPassword(this.email, this.password)    
+        await response.user.updateProfile({ displayName: that.name })
+        this.$router.push({ path: "/dashboard/home" });
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.loading = false;        
+      }
     },
   },
 };

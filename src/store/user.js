@@ -10,7 +10,9 @@ const userModule = {
     },
   },
   actions: {},
-  getters: {},
+  getters: {
+    user: state => state.authUser
+  },
 };
 
 export default userModule;
