@@ -96,8 +96,16 @@
             <v-list-item>
               <v-list-item-content>
                 <v-list-item-title>Email</v-list-item-title>
-                <v-list-item-subtitle>Altere seu email</v-list-item-subtitle>
+                <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
+                
               </v-list-item-content>
+              
+              <v-list-item-action>
+                <v-btn x-small icon v-if="user.emailVerified">
+                  <v-icon size="24" color="green lighten-2">mdi-check</v-icon>
+                </v-btn>
+                <v-btn x-small dark color="green lighten-2" v-else @click="verifyEmail">Verificar</v-btn>
+              </v-list-item-action>
             </v-list-item>
 
             <v-divider></v-divider>
@@ -175,9 +183,20 @@ export default {
 
     methods: {
         async resetPassword() {
-            const user = auth.currentUser
+          const user = auth.currentUser
+          console.log(user)
             try {
                 await auth.sendPasswordResetEmail(user.email)
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        
+        async verifyEmail() {
+          const user = auth.currentUser
+            try {
+                await user.sendEmailVerification()
+                console.log('enviou')
             } catch (error) {
                 console.log(error)
             }
