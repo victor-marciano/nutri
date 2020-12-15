@@ -100,22 +100,71 @@
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
                     <v-row no-gutters>
-                    <v-spacer></v-spacer>
-                    <v-col cols="6">
-                       <p class="body-2">Calorias: <b>300</b></p>
-                       <p class="body-2">Carbohidratos: <b>70</b></p>
-                       <p class="body-2">Proteínas: <b>30</b></p>
-                       <p class="body-2">Gorduras: <b>10</b></p>
-                    </v-col>
+                        <v-col cols="5">
+                            <div class="d-block align-center">
+                                <v-chip
+                                    class="ma-2"
+                                    color="green"
+                                    text-color="white"
+                                    small
+                                >
+                                    <v-avatar
+                                        left
+                                        class="green darken-4"
+                                    >
+                                        1
+                                    </v-avatar>
+                                    Calorias
+                                </v-chip>
+                                <v-chip
+                                    class="ma-2"
+                                    color="green"
+                                    text-color="white"
+                                    small
+                                >
+                                    <v-avatar
+                                        left
+                                        class="green darken-4"
+                                    >
+                                        1
+                                    </v-avatar>
+                                    Carbohidratos
+                                </v-chip>
+                                <v-chip
+                                    class="ma-2"
+                                    color="green"
+                                    text-color="white"
+                                    small
+                                >
+                                    <v-avatar
+                                        left
+                                        class="green darken-4"
+                                    >
+                                        1
+                                    </v-avatar>
+                                    Proteínas
+                                </v-chip>
+                                <v-chip
+                                    class="ma-2"
+                                    color="green"
+                                    text-color="white"
+                                    small
+                                >
+                                    <v-avatar
+                                        left
+                                        class="green darken-4"
+                                    >
+                                        1
+                                    </v-avatar>
+                                    Gorduras
+                                </v-chip>
+                            </div>
+                        </v-col>
 
-                    <v-divider
-                        vertical
-                        class="mx-5"
-                    ></v-divider>
-
-                    <v-col cols="4">
-                        <FoodChart :chart-data="datacollection" :options="{responsive: true}"></FoodChart>
-                    </v-col>
+                        <v-col cols="7" style="height: 200px;">
+                            <FoodChart></FoodChart>
+                            <small class="text--secondary py-2">Percentual dos macro-nutrientes</small>
+                        </v-col>
                     </v-row>
 
                     <v-card-actions>
