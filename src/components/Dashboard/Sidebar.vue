@@ -23,15 +23,15 @@
 
       <v-list flat>
         <v-subheader>Opções</v-subheader>
-          <v-list-item class="px-2">
+          <v-list-item class="px-2" ripple to="/dashboard/alimentos">
               <v-list-item-icon>
-                <v-icon>mdi-food</v-icon>
+                <v-icon>mdi-fruit-cherries</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title v-text="'Alimentos'"></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-          <v-list-item class="px-2">
+          <v-list-item class="px-2" ripple>
               <v-list-item-icon>
                 <v-icon>mdi-cog</v-icon>
               </v-list-item-icon>
@@ -39,7 +39,7 @@
                 <v-list-item-title v-text="'Configurações'"></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-          <v-list-item class="px-2" @click="logout">
+          <v-list-item class="px-2" @click="logout" ripple>
               <v-list-item-icon>
                 <v-icon>mdi-logout</v-icon>
               </v-list-item-icon>

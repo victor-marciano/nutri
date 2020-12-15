@@ -199,12 +199,8 @@ export default {
             try {
                 const file = await storage.ref('profile/').child(`${user.uid}.jpeg`).putString(that.profilePhoto, 'data_url', { contentType: 'image/jpeg'})
                 await user.updateProfile({ photoURL: await file.ref.getDownloadURL() })
-                this.notificationText = 'Foto de perfil atualizada!'
-                this.notification = true
                 this.photoDialog = false
             } catch (error) {
-                this.notificationText = 'Erro ao atualizar a foto'
-                this.notification = true
                 console.log(error)
             }
         }

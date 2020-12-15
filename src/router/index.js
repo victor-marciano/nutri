@@ -32,6 +32,11 @@ const routes = [
         name: "calculadoras",
         component: () => import("@/views/Calculadoras.vue"),
       },
+      {
+        path: "/dashboard/alimentos",
+        name: "alimentos",
+        component: () => import("@/views/Food.vue"),
+      },
     ],
   },
   {
