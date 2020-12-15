@@ -11,7 +11,7 @@
     >
        <v-list-item class="px-2">
         <v-list-item-avatar>
-          <v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
+          <v-img :src="user.photoURL || require('../../assets/user.png')"></v-img>
         </v-list-item-avatar>
 
         <v-list-item-title>{{ user.displayName }}</v-list-item-title>
@@ -23,6 +23,14 @@
 
       <v-list flat>
         <v-subheader>Opções</v-subheader>
+          <v-list-item class="px-2">
+              <v-list-item-icon>
+                <v-icon>mdi-food</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title v-text="'Alimentos'"></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
           <v-list-item class="px-2">
               <v-list-item-icon>
                 <v-icon>mdi-cog</v-icon>
