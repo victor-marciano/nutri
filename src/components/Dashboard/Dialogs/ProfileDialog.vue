@@ -33,15 +33,45 @@
         </v-toolbar>
 
         <div class="d-flex justify-center align-center my-5">
-            <v-avatar size="128" color="green">
-                <img
-                    src="https://cdn.vuetifyjs.com/images/john.jpg"
-                    alt="John"
-                >
-            </v-avatar>
+            <v-dialog v-model="photoDialog">
+                <template v-slot:activator="{ on }">
+                    <v-avatar size="128" color="green" v-on="on">
+                        <img
+                            src="https://cdn.vuetifyjs.com/images/john.jpg"
+                            alt="John"
+                        >
+                    </v-avatar> 
+                    <v-badge
+                        bordered
+                        color="orange darken-4"
+                        icon="mdi-camera"
+                        overlap
+                        offset-y="60"
+                        offset-x="25"
+                    >
+                    </v-badge>                   
+                </template>
+                <v-card>
+                    <v-card-title>Foto do perfil</v-card-title>
+                    <v-card-text>Formatos aceitos: JPG, PNG</v-card-text>
+                    <v-card-text>
+                        <v-image-input 
+                            v-model="profilePhoto"
+                            :fullWidth="true"
+                            clearable
+                            :imageHeight="100"
+                        >
+                        </v-image-input>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn text color="red" @click="photoDialog = false">Cancelar</v-btn>
+                        <v-btn text color="green lighten-3">Enviar</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
         </div>
-        <v-file-input>
-        </v-file-input>
+
         <v-list
           two-line
           subheader
@@ -55,7 +85,7 @@
           </v-list-item>
 
           <v-divider></v-divider>
-          
+
           <v-list-item @click="resetPassword">
             <v-list-item-content>
               <v-list-item-title>Senha</v-list-item-title>
@@ -65,7 +95,7 @@
           
           <v-divider></v-divider>
 
-          <v-dialog>
+          <v-dialog v-model="removeDialog">
               <template v-slot:activator="{ on }">
                 <v-list-item v-on="on">
                     <v-list-item-content>
@@ -85,14 +115,14 @@
                     <v-btn
                         color="green darken-1"
                         text
-                        @click="dialog = false"
+                        @click="removeDialog = false"
                     >
                         Cancelar
                     </v-btn>
                     <v-btn
                         color="red darken-1"
                         text
-                        @click="dialog = false"
+                        @click="deleteAccount"
                     >
                         Excluir
                     </v-btn>
@@ -108,12 +138,19 @@
 
 <script>
 import { auth } from "../../../firebase";
+import VImageInput from 'vuetify-image-input/a-la-carte';
 
 export default {
     name: 'ProfileDialog',
+    components: {
+        VImageInput
+    },
+
     data: () => ({
         dialog: false,
-        removeDialog: false
+        removeDialog: false,
+        photoDialog: false,
+        profilePhoto: null
     }),
 
     methods: {
@@ -121,6 +158,27 @@ export default {
             const user = auth.currentUser
             try {
                 await auth.sendPasswordResetEmail(user.email)
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        
+        async deleteAccount() {
+            const user = auth.currentUser
+            try {
+                await user.delete()
+            } catch (error) {
+                console.log(error)
+            }
+        },
+
+        async updateUserPhoto() {
+            const user = auth.currentUser
+            const that = this
+            try {
+                await user.updateProfile({
+                    photoURL: that.profilePhoto
+                })
             } catch (error) {
                 console.log(error)
             }
