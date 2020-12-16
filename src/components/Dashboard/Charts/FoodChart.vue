@@ -3,21 +3,17 @@ import { Pie } from 'vue-chartjs'
 
 export default {
   extends: Pie,
-  data: () => ({
+  props: {
     chartdata: {
-      labels: ['Carbohidratos', 'Proteínas', 'Gorduras'],
-      datasets: [
-        {
-          backgroundColor: '#f87979',
-          data: [40, 20, 40]
-        }
-      ]
+      type: Object,
+      default: null
     },
+
     options: {
-      responsive: true,
-      maintainAspectRatio: true
+      type: Object,
+      default: null
     }
-  }),
+  },
 
   mounted () {
     this.renderChart(this.chartdata, this.options)

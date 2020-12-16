@@ -163,8 +163,23 @@
                         </v-col>
 
                         <v-col cols="7" style="height: 200px;">
-                            <FoodChart></FoodChart>
-                            <small class="text--secondary py-2">Divisão dos macro-nutrientes</small>
+                            <FoodChart 
+                              :chartdata="{
+                                labels: ['Carbohidrato', 'Proteína', 'Gordura'],
+                                datasets: [
+                                  {
+                                    backgroundColor: ['#E65100', '#EF6C00', '#FB8C00'],
+                                    data: [
+                                      item.carbs, 
+                                      item.protein, 
+                                      item.fats
+                                    ]
+                                  }
+                                ]
+                              }" 
+                              :options="{ responsive: true, maintainAspectRatio: true }">
+                            </FoodChart>
+                            <small class="text--secondary text-center py-2">Divisão dos macro-nutrientes(%)</small>
                         </v-col>
                     </v-row>
 
@@ -241,24 +256,12 @@ export default {
     
     created(){
       this.$store.dispatch('fetchFood')
-      this.qtd = Array(this.foods.length).fill(100)
     },
 
     mounted () {
-        this.datacollection = {
-            labels: ['teste', 'resultado'],
-            datasets: [
-              {
-                  label: 'Data One',
-                  backgroundColor: '#f87979',
-                  data: [60, 30]
-              }, {
-                  label: 'Data Two',
-                  backgroundColor: '#f87979',
-                  data: [20, 23]
-              }
-            ]
-        }
+        setTimeout(() => {
+          this.qtd = Array(this.foods.length).fill(100)
+        }, 1500)
     },
 
     data () {
