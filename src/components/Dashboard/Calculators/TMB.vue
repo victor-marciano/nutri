@@ -19,8 +19,16 @@
                         </v-card-title>
 
                         <v-card-text class="text--secondary">
-                            Fórmula feminina: TMB = 655 + (9,6 * P) + (1,8 * A) – (4,7 * I)
-                            Fórmula masculina: TMB = 66 + (13,7 * P) + (5 * A) – (6,8 * I)
+                            <p>
+                                Taxa metabólica basal(TMB) é um meio/forma matemático, não exato, de calcular a quantidade calórica que o corpo necessita, em vinte e quatro horas, para manter-se nutrido durante o decorrer das atividades diárias, e/ou fazendo um jejum de pelo menos doze horas em repouso, sem prejudicar o funcionamento dos principais órgãos.
+                            </p>
+                            <p>
+                                O cálculo da TMB através da fórmula de Harris-Benedict é realizado em duas fórmulas distintas para homens e mulheres:
+                            </p>
+                            <p class="font-weight-bold">
+                                Fórmula feminina:<br> TMB = 655 + (9,6 * P) + (1,8 * A) – (4,7 * I) <br><br>
+                                Fórmula masculina:<br> TMB = 66 + (13,7 * P) + (5 * A) – (6,8 * I)
+                            </p>
                         </v-card-text>
 
                         <v-card-actions class="d-flex justify-center"> 

@@ -19,7 +19,14 @@
                         </v-card-title>
 
                         <v-card-text class="text--secondary">
-                            O índice de massa corporal(IMC) é uma métrica...
+                             <p>
+                                O índice de massa corporal(IMC) é um índice que avalia se um indivíduo está dentro da faixa de peso ideal para a sua altura.
+                                O cálculo se dá pela seguinte forma <b>IMC = Peso/Altura²</b>.
+                            </p> 
+                            <p>
+                            Há controvérsias sobre a eficácia do IMC, pois ele não leva em consideração a composição corporal. Então para indivíduos muito musculosos, o resultado pode apresentar distorções. 
+
+                            </p>
                         </v-card-text>
                         
                         <v-card-text>

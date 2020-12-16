@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-data-iterator
-      :items="items"
-      :items-per-page.sync="itemsPerPage"
+      :items="foods"
+      :items-per-page.sync="foodsPerPage"
       :page="page"
       :search="search"
       :sort-by="sortBy.toLowerCase()"
@@ -10,6 +10,7 @@
       hide-default-footer
       no-data-text="Nenhum alimento cadastrado na plataforma"
       no-results-text="Nenhum alimento encontrado"
+      v-if="foods"
     >
       <template v-slot:header>
         <v-toolbar
@@ -112,7 +113,7 @@
                                         left
                                         class="green darken-4"
                                     >
-                                        1
+                                        {{ item.kcal }}
                                     </v-avatar>
                                     Calorias
                                 </v-chip>
@@ -126,7 +127,7 @@
                                         left
                                         class="green darken-4"
                                     >
-                                        1
+                                        {{ item.carbs }}
                                     </v-avatar>
                                     Carbohidratos
                                 </v-chip>
@@ -140,7 +141,7 @@
                                         left
                                         class="green darken-4"
                                     >
-                                        1
+                                        {{ item.protein }}
                                     </v-avatar>
                                     Proteínas
                                 </v-chip>
@@ -154,7 +155,7 @@
                                         left
                                         class="green darken-4"
                                     >
-                                        1
+                                        {{ item.fats }}
                                     </v-avatar>
                                     Gorduras
                                 </v-chip>
@@ -230,6 +231,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import FoodChart from "../Charts/FoodChart.vue";
 
 export default {
@@ -237,6 +239,10 @@ export default {
         FoodChart
     },
     
+    created(){
+      this.$store.dispatch('fetchFood')
+    },
+
     mounted () {
         this.datacollection = {
             labels: ['teste', 'resultado'],
@@ -256,98 +262,32 @@ export default {
 
     data () {
       return {
+        qtd: 100,
         datacollection: null,
         itemsPerPageArray: [8, 16],
         search: '',
         filter: {},
         sortDesc: false,
         page: 1,
-        itemsPerPage: 8,
+        foodsPerPage: 8,
         sortBy: 'name',
         keys: [
           'Name',
-          'Calories',
-          'Fat',
+          'Kcal',
+          'Fats',
           'Carbs',
-          'Protein'
-        ],
-        items: [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7
-          },
-        ],
+          'Proteins'
+        ]
       }
     },
+
     computed: {
+      ...mapGetters([
+        'foods'
+      ]),
+
       numberOfPages () {
-        return Math.ceil(this.items.length / this.itemsPerPage)
+        return Math.ceil(this.foods.length / this.foodsPerPage)
       },
       filteredKeys () {
         return this.keys.filter(key => key !== 'Name')
@@ -359,10 +299,7 @@ export default {
       },
       formerPage () {
         if (this.page - 1 >= 1) this.page -= 1
-      },
-      updateItemsPerPage (number) {
-        this.itemsPerPage = number
-      },
+      }
     },
 }
 </script>

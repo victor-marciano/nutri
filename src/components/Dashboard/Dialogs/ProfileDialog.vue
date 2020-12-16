@@ -184,7 +184,7 @@ export default {
     methods: {
         async resetPassword() {
           const user = auth.currentUser
-          console.log(user)
+          console.log(user.email)
             try {
                 await auth.sendPasswordResetEmail(user.email)
             } catch (error) {
