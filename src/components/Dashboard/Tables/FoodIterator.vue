@@ -67,8 +67,8 @@
       <template v-slot:default="props">
         <v-row>
           <v-col
-            v-for="item in props.items"
-            :key="item.name"
+            v-for="(item, index) in props.items"
+            :key="index"
             cols="12"
             sm="6"
             md="4"
@@ -113,7 +113,7 @@
                                         left
                                         class="green darken-4"
                                     >
-                                        {{ item.kcal }}
+                                        {{ (item.kcal * (qtd[index] / 100)).toFixed(0) }}
                                     </v-avatar>
                                     Calorias
                                 </v-chip>
@@ -127,7 +127,7 @@
                                         left
                                         class="green darken-4"
                                     >
-                                        {{ item.carbs }}
+                                        {{ (item.carbs * (qtd[index] / 100)).toFixed(0) }}
                                     </v-avatar>
                                     Carbohidratos
                                 </v-chip>
@@ -141,7 +141,7 @@
                                         left
                                         class="green darken-4"
                                     >
-                                        {{ item.protein }}
+                                        {{ (item.protein * (qtd[index] / 100)).toFixed(0) }}
                                     </v-avatar>
                                     Proteínas
                                 </v-chip>
@@ -155,7 +155,7 @@
                                         left
                                         class="green darken-4"
                                     >
-                                        {{ item.fats }}
+                                        {{ (item.fats * (qtd[index] / 100)).toFixed(0) }}
                                     </v-avatar>
                                     Gorduras
                                 </v-chip>
@@ -164,13 +164,13 @@
 
                         <v-col cols="7" style="height: 200px;">
                             <FoodChart></FoodChart>
-                            <small class="text--secondary py-2">Percentual dos macro-nutrientes</small>
+                            <small class="text--secondary py-2">Divisão dos macro-nutrientes</small>
                         </v-col>
                     </v-row>
 
                     <v-card-actions>
                     
-                    <v-text-field v-model="qtd" placeholder="Quantidade(g)">
+                    <v-text-field v-model="qtd[index]" placeholder="Quantidade(g)">
 
                     </v-text-field>
 
@@ -241,28 +241,29 @@ export default {
     
     created(){
       this.$store.dispatch('fetchFood')
+      this.qtd = Array(this.foods.length).fill(100)
     },
 
     mounted () {
         this.datacollection = {
             labels: ['teste', 'resultado'],
             datasets: [
-            {
-                label: 'Data One',
-                backgroundColor: '#f87979',
-                data: [60, 30]
-            }, {
-                label: 'Data Two',
-                backgroundColor: '#f87979',
-                data: [20, 23]
-            }
+              {
+                  label: 'Data One',
+                  backgroundColor: '#f87979',
+                  data: [60, 30]
+              }, {
+                  label: 'Data Two',
+                  backgroundColor: '#f87979',
+                  data: [20, 23]
+              }
             ]
         }
     },
 
     data () {
       return {
-        qtd: 100,
+        qtd: [],
         datacollection: null,
         itemsPerPageArray: [8, 16],
         search: '',
