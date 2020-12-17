@@ -4,6 +4,7 @@
     :items="desserts"
     class="elevation-0"
     :dense="$vuetify.breakpoint.mobile"
+    disable-sort
   >
     <template v-slot:top>
       <v-toolbar flat>
@@ -44,7 +45,7 @@
                 </div>
                 <v-row>
                     <v-col cols="6">
-                      <v-text-field dense placeholder="Refeição"></v-text-field>
+                      <v-text-field dense placeholder="Nome"></v-text-field>
                     </v-col>
                     <v-col cols="6">
                       <v-menu
@@ -99,6 +100,7 @@
 export default {
   data: () => ({
     dialog: false,
+    menu2: false,
     headers: [
       {
         text: "Dessert (100g serving)",
@@ -112,7 +114,14 @@ export default {
       { text: "Protein (g)", value: "protein" },
       { text: "Actions", value: "actions", sortable: false },
     ],
-    desserts: []
+    desserts: [],
+    newDiet: [
+      { 
+        meals: [
+          { name: '', time: null, food: {}}
+        ] 
+      }
+    ]
   }),
 
   created() {
@@ -128,20 +137,6 @@ export default {
           fat: 6.0,
           carbs: 24,
           protein: 4.0,
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
         }
       ];
     }
