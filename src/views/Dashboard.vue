@@ -1,5 +1,5 @@
 <template>
-  <div>    
+  <div>
     <v-overlay :value="overlay" :opacity="1" color="white">
       <v-img :src="require('@/assets/horizontalLogo2.png')"></v-img>
 
@@ -26,15 +26,15 @@ export default {
   data: () => ({
     overlay: true
   }),
-  
+
   components: {
-    Sidebar,
+    Sidebar
   },
-  
+
   beforeCreate() {
     setTimeout(() => {
-        this.overlay = false
-    }, 2500)
+      this.overlay = false;
+    }, 2500);
   }
 };
 </script>

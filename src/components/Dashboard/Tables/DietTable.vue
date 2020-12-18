@@ -34,60 +34,60 @@
             </v-btn>
           </template>
           <v-card flat>
-              <v-card-title>Criar dieta</v-card-title>
+            <v-card-title>Criar dieta</v-card-title>
 
-              <v-card-text>
-                <div class="d-flex justify-space-between align-center my-3">
-                  <p class="title">Refeição</p>
-                  <v-btn icon>
-                    <v-icon>mdi-plus</v-icon>
-                  </v-btn>
-                </div>
-                <v-row>
-                    <v-col cols="6">
-                      <v-text-field dense placeholder="Nome"></v-text-field>
-                    </v-col>
-                    <v-col cols="6">
-                      <v-menu
-                        ref="menu"
-                        v-model="menu2"
-                        :close-on-content-click="false"
-                        :nudge-right="40"
-                        :return-value.sync="time"
-                        transition="scale-transition"
-                        offset-y
-                        max-width="290px"
-                        min-width="200px"
-                      >
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-text-field
-                            v-model="time"
-                            label="Horario"
-                            prepend-icon="mdi-clock-time-four-outline"
-                            readonly
-                            v-bind="attrs"
-                            v-on="on"
-                          ></v-text-field>
-                        </template>
-                        <v-time-picker
-                          v-if="menu2"
-                          v-model="time"
-                          full-width
-                          @click:minute="$refs.menu.save(time)"
-                        ></v-time-picker>
-                      </v-menu>
-                    </v-col>
-                    <v-col cols="12">
-                        <v-text-field dense placeholder="Qtd"></v-text-field>
-                    </v-col>
-                </v-row>
-              </v-card-text>
+            <v-card-text>
+              <div class="d-flex justify-space-between align-center my-3">
+                <p class="title">Refeição</p>
+                <v-btn icon>
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
+              </div>
+              <v-row>
+                <v-col cols="6">
+                  <v-text-field dense placeholder="Nome"></v-text-field>
+                </v-col>
+                <v-col cols="6">
+                  <v-menu
+                    ref="menu"
+                    v-model="menu2"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    :return-value.sync="time"
+                    transition="scale-transition"
+                    offset-y
+                    max-width="290px"
+                    min-width="200px"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        v-model="time"
+                        label="Horario"
+                        prepend-icon="mdi-clock-time-four-outline"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                      ></v-text-field>
+                    </template>
+                    <v-time-picker
+                      v-if="menu2"
+                      v-model="time"
+                      full-width
+                      @click:minute="$refs.menu.save(time)"
+                    ></v-time-picker>
+                  </v-menu>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field dense placeholder="Qtd"></v-text-field>
+                </v-col>
+              </v-row>
+            </v-card-text>
 
-              <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn text @click="dialog = false">Cancelar</v-btn>
-                  <v-btn text>Salvar</v-btn>
-              </v-card-actions>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn text @click="dialog = false">Cancelar</v-btn>
+              <v-btn text>Salvar</v-btn>
+            </v-card-actions>
           </v-card>
         </v-dialog>
       </v-toolbar>
@@ -96,7 +96,6 @@
 </template>
 
 <script>
-
 export default {
   data: () => ({
     dialog: false,
@@ -106,20 +105,18 @@ export default {
         text: "Dessert (100g serving)",
         align: "start",
         sortable: false,
-        value: "name",
+        value: "name"
       },
       { text: "Calories", value: "calories" },
       { text: "Fat (g)", value: "fat" },
       { text: "Carbs (g)", value: "carbs" },
       { text: "Protein (g)", value: "protein" },
-      { text: "Actions", value: "actions", sortable: false },
+      { text: "Actions", value: "actions", sortable: false }
     ],
     desserts: [],
     newDiet: [
-      { 
-        meals: [
-          { name: '', time: null, food: {}}
-        ] 
+      {
+        meals: [{ name: "", time: null, food: {} }]
       }
     ]
   }),
@@ -136,11 +133,11 @@ export default {
           calories: 159,
           fat: 6.0,
           carbs: 24,
-          protein: 4.0,
+          protein: 4.0
         }
       ];
     }
-  },
+  }
 };
 </script>
 

@@ -14,8 +14,8 @@ const TrainingTable = () =>
 
 export default {
   components: {
-    TrainingTable,
-  },
+    TrainingTable
+  }
 };
 </script>
 

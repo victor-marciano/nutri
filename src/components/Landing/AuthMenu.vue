@@ -45,12 +45,12 @@ export default {
   name: "AuthMenu",
   components: {
     RegisterForm,
-    AuthForm,
+    AuthForm
   },
 
   data: () => ({
-    tab: 1,
-  }),
+    tab: 1
+  })
 };
 </script>
 

@@ -8,21 +8,22 @@
     </v-tabs>
 
     <v-tabs-items v-model="tab" class="pa-3">
-        <v-tab-item><IMC></IMC></v-tab-item>
-        <v-tab-item><TMB></TMB></v-tab-item>
-        <v-tab-item>4</v-tab-item>
-        <v-tab-item><PesoIdeal></PesoIdeal></v-tab-item>
+      <v-tab-item><IMC></IMC></v-tab-item>
+      <v-tab-item><TMB></TMB></v-tab-item>
+      <v-tab-item>4</v-tab-item>
+      <v-tab-item><PesoIdeal></PesoIdeal></v-tab-item>
     </v-tabs-items>
   </div>
 </template>
 
 <script>
-const IMC = () => import('@/components/Dashboard/Calculators/IMC.vue')
-const TMB = () => import('@/components/Dashboard/Calculators/TMB.vue')
-const PesoIdeal = () => import('@/components/Dashboard/Calculators/PesoIdeal.vue')
+const IMC = () => import("@/components/Dashboard/Calculators/IMC.vue");
+const TMB = () => import("@/components/Dashboard/Calculators/TMB.vue");
+const PesoIdeal = () =>
+  import("@/components/Dashboard/Calculators/PesoIdeal.vue");
 
 export default {
-  name: 'Calculadoras',
+  name: "Calculadoras",
   components: {
     IMC,
     TMB,
@@ -36,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .calculators {
-    background: whitesmoke;
-  }
+.calculators {
+  background: whitesmoke;
+}
 </style>

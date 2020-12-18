@@ -33,25 +33,28 @@ export default {
     loading: false,
     email: "",
     password: "",
-    name: "",
+    name: ""
   }),
 
   methods: {
     async submit() {
       this.loading = true;
-      const that = this
+      const that = this;
 
-      try {  
-        const response = await auth.createUserWithEmailAndPassword(this.email, this.password)    
-        await response.user.updateProfile({ displayName: that.name })
+      try {
+        const response = await auth.createUserWithEmailAndPassword(
+          this.email,
+          this.password
+        );
+        await response.user.updateProfile({ displayName: that.name });
         this.$router.push({ path: "/dashboard/home" });
       } catch (error) {
-        console.log(error)
+        console.log(error);
       } finally {
-        this.loading = false;        
+        this.loading = false;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -24,7 +24,7 @@ export default {
   data: () => ({
     email: "",
     password: "",
-    loading: false,
+    loading: false
   }),
 
   methods: {
@@ -39,8 +39,8 @@ export default {
       } finally {
         this.loading = false;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

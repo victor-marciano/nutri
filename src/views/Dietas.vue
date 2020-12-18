@@ -13,8 +13,8 @@ const DietTable = () => import("@/components/Dashboard/Tables/DietTable.vue");
 
 export default {
   components: {
-    DietTable,
-  },
+    DietTable
+  }
 };
 </script>
 

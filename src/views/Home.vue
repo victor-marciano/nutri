@@ -2,31 +2,33 @@
   <div class="home">
     <v-container>
       <p class="title">Bem vindo {{ user.displayName }}.</p>
-      <p class="subtitle">Acompanhe seu progresso e o andamento das suas dietas e treinos.</p>
+      <p class="subtitle">
+        Acompanhe seu progresso e o andamento das suas dietas e treinos.
+      </p>
       <v-row>
         <v-col cols="12" md="6">
-          <v-card
-              color="orange darken-4"
-              dark
+          <v-card color="orange darken-4" dark>
+            <v-card-title class="headline">
+              Sua dieta atual
+            </v-card-title>
+
+            <v-card-subtitle
+              >Você não possui nenhuma dieta ativa, crie ja a
+              sua!</v-card-subtitle
             >
-              <v-card-title class="headline">
-                Sua dieta atual
-              </v-card-title>
 
-              <v-card-subtitle>Você não possui nenhuma dieta ativa, crie ja a sua!</v-card-subtitle>
-
-              <v-card-actions>
-                <v-btn text>
-                  Criar dieta
-                </v-btn>
-              </v-card-actions>
-            </v-card>
+            <v-card-actions>
+              <v-btn text>
+                Criar dieta
+              </v-btn>
+            </v-card-actions>
+          </v-card>
         </v-col>
       </v-row>
 
       <v-divider class="py-3"></v-divider>
 
-        <p class="headline">Dietas populares</p>
+      <p class="headline">Dietas populares</p>
       <v-row>
         <v-col cols="6">
           <v-card>
@@ -87,7 +89,7 @@
       </v-row>
       <v-divider class="py-3"></v-divider>
 
-        <p class="headline">Treinos populares</p>
+      <p class="headline">Treinos populares</p>
       <v-row>
         <v-col cols="6">
           <v-card>
@@ -151,14 +153,13 @@
 </template>
 
 <script>
-
 import { mapGetters } from "vuex";
 
 export default {
   name: "Home",
   components: {},
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(["user"])
   }
 };
 </script>

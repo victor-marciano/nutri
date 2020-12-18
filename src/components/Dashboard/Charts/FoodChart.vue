@@ -1,5 +1,5 @@
 <script>
-import { Pie } from 'vue-chartjs'
+import { Pie } from "vue-chartjs";
 
 export default {
   extends: Pie,
@@ -15,8 +15,8 @@ export default {
     }
   },
 
-  mounted () {
-    this.renderChart(this.chartdata, this.options)
+  mounted() {
+    this.renderChart(this.chartdata, this.options);
   }
-}
+};
 </script>

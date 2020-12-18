@@ -14,7 +14,7 @@
         v-scroll="onScroll"
         v-show="offsetTop > 200"
       >
-        <v-icon>mdi-arrow-up</v-icon> 
+        <v-icon>mdi-arrow-up</v-icon>
       </v-btn>
     </v-fab-transition>
 
@@ -23,19 +23,34 @@
       <v-container>
         <v-row>
           <v-col cols="12" md="6">
-              <v-sheet light class="transparent text-center py-5">
-                <v-img src="../assets/fullLogo.png" width="250" class="mx-auto"></v-img>
-                <br>
-                <p class="body-2 text--secondary">
-                  Somos a tecnologia impactando positivamente na sua saúde e estética, faça seu cadastro e conheça nossa plataforma Web.
-                </p><br>
-                <v-btn @click="$vuetify.goTo('.resources')" :width="$vuetify.breakpoint.mdAndUp ? '50%' : '100%'" :large="$vuetify.breakpoint.mdAndUp" class="green lighten-3" dark> 
-                  Saiba mais
-                </v-btn>
-              </v-sheet>
-          </v-col> 
-          <v-col cols="12" md="6">            
-            <v-img src="../assets/6569.jpg" :height="$vuetify.breakpoint.mobile ? 200 : 400"></v-img>
+            <v-sheet light class="transparent text-center py-5">
+              <v-img
+                src="../assets/fullLogo.png"
+                width="250"
+                class="mx-auto"
+              ></v-img>
+              <br />
+              <p class="body-2 text--secondary">
+                Somos a tecnologia impactando positivamente na sua saúde e
+                estética, faça seu cadastro e conheça nossa plataforma Web.
+              </p>
+              <br />
+              <v-btn
+                @click="$vuetify.goTo('.resources')"
+                :width="$vuetify.breakpoint.mdAndUp ? '50%' : '100%'"
+                :large="$vuetify.breakpoint.mdAndUp"
+                class="green lighten-3"
+                dark
+              >
+                Saiba mais
+              </v-btn>
+            </v-sheet>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-img
+              src="../assets/6569.jpg"
+              :height="$vuetify.breakpoint.mobile ? 200 : 400"
+            ></v-img>
           </v-col>
         </v-row>
       </v-container>
@@ -72,7 +87,9 @@
         <v-row>
           <v-col cols="12" md="6">
             <v-img src="../assets/5964.jpg"></v-img>
-            <p class="body text-center text--secondary">Alguma dúvida? Envie uma mensagem para nós!</p>
+            <p class="body text-center text--secondary">
+              Alguma dúvida? Envie uma mensagem para nós!
+            </p>
           </v-col>
           <v-col cols="12" md="6">
             <ContactForm></ContactForm>
@@ -80,7 +97,7 @@
         </v-row>
       </v-container>
     </div>
-    
+
     <Footer></Footer>
   </div>
 </template>
@@ -104,52 +121,51 @@ export default {
         title: "Dietas",
         description:
           "Crie e manipule dietas e treinos com os alimentos/treinos da nossa base de dados",
-        icon: "021-diet",
+        icon: "021-diet"
       },
       {
         title: "Calculadoras Fit",
         description:
           "Obtenha dados precisos sobre seu corpo, e sobre como proceder com sua alimentação e atividades físicas",
-        icon: "001-scale",
+        icon: "001-scale"
       },
       {
         title: "Guia Nutricional",
         description:
           "Alimentos e seus valores nutricionais detalhados, contendo informações adicionais",
-        icon: "011-apple-1",
+        icon: "011-apple-1"
       },
       {
         title: "Treinos",
         description: "Gerencie seus treinos",
-        icon: "002-heart-rate",
-      },
+        icon: "002-heart-rate"
+      }
     ],
 
-    offsetTop: 0,
+    offsetTop: 0
   }),
 
   methods: {
     onScroll() {
       this.offsetTop = window.scrollY;
-    },
+    }
   },
 
   computed: {
     getScroll() {
       return this.offsetTop;
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-
 @media (max-width: 990px) {
   .resources {
     padding-top: 25px;
     padding-bottom: 25px;
   }
-  
+
   .section {
     padding-top: 50px;
     padding-bottom: 50px;
