@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 
 export default {
   name: "RegisterForm",
@@ -47,6 +47,9 @@ export default {
           this.password
         );
         await response.user.updateProfile({ displayName: that.name });
+        await db.collection('users').doc(response.user.uid).set({
+          name: response.user.displayName
+        })
         this.$router.push({ path: "/dashboard/home" });
       } catch (error) {
         console.log(error);

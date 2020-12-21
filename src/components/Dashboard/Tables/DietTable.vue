@@ -4,6 +4,8 @@
     :items="desserts"
     class="elevation-0"
     :dense="$vuetify.breakpoint.mobile"
+    no-data-text="Você não possui nenhuma dieta cadastrada"
+    no-results-text="Nenhum resultado para a sua busca"
     disable-sort
   >
     <template v-slot:top>
@@ -33,61 +35,202 @@
               </v-icon>
             </v-btn>
           </template>
-          <v-card flat>
-            <v-card-title>Criar dieta</v-card-title>
+          <v-card>
+            <v-card-title>
+              Nova Dieta
+            </v-card-title>
 
-            <v-card-text>
-              <div class="d-flex justify-space-between align-center my-3">
-                <p class="title">Refeição</p>
-                <v-btn icon>
-                  <v-icon>mdi-plus</v-icon>
-                </v-btn>
-              </div>
-              <v-row>
-                <v-col cols="6">
-                  <v-text-field dense placeholder="Nome"></v-text-field>
-                </v-col>
-                <v-col cols="6">
-                  <v-menu
-                    ref="menu"
-                    v-model="menu2"
-                    :close-on-content-click="false"
-                    :nudge-right="40"
-                    :return-value.sync="time"
-                    transition="scale-transition"
-                    offset-y
-                    max-width="290px"
-                    min-width="200px"
+              <v-stepper
+                v-model="e6"
+                vertical
+              >
+                <v-stepper-step
+                 color="orange darken-4"
+                  :complete="e6 > 1"
+                  step="1"
+                >
+                  Dados primários
+                </v-stepper-step>
+
+                <v-stepper-content step="1">
+                  <v-row>
+                    <v-col cols="12">
+                      <v-text-field placeholder="Nome da Dieta" v-model="newDiet.name"></v-text-field>
+                    </v-col>
+                   
+                    <v-col cols="12">
+                     <v-select
+                      :items="objectives"
+                      label="Objetivo"
+                      v-model="newDiet.objective"
+                    ></v-select>
+                    </v-col>
+                    
+                    <v-col cols="6">
+                     <v-menu
+                      ref="menu1"
+                      v-model="menu1"
+                      :close-on-content-click="false"
+                      transition="scale-transition"
+                      offset-y
+                      max-width="290px"
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                          v-model="dateFormatted"
+                          label="Início"
+                          hint="MM/DD/YYYY"
+                          persistent-hint
+                          prepend-icon="mdi-calendar"
+                          v-bind="attrs"
+                          @blur="newDiet.start = parseDate(dateFormatted)"
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
+                        v-model="newDiet.start"
+                        no-title
+                        @input="menu1 = false"
+                      ></v-date-picker>
+                    </v-menu>
+                    </v-col>
+                    
+                    <v-col cols="6">
+                     <v-menu
+                      ref="menu1"
+                      v-model="menu1"
+                      :close-on-content-click="false"
+                      transition="scale-transition"
+                      offset-y
+                      max-width="290px"
+                      min-width="290px"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                          v-model="dateFormatted"
+                          label="Término"
+                          hint="MM/DD/YYYY"
+                          persistent-hint
+                          prepend-icon="mdi-calendar"
+                          v-bind="attrs"
+                          @blur="newDiet.finish = parseDate(dateFormatted)"
+                          v-on="on"
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
+                        v-model="newDiet.finish"
+                        no-title
+                        @input="menu1 = false"
+                      ></v-date-picker>
+                    </v-menu>
+                    </v-col>
+                  </v-row>
+                  <v-btn
+                    dark
+                    color="orange darken-4"
+                    @click="e6 = 2"
                   >
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-text-field
-                        v-model="time"
-                        label="Horario"
-                        prepend-icon="mdi-clock-time-four-outline"
-                        readonly
-                        v-bind="attrs"
-                        v-on="on"
-                      ></v-text-field>
-                    </template>
-                    <v-time-picker
-                      v-if="menu2"
-                      v-model="time"
-                      full-width
-                      @click:minute="$refs.menu.save(time)"
-                    ></v-time-picker>
-                  </v-menu>
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field dense placeholder="Qtd"></v-text-field>
-                </v-col>
-              </v-row>
-            </v-card-text>
+                    Continuar
+                  </v-btn>
+                  <v-btn text @click="dialog = false">
+                    Cancelar
+                  </v-btn>
+                </v-stepper-content>
 
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn text @click="dialog = false">Cancelar</v-btn>
-              <v-btn text>Salvar</v-btn>
-            </v-card-actions>
+                <v-stepper-step
+                  color="orange darken-4"
+                  :complete="e6 > 2"
+                  step="2"
+                >
+                  Definição das refeições e seus alimentos
+                </v-stepper-step>
+
+                <v-stepper-content step="2">
+                  <div class="d-flex justify-space-between">
+                    <p class="title">Refeições</p>
+                    <v-btn icon @click="addMeal">
+                      <v-icon>mdi-plus</v-icon>
+                    </v-btn>
+                  </div>
+
+                  <v-expand-transition v-for="(meal, index) in newDiet.meals" :key="index">
+                    <v-container>
+                      <v-row>
+                        <small class="text-center">Preencha as informações deste treino</small>
+                        <v-col cols="12">
+                          <v-select label="Dia da semana" :items="weekDays" v-model="meal.weekDay"></v-select>
+                        </v-col>
+                        <v-col cols="12">
+                          <div class="d-flex justify-space-between">
+                            <p class="subtitle">Exercícios</p>
+                            <v-btn icon x-small @click="addFood(index)">
+                              <v-icon>mdi-plus</v-icon>
+                            </v-btn>
+                          </div>
+                          <div v-for="(food, index) in meal.foods" :key="index">
+                            <v-row>
+                              <v-col cols="8">
+                                <v-select label="Exercício" :items="foods" item-text="name"></v-select>
+                              </v-col>
+                              <v-col cols="4">
+                                <v-text-field placeholder="Qtd(g)"></v-text-field>
+                              </v-col>
+                            </v-row>
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-expand-transition>
+
+                  <v-btn
+                    dark
+                    color="orange darken-4"
+                    @click="e6 = 3"
+                  >
+                    Continuar
+                  </v-btn>
+                  <v-btn text @click="e6--">
+                    Voltar
+                  </v-btn>
+                </v-stepper-content>
+
+                <v-stepper-step
+                color="orange darken-4"
+                  :complete="e6 > 3"
+                  step="3"
+                >
+                  Prévia e finalização
+                </v-stepper-step>
+
+                <v-stepper-content step="3">
+                  <small>Confira se está tudo certo com sua dieta</small>
+                  <v-row>
+                    <v-col cols="12">
+                     <v-expansion-panels
+                        multiple                        
+                      >
+                        <v-expansion-panel v-for="(meal, index) in newDiet.meals" :key="index">
+                          <v-expansion-panel-header>{{ meal.weekDay }}</v-expansion-panel-header>
+                          <v-expansion-panel-content>
+                            Some content
+                          </v-expansion-panel-content>
+                        </v-expansion-panel>
+                      </v-expansion-panels>
+                    </v-col>
+                  </v-row>
+                  <v-btn
+                    dark
+                    color="orange darken-4"
+                    @click="e6 = 4"
+                  >
+                    Finalizar
+                  </v-btn>
+                  <v-btn text @click="e6--">
+                    Voltar
+                  </v-btn>
+                </v-stepper-content>
+              </v-stepper>
           </v-card>
         </v-dialog>
       </v-toolbar>
@@ -100,6 +243,7 @@ export default {
   data: () => ({
     dialog: false,
     menu2: false,
+    e6: 1,
     headers: [
       {
         text: "Dessert (100g serving)",
@@ -116,27 +260,12 @@ export default {
     desserts: [],
     newDiet: [
       {
-        meals: [{ name: "", time: null, food: {} }]
+        meals: [{ name: "", time: null, foods: [] }]
       }
     ]
   }),
 
   created() {
-    this.initialize();
-  },
-
-  methods: {
-    initialize() {
-      this.desserts = [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0
-        }
-      ];
-    }
   }
 };
 </script>

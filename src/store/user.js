@@ -1,7 +1,9 @@
 const userModule = {
   state: {
     authUser: {},
-    userData: {}
+    userData: {},
+    activeDiet: {},
+    activeTraining: {}
   },
 
   mutations: {

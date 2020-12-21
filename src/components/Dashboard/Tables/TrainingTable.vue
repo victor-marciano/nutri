@@ -171,10 +171,10 @@
                           <div v-for="(exercise, index) in training.exercises" :key="index">
                             <v-row>
                               <v-col cols="8">
-                                <v-select label="Exercício"></v-select>
+                                <v-select label="Exercício" :items="exercises" item-text="name"></v-select>
                               </v-col>
                               <v-col cols="4">
-                                <v-select label="Série/Repetições"></v-select>
+                                <v-select label="Série/Repetições" :items="series"></v-select>
                               </v-col>
                             </v-row>
                           </div>
@@ -239,6 +239,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   data: () => ({
     dialog: false,
@@ -268,11 +270,15 @@ export default {
       { text: "Término", value: "protein" },
       { text: "Ações", value: "actions", sortable: false },
     ],
-    desserts: []
+    desserts: [],
+    series: [
+      '3x10', '4x10', 'Até a falha', '3x15', '5x5', '4x8', '3x8', 'drop-set', 'piramide'
+    ]
   }),
 
   created() {
     this.initialize();
+    this.$store.dispatch('fetchExercises')
   },
 
   methods: {
@@ -295,6 +301,13 @@ export default {
     addExercise(index) {
       this.newTraining.trainings[index].exercises.push({})
     }
+  },
+
+  computed: {
+    ...mapGetters([
+      'trainings',
+      'exercises'
+    ])
   }
 };
 </script>
