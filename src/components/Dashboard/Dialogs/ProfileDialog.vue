@@ -156,7 +156,7 @@
 </template>
 
 <script>
-import { auth, storage } from "../../../firebase";
+import { auth, storage, db } from "../../../firebase";
 import { mapGetters } from "vuex";
 import VImageInput from "vuetify-image-input/a-la-carte";
 
@@ -199,7 +199,11 @@ export default {
     async deleteAccount() {
       const user = auth.currentUser;
       try {
-        await user.delete();
+        await Promise.all([
+          db.collection('users').doc(user.uid).delete(),
+          user.delete()
+        ])
+        this.$router.push({ path: '/' })
       } catch (error) {
         console.log(error);
       }
