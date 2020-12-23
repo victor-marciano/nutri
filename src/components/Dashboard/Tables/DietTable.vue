@@ -40,34 +40,34 @@
               Nova Dieta
             </v-card-title>
 
-              <v-stepper
-                v-model="e6"
-                vertical
+            <v-stepper v-model="e6" vertical>
+              <v-stepper-step
+                color="orange darken-4"
+                :complete="e6 > 1"
+                step="1"
               >
-                <v-stepper-step
-                 color="orange darken-4"
-                  :complete="e6 > 1"
-                  step="1"
-                >
-                  Dados primários
-                </v-stepper-step>
+                Dados primários
+              </v-stepper-step>
 
-                <v-stepper-content step="1">
-                  <v-row>
-                    <v-col cols="12">
-                      <v-text-field placeholder="Nome da Dieta" v-model="newDiet.name"></v-text-field>
-                    </v-col>
-                   
-                    <v-col cols="12">
-                     <v-select
+              <v-stepper-content step="1">
+                <v-row>
+                  <v-col cols="12">
+                    <v-text-field
+                      placeholder="Nome da Dieta"
+                      v-model="newDiet.name"
+                    ></v-text-field>
+                  </v-col>
+
+                  <v-col cols="12">
+                    <v-select
                       :items="objectives"
                       label="Objetivo"
                       v-model="newDiet.objective"
                     ></v-select>
-                    </v-col>
-                    
-                    <v-col cols="6">
-                     <v-menu
+                  </v-col>
+
+                  <v-col cols="6">
+                    <v-menu
                       ref="menu1"
                       v-model="menu1"
                       :close-on-content-click="false"
@@ -94,10 +94,10 @@
                         @input="menu1 = false"
                       ></v-date-picker>
                     </v-menu>
-                    </v-col>
-                    
-                    <v-col cols="6">
-                     <v-menu
+                  </v-col>
+
+                  <v-col cols="6">
+                    <v-menu
                       ref="menu1"
                       v-model="menu1"
                       :close-on-content-click="false"
@@ -124,122 +124,142 @@
                         @input="menu1 = false"
                       ></v-date-picker>
                     </v-menu>
-                    </v-col>
-                  </v-row>
-                  <v-btn
-                    dark
-                    color="orange darken-4"
-                    @click="e6 = 2"
-                  >
-                    Continuar
-                  </v-btn>
-                  <v-btn text @click="dialog = false">
-                    Cancelar
-                  </v-btn>
-                </v-stepper-content>
+                  </v-col>
+                </v-row>
+                <v-btn dark color="orange darken-4" @click="e6 = 2">
+                  Continuar
+                </v-btn>
+                <v-btn text @click="dialog = false">
+                  Cancelar
+                </v-btn>
+              </v-stepper-content>
 
-                <v-stepper-step
-                  color="orange darken-4"
-                  :complete="e6 > 2"
-                  step="2"
-                >
-                  Definição das refeições e seus alimentos
-                </v-stepper-step>
-
-                <v-stepper-content step="2">
-                  <div class="d-flex justify-space-between">
-                    <p class="title">Refeições</p>
-                    <v-btn icon @click="addMeal">
-                      <v-icon>mdi-plus</v-icon>
-                    </v-btn>
-                  </div>
-
-                  <v-expand-transition v-for="(meal, index) in newDiet.meals" :key="index">
-                    <v-container>
-                      <v-row>
-                        <small class="text-center">Preencha as informações deste treino</small>
-                        <v-col cols="12">
-                          <v-select label="Dia da semana" :items="weekDays" v-model="meal.weekDay"></v-select>
-                        </v-col>
-                        <v-col cols="12">
-                          <div class="d-flex justify-space-between">
-                            <p class="subtitle">Exercícios</p>
-                            <v-btn icon x-small @click="addFood(index)">
-                              <v-icon>mdi-plus</v-icon>
-                            </v-btn>
-                          </div>
-                          <div v-for="(food, index) in meal.foods" :key="index">
-                            <v-row>
-                              <v-col cols="8">
-                                <v-select label="Exercício" :items="foods" item-text="name"></v-select>
-                              </v-col>
-                              <v-col cols="4">
-                                <v-text-field placeholder="Qtd(g)"></v-text-field>
-                              </v-col>
-                            </v-row>
-                          </div>
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                  </v-expand-transition>
-
-                  <v-btn
-                    dark
-                    color="orange darken-4"
-                    @click="e6 = 3"
-                  >
-                    Continuar
-                  </v-btn>
-                  <v-btn text @click="e6--">
-                    Voltar
-                  </v-btn>
-                </v-stepper-content>
-
-                <v-stepper-step
+              <v-stepper-step
                 color="orange darken-4"
-                  :complete="e6 > 3"
-                  step="3"
-                >
-                  Prévia e finalização
-                </v-stepper-step>
+                :complete="e6 > 2"
+                step="2"
+              >
+                Definição das refeições e seus alimentos
+              </v-stepper-step>
 
-                <v-stepper-content step="3">
-                  <small>Confira se está tudo certo com sua dieta</small>
-                  <v-row>
-                    <v-col cols="12">
-                     <v-expansion-panels
-                        multiple                        
+              <v-stepper-content step="2">
+                <div class="d-flex justify-space-between">
+                  <p class="title">Refeições</p>
+                  <v-btn icon @click="addMeal">
+                    <v-icon>mdi-plus</v-icon>
+                  </v-btn>
+                </div>
+
+                <v-expand-transition
+                  v-for="(meal, index) in newDiet.meals"
+                  :key="index"
+                >
+                  <v-container>
+                    <v-row>
+                      <small class="text-center"
+                        >Preencha as informações deste treino</small
                       >
-                        <v-expansion-panel v-for="(meal, index) in newDiet.meals" :key="index">
-                          <v-expansion-panel-header>{{ meal.weekDay }}</v-expansion-panel-header>
-                          <v-expansion-panel-content>
-                            Some content
-                          </v-expansion-panel-content>
-                        </v-expansion-panel>
-                      </v-expansion-panels>
-                    </v-col>
-                  </v-row>
-                  <v-btn
-                    dark
-                    color="orange darken-4"
-                    @click="e6 = 4"
-                  >
-                    Finalizar
-                  </v-btn>
-                  <v-btn text @click="e6--">
-                    Voltar
-                  </v-btn>
-                </v-stepper-content>
-              </v-stepper>
+                      <v-col cols="12">
+                        <v-select
+                          label="Dia da semana"
+                          :items="weekDays"
+                          v-model="meal.weekDay"
+                        ></v-select>
+                      </v-col>
+                      <v-col cols="12">
+                        <div class="d-flex justify-space-between">
+                          <p class="subtitle">Exercícios</p>
+                          <v-btn icon x-small @click="addFood(index)">
+                            <v-icon>mdi-plus</v-icon>
+                          </v-btn>
+                        </div>
+                        <div v-for="(food, index) in meal.foods" :key="index">
+                          <v-row>
+                            <v-col cols="8">
+                              <v-select
+                                label="Exercício"
+                                :items="foods"
+                                item-text="name"
+                              ></v-select>
+                            </v-col>
+                            <v-col cols="4">
+                              <v-text-field placeholder="Qtd(g)"></v-text-field>
+                            </v-col>
+                          </v-row>
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-expand-transition>
+
+                <v-btn dark color="orange darken-4" @click="e6 = 3">
+                  Continuar
+                </v-btn>
+                <v-btn text @click="e6--">
+                  Voltar
+                </v-btn>
+              </v-stepper-content>
+
+              <v-stepper-step
+                color="orange darken-4"
+                :complete="e6 > 3"
+                step="3"
+              >
+                Prévia e finalização
+              </v-stepper-step>
+
+              <v-stepper-content step="3">
+                <small>Confira se está tudo certo com sua dieta</small>
+                <v-row>
+                  <v-col cols="12">
+                    <v-expansion-panels multiple>
+                      <v-expansion-panel
+                        v-for="(meal, index) in newDiet.meals"
+                        :key="index"
+                      >
+                        <v-expansion-panel-header>{{
+                          meal.weekDay
+                        }}</v-expansion-panel-header>
+                        <v-expansion-panel-content>
+                          Some content
+                        </v-expansion-panel-content>
+                      </v-expansion-panel>
+                    </v-expansion-panels>
+                  </v-col>
+                </v-row>
+                <v-btn dark color="orange darken-4" @click="e6 = 4">
+                  Finalizar
+                </v-btn>
+                <v-btn text @click="e6--">
+                  Voltar
+                </v-btn>
+              </v-stepper-content>
+            </v-stepper>
           </v-card>
         </v-dialog>
       </v-toolbar>
+    </template>
+    <template v-slot:item.actions="{ item }">
+      <DietInfo :diet="item"></DietInfo>
+
+      <v-btn dark x-small @click="deleteTraining(item)" color="red">
+        <v-icon small>
+          mdi-delete
+        </v-icon>
+      </v-btn>
     </template>
   </v-data-table>
 </template>
 
 <script>
+import { db } from "../../../firebase";
+const DietInfo = () => import('@/components/Dashboard/DietInfo.vue')
+
 export default {
+  components: {
+    DietInfo
+  },
+
   data: () => ({
     dialog: false,
     menu2: false,
@@ -266,6 +286,41 @@ export default {
   }),
 
   created() {
+    this.$store.dispatch("fetchDiets");
+  },
+
+  methods: {
+    addMeals() {
+      this.newDiet.meals.push({ name: "", time: null, foods: [] });
+    },
+
+    addFoods(index) {
+      this.newDiet.meals[index].foods.push({});
+    },
+
+    async insertDiet() {
+      let formattedDiet = Object.assign(this.newDiet, {
+        userId: this.user.uid
+      });
+      try {
+        await db.collection("diets").add(formattedDiet);
+        this.$store.dispatch("fetchDiets");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async deleteDiet(item) {
+      try {
+        await db
+          .collection("diets")
+          .doc(item.uid)
+          .delete();
+        this.$store.dispatch("fetchDiets");
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 };
 </script>

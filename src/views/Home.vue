@@ -44,6 +44,8 @@
             <v-card-actions>
               <v-spacer></v-spacer>
 
+              <DietInfo :diet="diet" system></DietInfo>
+              
               <v-btn icon>
                 <v-icon>mdi-book-plus-multiple-outline</v-icon>
               </v-btn>
@@ -110,12 +112,15 @@
 
 <script>
 import { mapGetters } from "vuex";
+const DietInfo = () => import('@/components/Dashboard/DietInfo.vue')
 
 export default {
   name: "Home",
-  components: {},
-  created () {
-    this.$store.dispatch('fetchDiets')
+  components: {
+    DietInfo
+  },
+  created() {
+    this.$store.dispatch("fetchDiets");
   },
 
   computed: {

@@ -190,7 +190,7 @@ export default {
       const user = auth.currentUser;
       try {
         await user.sendEmailVerification();
-        this.$store.commit('SET_AUTH_USER', user)
+        this.$store.commit("SET_AUTH_USER", user);
       } catch (error) {
         console.log(error);
       }
@@ -200,10 +200,13 @@ export default {
       const user = auth.currentUser;
       try {
         await Promise.all([
-          db.collection('users').doc(user.uid).delete(),
+          db
+            .collection("users")
+            .doc(user.uid)
+            .delete(),
           user.delete()
-        ])
-        this.$router.push({ path: '/' })
+        ]);
+        this.$router.push({ path: "/" });
       } catch (error) {
         console.log(error);
       }

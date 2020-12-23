@@ -12,17 +12,17 @@ const trainingModule = {
     },
     SET_EXERCISES(state, exercises) {
       state.exercises = exercises;
-    },
+    }
   },
 
   actions: {
     fetchTrainings: async ({ commit }) => {
       try {
-        const trainings = []
+        const trainings = [];
         const response = await db.collection("trainings").get();
         response.forEach(training => {
           let trainingData = training.data();
-          trainingData = Object.assign(trainingData, { uid: training.id })
+          trainingData = Object.assign(trainingData, { uid: training.id });
           trainings.push(trainingData);
         });
         commit("SET_TRAININGS", trainings);
@@ -30,20 +30,20 @@ const trainingModule = {
         console.log(error);
       }
     },
-    
+
     fetchExercises: async ({ commit }) => {
-        try {
-          const exercises = []
-          const response = await db.collection("exercises").get();
-          response.forEach(exercise => {
-            let exerciseData = exercise.data();
-            exercises.push(exerciseData);
-          });
-          commit("SET_EXERCISES", exercises);
-        } catch (error) {
-            console.log(error);
-        }
-    },
+      try {
+        const exercises = [];
+        const response = await db.collection("exercises").get();
+        response.forEach(exercise => {
+          let exerciseData = exercise.data();
+          exercises.push(exerciseData);
+        });
+        commit("SET_EXERCISES", exercises);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   },
 
   getters: {

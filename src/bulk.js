@@ -15,30 +15,46 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-const diets = 
-  { name: 'Dieta Emagrecimento', start: null, end: null, meals: [
-    { name: '', hour: '', foods: [
-      { id: '11eZpNDmvTgUcIZ8hpCJ', qtd: 80},
-      { id: 'wQriQTgGQTYqBR8dnja8', qtd: 100},
-      { id: 'qdMVUbPd7FXbXUTlRcWW', qtd: 70},
-    ]},
-    { name: '', hour: '', foods: [
-      { id: '11eZpNDmvTgUcIZ8hpCJ', qtd: 80},
-      { id: 'wQriQTgGQTYqBR8dnja8', qtd: 100},
-      { id: 'qdMVUbPd7FXbXUTlRcWW', qtd: 70},
-    ]},
-    { name: '', hour: '', foods: [
-      { id: '11eZpNDmvTgUcIZ8hpCJ', qtd: 80},
-      { id: 'wQriQTgGQTYqBR8dnja8', qtd: 100},
-      { id: 'qdMVUbPd7FXbXUTlRcWW', qtd: 70},
-    ]},
-  ]}
+const diets = {
+  name: "Dieta Emagrecimento",
+  start: null,
+  end: null,
+  meals: [
+    {
+      name: "",
+      hour: "",
+      foods: [
+        { id: "11eZpNDmvTgUcIZ8hpCJ", qtd: 80 },
+        { id: "wQriQTgGQTYqBR8dnja8", qtd: 100 },
+        { id: "qdMVUbPd7FXbXUTlRcWW", qtd: 70 }
+      ]
+    },
+    {
+      name: "",
+      hour: "",
+      foods: [
+        { id: "11eZpNDmvTgUcIZ8hpCJ", qtd: 80 },
+        { id: "wQriQTgGQTYqBR8dnja8", qtd: 100 },
+        { id: "qdMVUbPd7FXbXUTlRcWW", qtd: 70 }
+      ]
+    },
+    {
+      name: "",
+      hour: "",
+      foods: [
+        { id: "11eZpNDmvTgUcIZ8hpCJ", qtd: 80 },
+        { id: "wQriQTgGQTYqBR8dnja8", qtd: 100 },
+        { id: "qdMVUbPd7FXbXUTlRcWW", qtd: 70 }
+      ]
+    }
+  ]
+};
 
 db.collection("diets")
-.add(diets)
-.then(docRef => {
-  console.log(docRef.id);
-})
-.catch(err => {
-  console.log(err);
-});
+  .add(diets)
+  .then(docRef => {
+    console.log(docRef.id);
+  })
+  .catch(err => {
+    console.log(err);
+  });
