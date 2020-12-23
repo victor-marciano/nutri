@@ -1,10 +1,12 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="desserts"
+    :items="trainings"
     class="elevation-0"
     :dense="$vuetify.breakpoint.mobile"
     disable-sort
+    no-data-text="Você ainda não possui nenhum treino cadastrado"
+    no-results-text="Nenhum resultado para sua busca"
     locale="pt-BR"
   >
     <template v-slot:top>
@@ -98,8 +100,8 @@
                     
                     <v-col cols="6">
                      <v-menu
-                      ref="menu1"
-                      v-model="menu1"
+                      ref="menu2"
+                      v-model="menu2"
                       :close-on-content-click="false"
                       transition="scale-transition"
                       offset-y
@@ -171,7 +173,7 @@
                           <div v-for="(exercise, index) in training.exercises" :key="index">
                             <v-row>
                               <v-col cols="8">
-                                <v-select label="Exercício" :items="exercises" item-text="name"></v-select>
+                                <v-select label="Exercício" :items="exercises" item-text="name" item-value="name"></v-select>
                               </v-col>
                               <v-col cols="4">
                                 <v-select label="Série/Repetições" :items="series"></v-select>
@@ -222,7 +224,7 @@
                   <v-btn
                     dark
                     color="orange darken-4"
-                    @click="e6 = 4"
+                    @click="insertTraining"
                   >
                     Finalizar
                   </v-btn>
@@ -235,11 +237,19 @@
         </v-dialog>
       </v-toolbar>
     </template>
+    <template v-slot:item.actions="{ item }">
+      <v-btn dark x-small @click="deleteTraining(item)" color="red">
+        <v-icon small>
+          mdi-delete
+        </v-icon>
+      </v-btn>
+    </template>
   </v-data-table>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import { db } from "../../../firebase";
 
 export default {
   data: () => ({
@@ -258,53 +268,57 @@ export default {
     ],
     e6: 1,
     headers: [
-      {
-        text: "Dessert (100g serving)",
-        align: "start",
-        sortable: false,
-        value: "name",
-      },
-      { text: "Nome", value: "calories" },
-      { text: "Objetivo", value: "fat" },
-      { text: "Início", value: "carbs" },
-      { text: "Término", value: "protein" },
+      { text: "Nome", value: "name" },
+      { text: "Objetivo", value: "objective" },
+      { text: "Início", value: "start" },
+      { text: "Término", value: "finish" },
       { text: "Ações", value: "actions", sortable: false },
     ],
     desserts: [],
     series: [
       '3x10', '4x10', 'Até a falha', '3x15', '5x5', '4x8', '3x8', 'drop-set', 'piramide'
-    ]
+    ],
+    menu1: false,
+    menu2: false
   }),
 
   created() {
-    this.initialize();
     this.$store.dispatch('fetchExercises')
+    this.$store.dispatch('fetchTrainings')
   },
 
   methods: {
-    initialize() {
-      this.desserts = [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-        }
-      ];
-    },
-
     addTraining() {
       this.newTraining.trainings.push({ weekDay: '', exercises: []})
     },
 
     addExercise(index) {
       this.newTraining.trainings[index].exercises.push({})
+    },
+
+    async insertTraining() {
+      let formattedTraining = Object.assign(this.newTraining, { userId: this.user.uid})
+      try {
+        await db.collection('trainings').add(formattedTraining)
+        this.$store.dispatch('fetchTrainings')
+      } catch (error) {
+        console.log(error)
+      } 
+    },
+    
+    async deleteTraining(item) {
+      try {
+        await db.collection('trainings').doc(item.uid).delete()
+        this.$store.dispatch('fetchTrainings')
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
 
   computed: {
     ...mapGetters([
+      'user',
       'trainings',
       'exercises'
     ])

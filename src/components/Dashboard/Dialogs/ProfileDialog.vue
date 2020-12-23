@@ -190,7 +190,7 @@ export default {
       const user = auth.currentUser;
       try {
         await user.sendEmailVerification();
-        console.log("enviou");
+        this.$store.commit('SET_AUTH_USER', user)
       } catch (error) {
         console.log(error);
       }

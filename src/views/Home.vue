@@ -30,7 +30,7 @@
 
       <p class="headline">Dietas populares</p>
       <v-row>
-        <v-col cols="6">
+        <v-col cols="6" v-for="(diet, index) in diets" :key="index">
           <v-card>
             <v-img
               :src="'https://cdn.vuetifyjs.com/images/cards/road.jpg'"
@@ -38,50 +38,14 @@
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
               height="150px"
             >
-              <v-card-title v-text="'Teste'"></v-card-title>
+              <v-card-title>{{ diet.name }}</v-card-title>
             </v-img>
 
             <v-card-actions>
               <v-spacer></v-spacer>
 
               <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-
-              <v-btn icon>
-                <v-icon>mdi-bookmark</v-icon>
-              </v-btn>
-
-              <v-btn icon>
-                <v-icon>mdi-share-variant</v-icon>
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-col>
-        <v-col cols="6">
-          <v-card>
-            <v-img
-              :src="'https://cdn.vuetifyjs.com/images/cards/house.jpg'"
-              class="white--text align-end"
-              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="150px"
-            >
-              <v-card-title v-text="'Teste 2'"></v-card-title>
-            </v-img>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-
-              <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-
-              <v-btn icon>
-                <v-icon>mdi-bookmark</v-icon>
-              </v-btn>
-
-              <v-btn icon>
-                <v-icon>mdi-share-variant</v-icon>
+                <v-icon>mdi-book-plus-multiple-outline</v-icon>
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -134,15 +98,7 @@
               <v-spacer></v-spacer>
 
               <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-
-              <v-btn icon>
-                <v-icon>mdi-bookmark</v-icon>
-              </v-btn>
-
-              <v-btn icon>
-                <v-icon>mdi-share-variant</v-icon>
+                <v-icon>mdi-plus</v-icon>
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -158,8 +114,12 @@ import { mapGetters } from "vuex";
 export default {
   name: "Home",
   components: {},
+  created () {
+    this.$store.dispatch('fetchDiets')
+  },
+
   computed: {
-    ...mapGetters(["user"])
+    ...mapGetters(["user", "diets"])
   }
 };
 </script>
