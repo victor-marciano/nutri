@@ -251,6 +251,8 @@
       </v-toolbar>
     </template>
     <template v-slot:item.actions="{ item }">
+      <TrainingInfo :training="item"></TrainingInfo>
+
       <v-btn dark x-small @click="deleteTraining(item)" color="red">
         <v-icon small>
           mdi-delete
@@ -263,8 +265,13 @@
 <script>
 import { mapGetters } from "vuex";
 import { db } from "../../../firebase";
+const TrainingInfo = () => import('@/components/Dashboard/TrainingInfo.vue')
 
 export default {
+  components: {
+    TrainingInfo
+  },
+
   data: () => ({
     dialog: false,
     dialogDelete: false,
