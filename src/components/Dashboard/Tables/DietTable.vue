@@ -19,7 +19,13 @@
           <span>Atualizar</span>
         </v-tooltip>
 
-        <v-btn id="btnDietRefresh" color="orange darken-4" dark class="mb-2" icon>
+        <v-btn
+          id="btnDietRefresh"
+          color="orange darken-4"
+          dark
+          class="mb-2"
+          icon
+        >
           <v-icon>
             mdi-refresh
           </v-icon>
@@ -33,7 +39,7 @@
             <v-tooltip open-on-hover activator="#btnNewDiet">
               <span>Nova dieta</span>
             </v-tooltip>
-            
+
             <v-btn
               color="orange darken-4"
               dark
@@ -91,28 +97,25 @@
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                          v-model="dateFormatted"
+                          :value="formatedStartDate"
                           label="Início"
-                          hint="MM/DD/YYYY"
-                          persistent-hint
                           prepend-icon="mdi-calendar"
                           v-bind="attrs"
-                          @blur="newDiet.start = parseDate(dateFormatted)"
                           v-on="on"
                         ></v-text-field>
                       </template>
                       <v-date-picker
                         v-model="newDiet.start"
                         no-title
-                        @input="menu1 = false"
+                        @change="menu1 = false"
                       ></v-date-picker>
                     </v-menu>
                   </v-col>
 
                   <v-col cols="6">
                     <v-menu
-                      ref="menu1"
-                      v-model="menu1"
+                      ref="menu2"
+                      v-model="menu2"
                       :close-on-content-click="false"
                       transition="scale-transition"
                       offset-y
@@ -121,20 +124,17 @@
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                          v-model="dateFormatted"
+                          :value="formatedFinishDate"
                           label="Término"
-                          hint="MM/DD/YYYY"
-                          persistent-hint
                           prepend-icon="mdi-calendar"
                           v-bind="attrs"
-                          @blur="newDiet.finish = parseDate(dateFormatted)"
                           v-on="on"
                         ></v-text-field>
                       </template>
                       <v-date-picker
                         v-model="newDiet.finish"
                         no-title
-                        @input="menu1 = false"
+                        @change="menu2 = false"
                       ></v-date-picker>
                     </v-menu>
                   </v-col>
@@ -266,6 +266,7 @@
 
 <script>
 import { db } from "../../../firebase";
+import { moment } from "moment";
 const DietInfo = () => import("@/components/Dashboard/DietInfo.vue");
 
 export default {
@@ -275,6 +276,7 @@ export default {
 
   data: () => ({
     dialog: false,
+    menu1: false,
     menu2: false,
     e6: 1,
     objectives: [
@@ -307,6 +309,16 @@ export default {
 
   created() {
     this.$store.dispatch("fetchDiets");
+  },
+
+  computed: {
+    formatedStartDate() {
+      return this.newDiet.start ? moment(this.newDiet.start).format('DD/MM/YYYY') : null
+    },
+    
+    formatedFinishDate() {
+      return this.newDiet.finish ? moment(this.newDiet.finish).format('DD/MM/YYYY') : null
+    }
   },
 
   methods: {

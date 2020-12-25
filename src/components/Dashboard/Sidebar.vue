@@ -3,7 +3,7 @@
     <v-navigation-drawer
       v-model="sidebar"
       floating
-      :mini-variant.sync="miniSidebar"
+      :mini-variant="miniSidebar"
       app
       dark
       :bottom="$vuetify.breakpoint.mobile"
@@ -24,7 +24,12 @@
       </v-list-item>
 
       <template v-if="$vuetify.breakpoint.mdAndUp" v-slot:prepend>
-        <v-btn icon color="green lighten-2" class="mx-2 mb-5" @click="miniSidebar = !miniSidebar">
+        <v-btn
+          icon
+          color="green lighten-2"
+          class="mx-2 mb-5"
+          @click="miniSidebar = !miniSidebar"
+        >
           <v-icon>mdi-menu</v-icon>
         </v-btn>
       </template>
@@ -51,19 +56,29 @@
 
             <span>Alimentos</span>
           </v-tooltip>
-          
 
-          <v-dialog 
-            v-model="configDialog" 
+          <v-dialog
+            v-model="configDialog"
             :fullscreen="$vuetify.breakpoint.mobile"
             :width="$vuetify.breakpoint.mobile ? '100%' : '500px'"
           >
-            <template v-slot:activator="{ on, attrs }">              
-              <v-tooltip activator="#configListItem" open-on-hover right transition="slide-x-transition">
+            <template v-slot:activator="{ on, attrs }">
+              <v-tooltip
+                activator="#configListItem"
+                open-on-hover
+                right
+                transition="slide-x-transition"
+              >
                 <span>Configurações</span>
               </v-tooltip>
 
-              <v-list-item id="configListItem" class="px-2" ripple v-on="on" v-bind="attrs">
+              <v-list-item
+                id="configListItem"
+                class="px-2"
+                ripple
+                v-on="on"
+                v-bind="attrs"
+              >
                 <v-list-item-icon>
                   <v-icon color="green lighten-2">mdi-cog</v-icon>
                 </v-list-item-icon>
@@ -74,20 +89,20 @@
                 </v-list-item-content>
               </v-list-item>
             </template>
-            
+
             <v-toolbar color="green lighten-3">
               <v-toolbar-title>Configurações</v-toolbar-title>
             </v-toolbar>
-              <v-card>
-                <v-card-text>
-                  Tema
-                  <v-switch v-model="$vuetify.theme.dark">
-                    <template v-slot:label>
-                      Escuro
-                    </template>
-                  </v-switch>
-                </v-card-text>
-              </v-card>
+            <v-card>
+              <v-card-text>
+                Tema
+                <v-switch v-model="$vuetify.theme.dark">
+                  <template v-slot:label>
+                    Escuro
+                  </template>
+                </v-switch>
+              </v-card-text>
+            </v-card>
           </v-dialog>
 
           <v-tooltip open-on-hover right transition="slide-x-transition">
@@ -128,7 +143,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-list-item v-bind="attrs" v-on="on" :to="item.path">
               <v-list-item-icon>
-                <v-icon color="green lighten-2" >{{ item.icon }}</v-icon>
+                <v-icon color="green lighten-2">{{ item.icon }}</v-icon>
               </v-list-item-icon>
 
               <v-list-item-content>
@@ -168,7 +183,7 @@
           <span class="green--text">Treino</span>
           <v-icon size="20" color="green">mdi-weight-lifter</v-icon>
         </v-btn>
-        <v-btn x-small @click="teste">
+        <v-btn x-small @click="sidebar = true">
           <v-icon size="20" color="green">mdi-dots-vertical</v-icon>
         </v-btn>
       </template>
@@ -192,6 +207,7 @@ export default {
   data: () => ({
     sidebar: false,
     miniSidebar: true,
+    configDialog: false,
     items: [
       { title: "Inicio", icon: "mdi-home", path: "/dashboard/home" },
       {

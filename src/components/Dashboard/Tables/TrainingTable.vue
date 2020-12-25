@@ -5,6 +5,8 @@
     class="elevation-0"
     :dense="$vuetify.breakpoint.mobile"
     disable-sort
+    :loading="loading"
+    loading-text="Carregando seus treinos... aguarde!"
     no-data-text="Você ainda não possui nenhum treino cadastrado"
     no-results-text="Nenhum resultado para sua busca"
     locale="pt-BR"
@@ -20,7 +22,14 @@
           <span>Atualizar</span>
         </v-tooltip>
 
-        <v-btn id="btnTrainingRefresh" color="orange darken-4" dark class="mb-2" icon>
+        <v-btn
+          id="btnTrainingRefresh"
+          color="orange darken-4"
+          dark
+          class="mb-2"
+          icon
+          @click="updateTable"
+        >
           <v-icon>
             mdi-refresh
           </v-icon>
@@ -92,20 +101,18 @@
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                          v-model="dateFormatted"
+                          :value="formatedStartDate"
                           label="Início"
-                          hint="MM/DD/YYYY"
-                          persistent-hint
                           prepend-icon="mdi-calendar"
                           v-bind="attrs"
-                          @blur="newTraining.start = parseDate(dateFormatted)"
                           v-on="on"
                         ></v-text-field>
                       </template>
                       <v-date-picker
                         v-model="newTraining.start"
                         no-title
-                        @input="menu1 = false"
+                        @change="menu1 = false"
+                        locale="pt-br"
                       ></v-date-picker>
                     </v-menu>
                   </v-col>
@@ -122,20 +129,18 @@
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                          v-model="dateFormatted"
+                          :value="formatedFinishDate"
                           label="Término"
-                          hint="MM/DD/YYYY"
-                          persistent-hint
                           prepend-icon="mdi-calendar"
                           v-bind="attrs"
-                          @blur="newTraining.finish = parseDate(dateFormatted)"
                           v-on="on"
                         ></v-text-field>
                       </template>
                       <v-date-picker
                         v-model="newTraining.finish"
                         no-title
-                        @input="menu1 = false"
+                        @change="menu2 = false"
+                        locale="pt-br"
                       ></v-date-picker>
                     </v-menu>
                   </v-col>
@@ -277,6 +282,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { db } from "../../../firebase";
+import moment from "../../../date";
 const TrainingInfo = () => import("@/components/Dashboard/TrainingInfo.vue");
 
 export default {
@@ -287,6 +293,9 @@ export default {
   data: () => ({
     dialog: false,
     dialogDelete: false,
+    loading: false,
+    startDate: null,
+    finishDate: null,
     newTraining: {
       name: "",
       objective: "",
@@ -353,6 +362,7 @@ export default {
       });
       try {
         await db.collection("trainings").add(formattedTraining);
+        this.dialog = false;
         this.$store.dispatch("fetchTrainings");
       } catch (error) {
         console.log(error);
@@ -369,11 +379,30 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+
+    async updateTable() {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+      }, 2000);
     }
   },
 
   computed: {
-    ...mapGetters(["user", "trainings", "exercises"])
+    ...mapGetters(["user", "trainings", "exercises"]),
+
+    formatedStartDate() {
+      return this.newTraining.start
+        ? moment(this.newTraining.start).format("DD/MM/YYYY")
+        : null;
+    },
+
+    formatedFinishDate() {
+      return this.newTraining.finish
+        ? moment(this.newTraining.finish).format("DD/MM/YYYY")
+        : null;
+    }
   }
 };
 </script>
