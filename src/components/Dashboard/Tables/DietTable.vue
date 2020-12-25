@@ -15,13 +15,25 @@
 
         <v-spacer></v-spacer>
 
-        <v-btn color="orange darken-4" dark class="mb-2" icon>
+        <v-tooltip open-on-hover activator="#btnDietRefresh">
+          <span>Atualizar</span>
+        </v-tooltip>
+
+        <v-btn id="btnDietRefresh" color="orange darken-4" dark class="mb-2" icon>
           <v-icon>
             mdi-refresh
           </v-icon>
         </v-btn>
-        <v-dialog v-model="dialog" :fullscreen="$vuetify.breakpoint.mobile">
+        <v-dialog
+          v-model="dialog"
+          :width="$vuetify.breakpoint.mobile ? '100%' : '500px'"
+          :fullscreen="$vuetify.breakpoint.mobile"
+        >
           <template v-slot:activator="{ on, attrs }">
+            <v-tooltip open-on-hover activator="#btnNewDiet">
+              <span>Nova dieta</span>
+            </v-tooltip>
+            
             <v-btn
               color="orange darken-4"
               dark
@@ -29,6 +41,7 @@
               v-bind="attrs"
               v-on="on"
               icon
+              id="btnNewDiet"
             >
               <v-icon>
                 mdi-plus
@@ -253,7 +266,7 @@
 
 <script>
 import { db } from "../../../firebase";
-const DietInfo = () => import('@/components/Dashboard/DietInfo.vue')
+const DietInfo = () => import("@/components/Dashboard/DietInfo.vue");
 
 export default {
   components: {
@@ -264,6 +277,13 @@ export default {
     dialog: false,
     menu2: false,
     e6: 1,
+    objectives: [
+      "Hipertrofia",
+      "Emagrecimento",
+      "Condicionamento",
+      "Resistência"
+    ],
+
     headers: [
       {
         text: "Dessert (100g serving)",

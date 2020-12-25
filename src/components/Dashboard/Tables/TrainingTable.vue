@@ -16,13 +16,24 @@
 
         <v-spacer></v-spacer>
 
-        <v-btn color="orange darken-4" dark class="mb-2" icon>
+        <v-tooltip open-on-hover activator="#btnTrainingRefresh">
+          <span>Atualizar</span>
+        </v-tooltip>
+
+        <v-btn id="btnTrainingRefresh" color="orange darken-4" dark class="mb-2" icon>
           <v-icon>
             mdi-refresh
           </v-icon>
         </v-btn>
-        <v-dialog v-model="dialog" :fullscreen="$vuetify.breakpoint.mobile">
+        <v-dialog
+          v-model="dialog"
+          :fullscreen="$vuetify.breakpoint.mobile"
+          :width="$vuetify.breakpoint.mobile ? '100%' : '500px'"
+        >
           <template v-slot:activator="{ on, attrs }">
+            <v-tooltip open-on-hover activator="#btnPlusTraining">
+              <span>Novo treino</span>
+            </v-tooltip>
             <v-btn
               color="orange darken-4"
               dark
@@ -30,6 +41,7 @@
               v-bind="attrs"
               v-on="on"
               icon
+              id="btnPlusTraining"
             >
               <v-icon>
                 mdi-plus
@@ -265,7 +277,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { db } from "../../../firebase";
-const TrainingInfo = () => import('@/components/Dashboard/TrainingInfo.vue')
+const TrainingInfo = () => import("@/components/Dashboard/TrainingInfo.vue");
 
 export default {
   components: {

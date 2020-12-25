@@ -1,9 +1,13 @@
 <template>
   <div>
-    <v-card flat color="transparent">
+    <v-card flat :color="$vuetify.breakpoint.mobile ? 'transparent' : 'white'">
       <v-card-title class="d-flex justify-space-between">
         TMB(Taxa metabólica basal)
-        <v-dialog v-model="dialog" :fullscreen="$vuetify.breakpoint.mobile">
+        <v-dialog
+          v-if="$vuetify.breakpoint.mobile"
+          v-model="dialog"
+          :fullscreen="$vuetify.breakpoint.mobile"
+        >
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-on="on"
@@ -26,7 +30,7 @@
 
             <v-card-text class="text--secondary">
               <p>
-                Taxa metabólica basal(TMB) é um meio/forma matemático, não
+                Taxa metabólica basal(TMB) é um meio/formulá matemática, não
                 exato, de calcular a quantidade calórica que o corpo necessita,
                 em vinte e quatro horas, para manter-se nutrido durante o
                 decorrer das atividades diárias, e/ou fazendo um jejum de pelo

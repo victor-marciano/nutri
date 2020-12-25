@@ -55,7 +55,7 @@
             cols="12"
             sm="6"
             md="4"
-            lg="3"
+            lg="4"
           >
             <v-expansion-panels>
               <v-expansion-panel>
@@ -215,6 +215,10 @@ export default {
   },
 
   created() {
+    if (!this.$vuetify.breakpoint.mobile) {
+      this.foodsPerPage = 21;
+    }
+
     this.$store.dispatch("fetchFood");
   },
 

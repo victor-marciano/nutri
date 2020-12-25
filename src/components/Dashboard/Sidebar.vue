@@ -5,7 +5,7 @@
       floating
       :mini-variant="$vuetify.breakpoint.mdAndUp"
       app
-      light
+      dark
       :bottom="$vuetify.breakpoint.mobile"
       dense
     >
@@ -23,44 +23,116 @@
         <ProfileDialog></ProfileDialog>
       </v-list-item>
 
-      <v-list flat>
-        <v-subheader>Opções</v-subheader>
-        <v-list-item class="px-2" ripple to="/dashboard/alimentos">
-          <v-list-item-icon>
-            <v-icon>mdi-fruit-cherries</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title v-text="'Alimentos'"></v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item class="px-2" ripple>
-          <v-list-item-icon>
-            <v-icon>mdi-cog</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title v-text="'Configurações'"></v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item class="px-2" @click="logout" ripple>
-          <v-list-item-icon>
-            <v-icon>mdi-logout</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title v-text="'Sair da conta'"></v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+      <template v-slot:append>
+        <v-list :dense="$vuetify.breakpoint.mdAndUp" class="px-2">
+          <v-tooltip open-on-hover right transition="slide-x-transition">
+            <template v-slot:activator="{ on, attrs }">
+              <v-list-item
+                class="px-2"
+                ripple
+                to="/dashboard/alimentos"
+                v-on="on"
+                v-bind="attrs"
+              >
+                <v-list-item-icon>
+                  <v-icon color="green lighten-2">mdi-fruit-cherries</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title v-text="'Alimentos'"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </template>
 
-      <v-list v-if="!$vuetify.breakpoint.mobile">
-        <v-list-item v-for="item in items" :key="item.title" :to="item.path">
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
+            <span>Alimentos</span>
+          </v-tooltip>
+          
 
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+          <v-dialog 
+            v-model="configDialog" 
+            :fullscreen="$vuetify.breakpoint.mobile"
+            :width="$vuetify.breakpoint.mobile ? '100%' : '500px'"
+          >
+            <template v-slot:activator="{ on, attrs }">              
+              <v-tooltip activator="#configListItem" open-on-hover right transition="slide-x-transition">
+                <span>Configurações</span>
+              </v-tooltip>
+
+              <v-list-item id="configListItem" class="px-2" ripple v-on="on" v-bind="attrs">
+                <v-list-item-icon>
+                  <v-icon color="green lighten-2">mdi-cog</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title
+                    v-text="'Configurações'"
+                  ></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </template>
+            
+            <v-toolbar color="green lighten-3">
+              <v-toolbar-title>Configurações</v-toolbar-title>
+            </v-toolbar>
+              <v-card>
+                <v-card-text>
+                  Tema
+                  <v-switch v-model="$vuetify.theme.dark">
+                    <template v-slot:label>
+                      Escuro
+                    </template>
+                  </v-switch>
+                </v-card-text>
+              </v-card>
+          </v-dialog>
+
+          <v-tooltip open-on-hover right transition="slide-x-transition">
+            <template v-slot:activator="{ on, attrs }">
+              <v-list-item
+                class="px-2"
+                @click="logout"
+                ripple
+                v-on="on"
+                v-bind="attrs"
+              >
+                <v-list-item-icon>
+                  <v-icon color="green lighten-2">mdi-logout</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title
+                    v-text="'Sair da conta'"
+                  ></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </template>
+            <span>Sair da conta</span>
+          </v-tooltip>
+        </v-list>
+      </template>
+
+      <v-list
+        v-if="!$vuetify.breakpoint.mobile"
+        :dense="$vuetify.breakpoint.mdAndUp"
+      >
+        <v-tooltip
+          open-on-hover
+          right
+          transition="slide-x-transition"
+          v-for="item in items"
+          :key="item.name"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-list-item v-bind="attrs" v-on="on" :to="item.path">
+              <v-list-item-icon>
+                <v-icon color="green lighten-2" >{{ item.icon }}</v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+
+          <span>{{ item.title }}</span>
+        </v-tooltip>
       </v-list>
     </v-navigation-drawer>
 
@@ -128,6 +200,12 @@ export default {
       }
     ]
   }),
+
+  created() {
+    if (this.$vuetify.breakpoint.mdAndUp) {
+      this.sidebar = true;
+    }
+  },
 
   methods: {
     teste() {

@@ -29,8 +29,9 @@
       <v-divider class="py-3"></v-divider>
 
       <p class="headline">Dietas populares</p>
+
       <v-row>
-        <v-col cols="6" v-for="(diet, index) in diets" :key="index">
+        <v-col cols="6" md="3" v-for="(diet, index) in diets" :key="index">
           <v-card>
             <v-img
               :src="'https://cdn.vuetifyjs.com/images/cards/road.jpg'"
@@ -45,7 +46,7 @@
               <v-spacer></v-spacer>
 
               <DietInfo :diet="diet" system></DietInfo>
-              
+
               <v-btn icon>
                 <v-icon>mdi-book-plus-multiple-outline</v-icon>
               </v-btn>
@@ -57,7 +58,7 @@
 
       <p class="headline">Treinos populares</p>
       <v-row>
-        <v-col cols="6">
+        <v-col cols="6" md="3">
           <v-card>
             <v-img
               :src="'https://cdn.vuetifyjs.com/images/cards/road.jpg'"
@@ -85,7 +86,8 @@
             </v-card-actions>
           </v-card>
         </v-col>
-        <v-col cols="6">
+
+        <v-col cols="6" md="3">
           <v-card>
             <v-img
               :src="'https://cdn.vuetifyjs.com/images/cards/house.jpg'"
@@ -112,7 +114,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-const DietInfo = () => import('@/components/Dashboard/DietInfo.vue')
+const DietInfo = () => import("@/components/Dashboard/DietInfo.vue");
 
 export default {
   name: "Home",
