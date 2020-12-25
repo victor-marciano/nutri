@@ -3,7 +3,7 @@
     <v-navigation-drawer
       v-model="sidebar"
       floating
-      :mini-variant="$vuetify.breakpoint.mdAndUp"
+      :mini-variant.sync="miniSidebar"
       app
       dark
       :bottom="$vuetify.breakpoint.mobile"
@@ -22,6 +22,12 @@
 
         <ProfileDialog></ProfileDialog>
       </v-list-item>
+
+      <template v-if="$vuetify.breakpoint.mdAndUp" v-slot:prepend>
+        <v-btn icon color="green lighten-2" class="mx-2 mb-5" @click="miniSidebar = !miniSidebar">
+          <v-icon>mdi-menu</v-icon>
+        </v-btn>
+      </template>
 
       <template v-slot:append>
         <v-list :dense="$vuetify.breakpoint.mdAndUp" class="px-2">
@@ -185,6 +191,7 @@ export default {
 
   data: () => ({
     sidebar: false,
+    miniSidebar: true,
     items: [
       { title: "Inicio", icon: "mdi-home", path: "/dashboard/home" },
       {
@@ -208,10 +215,6 @@ export default {
   },
 
   methods: {
-    teste() {
-      this.sidebar = true;
-    },
-
     async logout() {
       try {
         await auth.signOut();
