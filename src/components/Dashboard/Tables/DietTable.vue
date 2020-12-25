@@ -170,18 +170,11 @@
                   <v-container>
                     <v-row>
                       <small class="text-center"
-                        >Preencha as informações deste treino</small
+                        >Preencha as informações desta refeição</small
                       >
                       <v-col cols="12">
-                        <v-select
-                          label="Dia da semana"
-                          :items="weekDays"
-                          v-model="meal.weekDay"
-                        ></v-select>
-                      </v-col>
-                      <v-col cols="12">
                         <div class="d-flex justify-space-between">
-                          <p class="subtitle">Exercícios</p>
+                          <p class="subtitle">Refeição</p>
                           <v-btn icon x-small @click="addFood(index)">
                             <v-icon>mdi-plus</v-icon>
                           </v-btn>
@@ -190,13 +183,18 @@
                           <v-row>
                             <v-col cols="8">
                               <v-select
+                                v-model="food.name"
                                 label="Exercício"
                                 :items="foods"
                                 item-text="name"
+                                cache-items
                               ></v-select>
                             </v-col>
                             <v-col cols="4">
-                              <v-text-field placeholder="Qtd(g)"></v-text-field>
+                              <v-text-field
+                                placeholder="Qtd(g)"
+                                v-model="food.qtd"
+                              ></v-text-field>
                             </v-col>
                           </v-row>
                         </div>
@@ -223,23 +221,9 @@
 
               <v-stepper-content step="3">
                 <small>Confira se está tudo certo com sua dieta</small>
-                <v-row>
-                  <v-col cols="12">
-                    <v-expansion-panels multiple>
-                      <v-expansion-panel
-                        v-for="(meal, index) in newDiet.meals"
-                        :key="index"
-                      >
-                        <v-expansion-panel-header>{{
-                          meal.weekDay
-                        }}</v-expansion-panel-header>
-                        <v-expansion-panel-content>
-                          Some content
-                        </v-expansion-panel-content>
-                      </v-expansion-panel>
-                    </v-expansion-panels>
-                  </v-col>
-                </v-row>
+
+                <DietInfo :diet="newDiet"></DietInfo>
+
                 <v-btn dark color="orange darken-4" @click="e6 = 4">
                   Finalizar
                 </v-btn>
@@ -253,7 +237,7 @@
       </v-toolbar>
     </template>
     <template v-slot:item.actions="{ item }">
-      <DietInfo :diet="item"></DietInfo>
+      <DietInfo :diet="newDiet"></DietInfo>
 
       <v-btn dark x-small @click="deleteTraining(item)" color="red">
         <v-icon small>
@@ -267,6 +251,7 @@
 <script>
 import { db } from "../../../firebase";
 import { moment } from "moment";
+import { mapGetters } from 'vuex';
 const DietInfo = () => import("@/components/Dashboard/DietInfo.vue");
 
 export default {
@@ -300,24 +285,35 @@ export default {
       { text: "Actions", value: "actions", sortable: false }
     ],
     desserts: [],
-    newDiet: [
-      {
-        meals: [{ name: "", time: null, foods: [] }]
-      }
-    ]
+    newDiet: {
+      name: "",
+      objective: "",
+      start: null,
+      finish: null,
+      meals: [{ name: "", time: null, foods: [{ name: "", qtd: 0 }] }]
+    }
   }),
 
   created() {
     this.$store.dispatch("fetchDiets");
+    this.$store.dispatch("fetchFood");
   },
 
   computed: {
+    ...mapGetters([
+      'foods'
+    ]),
+
     formatedStartDate() {
-      return this.newDiet.start ? moment(this.newDiet.start).format('DD/MM/YYYY') : null
+      return this.newDiet.start
+        ? moment(this.newDiet.start).format("DD/MM/YYYY")
+        : null;
     },
-    
+
     formatedFinishDate() {
-      return this.newDiet.finish ? moment(this.newDiet.finish).format('DD/MM/YYYY') : null
+      return this.newDiet.finish
+        ? moment(this.newDiet.finish).format("DD/MM/YYYY")
+        : null;
     }
   },
 

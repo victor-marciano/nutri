@@ -59,7 +59,12 @@
       <p class="headline">Treinos populares</p>
 
       <v-row>
-        <v-col cols="6" md="3" v-for="(training, index) in trainings" :key="index">
+        <v-col
+          cols="6"
+          md="3"
+          v-for="(training, index) in trainings"
+          :key="index"
+        >
           <v-card>
             <v-img
               :src="'https://cdn.vuetifyjs.com/images/cards/road.jpg'"
@@ -74,7 +79,6 @@
               <v-spacer></v-spacer>
 
               <TrainingInfo :training="training" system></TrainingInfo>
-              
             </v-card-actions>
           </v-card>
         </v-col>

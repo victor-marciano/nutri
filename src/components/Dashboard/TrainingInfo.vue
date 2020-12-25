@@ -1,18 +1,24 @@
 <template>
   <v-dialog v-model="dialog" :fullscreen="$vuetify.breakpoint.mobile">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn icon v-on="on" v-bind="attrs">
+      <v-btn x-small color="info" v-on="on" v-bind="attrs" class="mr-1">
         <v-icon>mdi-information-variant</v-icon>
       </v-btn>
     </template>
 
     <v-card color="white">
-      <v-card-title>{{ training.name }}</v-card-title>
+      <v-card-title>
+        {{ training.name }}
+
+        <v-spacer></v-spacer>
+
+        <v-icon @click="dialog = false">mdi-close</v-icon>
+      </v-card-title>
 
       <v-card-text>
         <p>Objetivo: {{ training.objective }}</p>
-        <div v-for="training in training.trainings" :key="training.name">
-          <h5>{{ training.weekDay }}</h5>
+        <div v-for="(series, index) in training.trainings" :key="index">
+          <h5>{{ series.weekDay }}</h5>
 
           <v-simple-table>
             <template v-slot:default>
@@ -27,7 +33,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="exercise in training.exercises" :key="exercise.name">
+                <tr v-for="exercise in series.exercises" :key="exercise.name">
                   <td>{{ exercise.name }}</td>
                   <td>{{ exercise.series }}</td>
                 </tr>

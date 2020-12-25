@@ -199,6 +199,7 @@
                           <v-row>
                             <v-col cols="8">
                               <v-select
+                                v-model="exercise.name"
                                 label="Exercício"
                                 :items="exercises"
                                 item-text="name"
@@ -207,6 +208,7 @@
                             </v-col>
                             <v-col cols="4">
                               <v-select
+                                v-model="exercise.series"
                                 label="Série/Repetições"
                                 :items="series"
                               ></v-select>
@@ -301,7 +303,7 @@ export default {
       objective: "",
       start: null,
       finish: null,
-      trainings: [{ weekDay: "", exercises: [] }]
+      trainings: [{ weekDay: "", exercises: [{ name: "", series: "" }] }]
     },
     objectives: [
       "Hipertrofia",

@@ -76,7 +76,7 @@ export default {
   }),
 
   created() {
-    console.log(this.diet)
+    console.log(this.diet);
   }
 };
 </script>
