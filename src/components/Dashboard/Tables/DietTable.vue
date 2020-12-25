@@ -322,7 +322,7 @@ export default {
   },
 
   methods: {
-    addMeals() {
+    addMeal() {
       this.newDiet.meals.push({ name: "", time: null, foods: [] });
     },
 

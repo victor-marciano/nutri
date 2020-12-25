@@ -57,8 +57,9 @@
       <v-divider class="py-3"></v-divider>
 
       <p class="headline">Treinos populares</p>
+
       <v-row>
-        <v-col cols="6" md="3">
+        <v-col cols="6" md="3" v-for="(training, index) in trainings" :key="index">
           <v-card>
             <v-img
               :src="'https://cdn.vuetifyjs.com/images/cards/road.jpg'"
@@ -66,44 +67,14 @@
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
               height="150px"
             >
-              <v-card-title v-text="'Teste'"></v-card-title>
+              <v-card-title>{{ training.name }}</v-card-title>
             </v-img>
 
             <v-card-actions>
               <v-spacer></v-spacer>
 
-              <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-
-              <v-btn icon>
-                <v-icon>mdi-bookmark</v-icon>
-              </v-btn>
-
-              <v-btn icon>
-                <v-icon>mdi-share-variant</v-icon>
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-col>
-
-        <v-col cols="6" md="3">
-          <v-card>
-            <v-img
-              :src="'https://cdn.vuetifyjs.com/images/cards/house.jpg'"
-              class="white--text align-end"
-              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-              height="150px"
-            >
-              <v-card-title v-text="'Teste 2'"></v-card-title>
-            </v-img>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-
-              <v-btn icon>
-                <v-icon>mdi-plus</v-icon>
-              </v-btn>
+              <TrainingInfo :training="training" system></TrainingInfo>
+              
             </v-card-actions>
           </v-card>
         </v-col>
@@ -115,18 +86,22 @@
 <script>
 import { mapGetters } from "vuex";
 const DietInfo = () => import("@/components/Dashboard/DietInfo.vue");
+const TrainingInfo = () => import("@/components/Dashboard/TrainingInfo.vue");
 
 export default {
   name: "Home",
   components: {
-    DietInfo
+    DietInfo,
+    TrainingInfo
   },
+
   created() {
     this.$store.dispatch("fetchDiets");
+    this.$store.dispatch("fetchTrainings");
   },
 
   computed: {
-    ...mapGetters(["user", "diets"])
+    ...mapGetters(["user", "diets", "trainings"])
   }
 };
 </script>

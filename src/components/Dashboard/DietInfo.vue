@@ -10,7 +10,7 @@
       <v-card-title>{{ diet.name }}</v-card-title>
 
       <v-card-text>
-        <div v-for="meal in diet.meals" :key="meal.name">
+        <div v-for="(meal, index) in diet.meals" :key="index">
           <h5>{{ meal.name }} - {{ meal.time }}</h5>
 
           <v-simple-table dense>
@@ -73,7 +73,11 @@ export default {
 
   data: () => ({
     dialog: false
-  })
+  }),
+
+  created() {
+    console.log(this.diet)
+  }
 };
 </script>
 
