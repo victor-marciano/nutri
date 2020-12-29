@@ -9,18 +9,20 @@
       :bottom="$vuetify.breakpoint.mobile"
       dense
     >
-      <v-list-item class="px-2">
+      <v-list-item class="px-2" @click.stop="profileDialog = true">
         <v-list-item-avatar>
           <v-img
             :src="user.photoURL || require('../../assets/user.png')"
           ></v-img>
         </v-list-item-avatar>
 
-        <v-list-item-title>{{ user.displayName }}</v-list-item-title>
+        <v-list-item-title>{{ user.displayName }}</v-list-item-title><br>
+        
+        <v-list-item-subtitle v-if="$vuetify.breakpoint.mobile">{{ user.email }}</v-list-item-subtitle>
 
         <v-spacer></v-spacer>
 
-        <ProfileDialog></ProfileDialog>
+        <ProfileDialog :show="profileDialog" @close="profileDialog = false"></ProfileDialog>
       </v-list-item>
 
       <template v-if="$vuetify.breakpoint.mdAndUp" v-slot:prepend>
@@ -208,6 +210,7 @@ export default {
     sidebar: false,
     miniSidebar: true,
     configDialog: false,
+    profileDialog: false,
     items: [
       { title: "Inicio", icon: "mdi-home", path: "/dashboard/home" },
       {

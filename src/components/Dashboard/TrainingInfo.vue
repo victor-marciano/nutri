@@ -1,7 +1,11 @@
 <template>
   <v-dialog v-model="dialog" :fullscreen="$vuetify.breakpoint.mobile">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn x-small color="info" v-on="on" v-bind="attrs" class="mr-1">
+      <v-tooltip open-on-hover top activator=".trainingInfo">
+        <span>Detalhes</span>
+      </v-tooltip>
+
+      <v-btn x-small color="info" v-on="on" v-bind="attrs" class="trainingInfo mr-1">
         <v-icon>mdi-information-variant</v-icon>
       </v-btn>
     </template>
@@ -63,7 +67,8 @@ export default {
   name: "TrainingInfo",
   props: {
     training: Object,
-    system: Boolean
+    system: Boolean,
+    id: String
   },
 
   data: () => ({

@@ -14,18 +14,14 @@
     <v-row justify="center">
       <v-dialog
         v-model="dialog"
-        fullscreen
+        :fullscreen="$vuetify.breakpoint.mobile"
         hide-overlay
         transition="dialog-bottom-transition"
+        :width="$vuetify.breakpoint.mobile ? '100%' : '500px'"
       >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn color="green lighten-2" v-bind="attrs" v-on="on" text small>
-            Editar perfil
-          </v-btn>
-        </template>
         <v-card>
           <v-toolbar dark color="green lighten-3">
-            <v-btn icon dark @click="dialog = false">
+            <v-btn icon dark @click.stop="closeDialog">
               <v-icon>mdi-arrow-left</v-icon>
             </v-btn>
             <v-toolbar-title>Perfil</v-toolbar-title>
@@ -166,8 +162,9 @@ export default {
     VImageInput
   },
 
+  props: ['show'],
+
   data: () => ({
-    dialog: false,
     removeDialog: false,
     photoDialog: false,
     profilePhoto: null,
@@ -176,9 +173,12 @@ export default {
   }),
 
   methods: {
+    closeDialog() {
+      this.$emit('close')
+    },
+
     async resetPassword() {
       const user = auth.currentUser;
-      console.log(user.email);
       try {
         await auth.sendPasswordResetEmail(user.email);
       } catch (error) {
@@ -232,7 +232,18 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["user"])
+    ...mapGetters(["user"]),
+
+    dialog: {
+      get() {
+        return this.show
+      },
+      set(value) {
+        if (!value) {
+          this.$emit('close')
+        }
+      }
+    }
   }
 };
 </script>

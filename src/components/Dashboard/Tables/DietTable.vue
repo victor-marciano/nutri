@@ -244,6 +244,28 @@
           mdi-delete
         </v-icon>
       </v-btn>
+      
+      <v-tooltip open-on-hover top>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-on="on" v-bind="attrs" dark x-small @click="deleteTraining(item)" color="red">
+            <v-icon small>
+              mdi-marker-check
+            </v-icon>
+          </v-btn>
+        </template>
+        <span>Dieta Ativa</span>
+      </v-tooltip>
+
+      <v-tooltip open-on-hover top>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-on="on" v-bind="attrs" dark x-small @click="deleteTraining(item)" color="red">
+            <v-icon small>
+              mdi-delete
+            </v-icon>
+          </v-btn>
+        </template>
+        <span>Remover</span>
+      </v-tooltip>
     </template>
   </v-data-table>
 </template>

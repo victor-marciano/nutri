@@ -270,13 +270,20 @@
       </v-toolbar>
     </template>
     <template v-slot:item.actions="{ item }">
-      <TrainingInfo :training="item"></TrainingInfo>
+      
+      <TrainingInfo id="trainigInfo" :training="item"></TrainingInfo>
 
-      <v-btn dark x-small @click="deleteTraining(item)" color="red">
-        <v-icon small>
-          mdi-delete
-        </v-icon>
-      </v-btn>
+      <v-tooltip open-on-hover top>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-on="on" v-bind="attrs" dark x-small @click="deleteTraining(item)" color="red">
+            <v-icon small>
+              mdi-delete
+            </v-icon>
+          </v-btn>
+        </template>
+        <span>Remover</span>
+      </v-tooltip>
+
     </template>
   </v-data-table>
 </template>
