@@ -13,7 +13,9 @@
     <Sidebar></Sidebar>
 
     <v-fade-transition>
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </v-fade-transition>
   </div>
 </template>
@@ -35,6 +37,12 @@ export default {
     setTimeout(() => {
       this.overlay = false;
     }, 2500);
+  },
+
+  created() {
+    this.$store.dispatch("fetchFood");
+    this.$store.dispatch("fetchDiets");
+    this.$store.dispatch("fetchTrainings");
   }
 };
 </script>

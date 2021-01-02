@@ -1,4 +1,5 @@
 import { db } from "../firebase";
+import moment from "../date";
 
 const trainingModule = {
   state: {
@@ -48,7 +49,12 @@ const trainingModule = {
 
   getters: {
     trainings: state => state.trainings,
-    exercises: state => state.exercises
+    exercises: state => state.exercises,
+    activeTraining: (state, getters) =>  { 
+      let activeTraining = getters.trainings.find(training => training.active) 
+      activeTraining = Object.assign(activeTraining, { remaining: moment(activeTraining.finish).fromNow()})
+      return activeTraining
+    }
   }
 };
 

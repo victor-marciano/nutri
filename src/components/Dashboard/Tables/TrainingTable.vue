@@ -270,7 +270,12 @@
       </v-toolbar>
     </template>
     <template v-slot:item.actions="{ item }">
-      
+      <v-btn dark x-small color="success" class="mx-1" :disabled="item.active">
+        <v-icon small>
+          mdi-check-circle
+        </v-icon>
+      </v-btn>
+
       <TrainingInfo id="trainigInfo" :training="item"></TrainingInfo>
 
       <v-tooltip open-on-hover top>
@@ -283,7 +288,6 @@
         </template>
         <span>Remover</span>
       </v-tooltip>
-
     </template>
   </v-data-table>
 </template>
@@ -350,11 +354,6 @@ export default {
     menu1: false,
     menu2: false
   }),
-
-  created() {
-    this.$store.dispatch("fetchExercises");
-    this.$store.dispatch("fetchTrainings");
-  },
 
   methods: {
     addTraining() {

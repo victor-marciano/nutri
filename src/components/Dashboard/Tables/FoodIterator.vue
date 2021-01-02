@@ -218,8 +218,6 @@ export default {
     if (!this.$vuetify.breakpoint.mobile) {
       this.foodsPerPage = 21;
     }
-
-    this.$store.dispatch("fetchFood");
   },
 
   mounted() {

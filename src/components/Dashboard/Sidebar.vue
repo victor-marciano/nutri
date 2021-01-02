@@ -5,7 +5,6 @@
       floating
       :mini-variant="miniSidebar"
       app
-      dark
       :bottom="$vuetify.breakpoint.mobile"
       dense
     >
@@ -16,7 +15,7 @@
           ></v-img>
         </v-list-item-avatar>
 
-        <v-list-item-title>{{ user.displayName }}</v-list-item-title><br>
+        <v-list-item-title>{{ user.displayName }}</v-list-item-title>
         
         <v-list-item-subtitle v-if="$vuetify.breakpoint.mobile">{{ user.email }}</v-list-item-subtitle>
 

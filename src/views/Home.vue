@@ -1,13 +1,9 @@
 <template>
   <div class="home">
     <v-container>
-      <p class="title">Bem vindo {{ user.displayName }}.</p>
-      <p class="subtitle">
-        Acompanhe seu progresso e o andamento das suas dietas e treinos.
-      </p>
       <v-row>
         <v-col cols="12" md="6">
-          <v-card color="orange darken-4" dark>
+          <v-card>
             <v-card-title class="headline">
               Sua dieta atual
             </v-card-title>
@@ -22,6 +18,41 @@
                 Criar dieta
               </v-btn>
             </v-card-actions>
+          </v-card>
+        </v-col>
+        <v-col>          
+          <v-card>
+            <v-card-title class="headline">
+              Seu treino atual
+            </v-card-title>
+
+            <div v-if="!activeTraining">
+              <v-card-subtitle>
+                Você não possui nenhuma dieta ativa, crie ja a sua!
+              </v-card-subtitle>
+
+              <v-card-actions>
+                <v-btn text>
+                  Criar dieta
+                </v-btn>
+              </v-card-actions>
+            </div>
+            
+            <div v-else>
+              <v-card-text>
+                <p v-text="activeTraining.name"></p>
+                <p></p>
+                <p></p>
+              </v-card-text>
+
+              <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-icon>
+                    mdi-clock
+                  </v-icon>
+                  <small class="text--secondary mx-2">Plano de treino se encerra {{ activeTraining.remaining }}</small>
+              </v-card-actions>
+            </div>
           </v-card>
         </v-col>
       </v-row>
@@ -98,14 +129,9 @@ export default {
     DietInfo,
     TrainingInfo
   },
-
-  created() {
-    this.$store.dispatch("fetchDiets");
-    this.$store.dispatch("fetchTrainings");
-  },
-
+  
   computed: {
-    ...mapGetters(["user", "diets", "trainings"])
+    ...mapGetters(["user", "diets", "trainings", "activeTraining"])
   }
 };
 </script>
