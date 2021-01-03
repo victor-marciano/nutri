@@ -162,7 +162,7 @@ export default {
     VImageInput
   },
 
-  props: ['show'],
+  props: ["show"],
 
   data: () => ({
     removeDialog: false,
@@ -174,7 +174,7 @@ export default {
 
   methods: {
     closeDialog() {
-      this.$emit('close')
+      this.$emit("close");
     },
 
     async resetPassword() {
@@ -236,11 +236,11 @@ export default {
 
     dialog: {
       get() {
-        return this.show
+        return this.show;
       },
       set(value) {
         if (!value) {
-          this.$emit('close')
+          this.$emit("close");
         }
       }
     }

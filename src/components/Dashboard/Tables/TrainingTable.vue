@@ -270,17 +270,47 @@
       </v-toolbar>
     </template>
     <template v-slot:item.actions="{ item }">
-      <v-btn dark x-small color="success" class="mx-1" :disabled="item.active">
-        <v-icon small>
-          mdi-check-circle
-        </v-icon>
-      </v-btn>
+      <v-dialog>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            v-on="on"
+            v-bind="attrs"
+            dark
+            x-small
+            color="success"
+            class="mx-1"
+            :disabled="item.active"
+          >
+            <v-icon small>
+              mdi-check-circle
+            </v-icon>
+          </v-btn>
+        </template>
+
+        <v-card>
+          <v-card-title
+            >Você gostaria de trocar para {{ item.name }}</v-card-title
+          >
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn>Não</v-btn>
+            <v-btn @click="setActiveTraining(item)">Sim</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
       <TrainingInfo id="trainigInfo" :training="item"></TrainingInfo>
 
       <v-tooltip open-on-hover top>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn v-on="on" v-bind="attrs" dark x-small @click="deleteTraining(item)" color="red">
+          <v-btn
+            v-on="on"
+            v-bind="attrs"
+            dark
+            x-small
+            @click="deleteTraining(item)"
+            color="red"
+          >
             <v-icon small>
               mdi-delete
             </v-icon>
@@ -394,11 +424,30 @@ export default {
       setTimeout(() => {
         this.loading = false;
       }, 2000);
+    },
+
+    async setActiveTraining(training) {
+      try {
+        await Promise.all([
+          db
+            .collection("trainings")
+            .doc(this.activeTraining.uid)
+            .update({ active: false }),
+          db
+            .collection("trainings")
+            .doc(training.uid)
+            .update({ active: true })
+        ]);
+
+        this.$store.dispatch("fetchTrainings");
+      } catch (error) {
+        console.log(error);
+      }
     }
   },
 
   computed: {
-    ...mapGetters(["user", "trainings", "exercises"]),
+    ...mapGetters(["user", "trainings", "exercises", "activeTraining"]),
 
     formatedStartDate() {
       return this.newTraining.start

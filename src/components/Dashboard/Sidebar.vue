@@ -16,12 +16,17 @@
         </v-list-item-avatar>
 
         <v-list-item-title>{{ user.displayName }}</v-list-item-title>
-        
-        <v-list-item-subtitle v-if="$vuetify.breakpoint.mobile">{{ user.email }}</v-list-item-subtitle>
+
+        <v-list-item-subtitle v-if="$vuetify.breakpoint.mobile">{{
+          user.email
+        }}</v-list-item-subtitle>
 
         <v-spacer></v-spacer>
 
-        <ProfileDialog :show="profileDialog" @close="profileDialog = false"></ProfileDialog>
+        <ProfileDialog
+          :show="profileDialog"
+          @close="profileDialog = false"
+        ></ProfileDialog>
       </v-list-item>
 
       <template v-if="$vuetify.breakpoint.mdAndUp" v-slot:prepend>

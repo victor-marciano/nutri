@@ -244,10 +244,17 @@
           mdi-delete
         </v-icon>
       </v-btn>
-      
+
       <v-tooltip open-on-hover top>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn v-on="on" v-bind="attrs" dark x-small @click="deleteTraining(item)" color="red">
+          <v-btn
+            v-on="on"
+            v-bind="attrs"
+            dark
+            x-small
+            @click="deleteTraining(item)"
+            color="red"
+          >
             <v-icon small>
               mdi-marker-check
             </v-icon>
@@ -258,7 +265,14 @@
 
       <v-tooltip open-on-hover top>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn v-on="on" v-bind="attrs" dark x-small @click="deleteTraining(item)" color="red">
+          <v-btn
+            v-on="on"
+            v-bind="attrs"
+            dark
+            x-small
+            @click="deleteTraining(item)"
+            color="red"
+          >
             <v-icon small>
               mdi-delete
             </v-icon>
@@ -273,7 +287,7 @@
 <script>
 import { db } from "../../../firebase";
 import { moment } from "moment";
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 const DietInfo = () => import("@/components/Dashboard/DietInfo.vue");
 
 export default {
@@ -322,9 +336,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters([
-      'foods'
-    ]),
+    ...mapGetters(["foods"]),
 
     formatedStartDate() {
       return this.newDiet.start

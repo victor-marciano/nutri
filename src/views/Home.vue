@@ -20,7 +20,7 @@
             </v-card-actions>
           </v-card>
         </v-col>
-        <v-col>          
+        <v-col>
           <v-card>
             <v-card-title class="headline">
               Seu treino atual
@@ -37,7 +37,7 @@
                 </v-btn>
               </v-card-actions>
             </div>
-            
+
             <div v-else>
               <v-card-text>
                 <p v-text="activeTraining.name"></p>
@@ -46,11 +46,14 @@
               </v-card-text>
 
               <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-icon>
-                    mdi-clock
-                  </v-icon>
-                  <small class="text--secondary mx-2">Plano de treino se encerra {{ activeTraining.remaining }}</small>
+                <v-spacer></v-spacer>
+                <v-icon>
+                  mdi-clock
+                </v-icon>
+                <small class="text--secondary mx-2"
+                  >Plano de treino se encerra
+                  {{ activeTraining.remaining }}</small
+                >
               </v-card-actions>
             </div>
           </v-card>
@@ -129,7 +132,7 @@ export default {
     DietInfo,
     TrainingInfo
   },
-  
+
   computed: {
     ...mapGetters(["user", "diets", "trainings", "activeTraining"])
   }

@@ -50,10 +50,14 @@ const trainingModule = {
   getters: {
     trainings: state => state.trainings,
     exercises: state => state.exercises,
-    activeTraining: (state, getters) =>  { 
-      let activeTraining = getters.trainings.find(training => training.active) 
-      activeTraining = Object.assign(activeTraining, { remaining: moment(activeTraining.finish).fromNow()})
-      return activeTraining
+    activeTraining: (state, getters) => {
+      let activeTraining = getters.trainings.find(training => training.active);
+      if (activeTraining) {
+        activeTraining = Object.assign(activeTraining, {
+          remaining: moment(activeTraining.finish).fromNow()
+        });
+      }
+      return activeTraining;
     }
   }
 };

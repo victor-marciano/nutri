@@ -44,10 +44,10 @@
           </v-treeview>
         </v-col>
 
-        <v-divider vertical inset></v-divider>
+        <v-divider vertical></v-divider>
 
-        <v-col cols="4" class="d-flex justify-center text-center">
-          <v-scroll-y-transition mode="out-in">
+        <v-col cols="4">
+          <v-slide-y-transition mode="out-in">
             <div
               v-if="!selected"
               class="title grey--text text--lighten-1 font-weight-light"
@@ -61,15 +61,18 @@
               v-bind:is="selected.name"
               :key="selected.name"
             ></component>
-          </v-scroll-y-transition>
+          </v-slide-y-transition>
         </v-col>
 
-        <v-divider vertical inset></v-divider>
+        <v-divider vertical></v-divider>
 
-        <v-col cols="3" class="d-flex text-center">
-          <v-scroll-y-transition mode="out-in">
-            a
-          </v-scroll-y-transition>
+        <v-col cols="4" class="d-flex text-center">
+          <v-slide-y-transition mode="out-in">
+            <component
+              v-bind:is="selected.info"
+              :key="selected.info"
+            ></component>
+          </v-slide-y-transition>
         </v-col>
       </v-row>
     </div>
@@ -81,20 +84,28 @@ const IMC = () => import("@/components/Dashboard/Calculators/IMC.vue");
 const TMB = () => import("@/components/Dashboard/Calculators/TMB.vue");
 const PesoIdeal = () =>
   import("@/components/Dashboard/Calculators/PesoIdeal.vue");
+const ImcInfo = () => import("@/components/Dashboard/Calculators/ImcInfo.vue");
+const TmbInfo = () => import("@/components/Dashboard/Calculators/TmbInfo.vue");
 
 export default {
   name: "Calculadoras",
   components: {
     IMC,
     TMB,
-    PesoIdeal
+    PesoIdeal,
+    ImcInfo,
+    TmbInfo
   },
 
   data: () => ({
     tab: 0,
     open: [],
     active: [],
-    calculators: [{ name: "IMC" }, { name: "PesoIdeal" }, { name: "TMB" }]
+    calculators: [
+      { name: "IMC", info: "ImcInfo" },
+      { name: "PesoIdeal", info: "WeightInfo" },
+      { name: "TMB", info: "TmbInfo" }
+    ]
   }),
 
   created() {
