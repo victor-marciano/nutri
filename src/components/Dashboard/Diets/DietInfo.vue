@@ -6,7 +6,7 @@
       </v-btn>
     </template>
 
-    <v-card color="white">
+    <v-card>
       <v-card-title>{{ diet.name }}</v-card-title>
 
       <v-card-text>

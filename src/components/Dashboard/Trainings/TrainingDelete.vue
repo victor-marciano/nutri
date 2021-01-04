@@ -1,8 +1,6 @@
 <template>
   <v-dialog
     v-model="dialog"
-    :fullscreen="$vuetify.breakpoint.mobile"
-    width="500px"
   >
     <template v-slot:activator="{ on, attrs }">
       <v-btn v-on="on" v-bind="attrs" dark x-small color="red">
@@ -22,6 +20,7 @@
         <small class="text--secondart">*Essa ação é irreversível.</small>
       </v-card-text>
       <v-card-actions>
+        <v-spacer></v-spacer>
         <v-btn text @click="dialog = false">Cancelar</v-btn>
         <v-btn @click="deleteTraining">Excluir</v-btn>
       </v-card-actions>
@@ -50,10 +49,23 @@ export default {
           .collection("trainings")
           .doc(this.training.uid)
           .delete();
+        
+        this.$emit('complete', {
+          show: true,
+          color: 'success',
+          icon: 'mdi-check-circle',
+          text: `${this.training.name} removido com sucesso`
+        })
+
         this.dialog = false;
         this.$store.dispatch("fetchTrainings");
       } catch (error) {
-        console.log(error);
+        this.$emit('complete', {
+          show: true,
+          color: 'error',
+          icon: 'mdi-close',
+          text: `Falha ao remover plano de treino`
+        })
       }
     }
   }

@@ -13,25 +13,25 @@
             >
 
             <v-card-actions>
-              <v-btn text>
+              <v-btn text to="/dashboard/dietas">
                 Criar dieta
               </v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
-        <v-col>
+        <v-col cols="12" md="6">
           <v-card rounded="xl">
             <v-card-title class="headline">
               Seu treino atual
             </v-card-title>
 
             <div v-if="!activeTraining">
-              <v-card-subtitle>
+              <v-card-text>
                 Você não possui nenhuma plano de treino ativo, crie ja o seu!
-              </v-card-subtitle>
+              </v-card-text>
 
               <v-card-actions>
-                <v-btn text>
+                <v-btn text to="/dashboard/treinos">
                   Criar Plano de treino
                 </v-btn>
               </v-card-actions>
@@ -87,10 +87,7 @@
               <v-spacer></v-spacer>
 
               <DietInfo :diet="diet" system></DietInfo>
-
-              <v-btn icon>
-                <v-icon>mdi-book-plus-multiple-outline</v-icon>
-              </v-btn>
+              <DietSave :diet="diet"></DietSave>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -124,6 +121,7 @@
               <v-spacer></v-spacer>
 
               <TrainingInfo :training="training" system></TrainingInfo>
+              <TrainingSave :training="training"></TrainingSave>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -135,14 +133,19 @@
 <script>
 import { mapGetters } from "vuex";
 const DietInfo = () => import("@/components/Dashboard/Diets/DietInfo.vue");
+const DietSave = () => import("@/components/Dashboard/Diets/DietSave.vue");
 const TrainingInfo = () =>
   import("@/components/Dashboard/Trainings/TrainingInfo.vue");
+const TrainingSave = () =>
+  import("@/components/Dashboard/Trainings/TrainingSave.vue");
 
 export default {
   name: "Home",
   components: {
     DietInfo,
-    TrainingInfo
+    DietSave,
+    TrainingInfo,
+    TrainingSave
   },
 
   computed: {

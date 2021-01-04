@@ -171,7 +171,6 @@
 
     <v-bottom-navigation
       dark
-      hide-on-scroll
       v-if="$vuetify.breakpoint.mobile"
       app
       shift

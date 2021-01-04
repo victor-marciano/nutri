@@ -1,280 +1,287 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="userTrainings"
-    class="elevation-0"
-    :dense="$vuetify.breakpoint.mobile"
-    disable-sort
-    :loading="loading"
-    loading-text="Carregando seus treinos... aguarde!"
-    no-data-text="Você ainda não possui nenhum treino cadastrado"
-    no-results-text="Nenhum resultado para sua busca"
-    locale="pt-BR"
-  >
-    <template v-slot:top>
-      <v-toolbar flat>
-        <v-toolbar-title>Meus Treinos</v-toolbar-title>
-        <v-divider class="mx-4" inset vertical></v-divider>
+  <div>
+    <v-snackbar app elevation="10" rounded="xl" :timeout="3000" top right v-model="notification.show" :color="notification.color">
+      <v-icon size="18" class="mx-3">{{ notification.icon }}</v-icon> 
+      {{ notification.text }}
+    </v-snackbar>
 
-        <v-spacer></v-spacer>
+    <v-data-table
+      :headers="headers"
+      :items="userTrainings"
+      class="elevation-0"
+      :dense="$vuetify.breakpoint.mobile"
+      disable-sort
+      :loading="loading"
+      loading-text="Carregando seus treinos... aguarde!"
+      no-data-text="Você ainda não possui nenhum treino cadastrado"
+      no-results-text="Nenhum resultado para sua busca"
+      locale="pt-BR"
+    >
+      <template v-slot:top>
+        <v-toolbar flat>
+          <v-toolbar-title>Meus Treinos</v-toolbar-title>
+          <v-divider class="mx-4" inset vertical></v-divider>
 
-        <v-tooltip open-on-hover activator="#btnTrainingRefresh">
-          <span>Atualizar</span>
-        </v-tooltip>
+          <v-spacer></v-spacer>
 
-        <v-btn
-          id="btnTrainingRefresh"
-          color="orange darken-4"
-          dark
-          class="mb-2"
-          icon
-          @click="updateTable"
-        >
-          <v-icon>
-            mdi-refresh
-          </v-icon>
-        </v-btn>
-        <v-dialog
-          v-model="dialog"
-          :fullscreen="$vuetify.breakpoint.mobile"
-          :width="$vuetify.breakpoint.mobile ? '100%' : '500px'"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-tooltip open-on-hover activator="#btnPlusTraining">
-              <span>Novo treino</span>
-            </v-tooltip>
-            <v-btn
-              color="orange darken-4"
-              dark
-              class="mb-2"
-              v-bind="attrs"
-              v-on="on"
-              icon
-              id="btnPlusTraining"
-            >
-              <v-icon>
-                mdi-plus
-              </v-icon>
-            </v-btn>
-          </template>
+          <v-tooltip open-on-hover activator="#btnTrainingRefresh">
+            <span>Atualizar</span>
+          </v-tooltip>
 
-          <v-card>
-            <v-card-title>
-              Novo Plano de treino
-            </v-card-title>
-
-            <v-stepper v-model="e6" vertical>
-              <v-stepper-step
+          <v-btn
+            id="btnTrainingRefresh"
+            color="orange darken-4"
+            dark
+            class="mb-2"
+            icon
+            @click="updateTable"
+          >
+            <v-icon>
+              mdi-refresh
+            </v-icon>
+          </v-btn>
+          <v-dialog
+            v-model="dialog"
+            :fullscreen="$vuetify.breakpoint.mobile"
+            :width="$vuetify.breakpoint.mobile ? '100%' : '500px'"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-tooltip open-on-hover activator="#btnPlusTraining">
+                <span>Novo treino</span>
+              </v-tooltip>
+              <v-btn
                 color="orange darken-4"
-                :complete="e6 > 1"
-                step="1"
+                dark
+                class="mb-2"
+                v-bind="attrs"
+                v-on="on"
+                icon
+                id="btnPlusTraining"
               >
-                Dados primários
-              </v-stepper-step>
+                <v-icon>
+                  mdi-plus
+                </v-icon>
+              </v-btn>
+            </template>
 
-              <v-stepper-content step="1">
-                <v-row>
-                  <v-col cols="12">
-                    <v-text-field
-                      placeholder="Nome do Plano de Treino"
-                      v-model="newTraining.name"
-                    ></v-text-field>
-                  </v-col>
+            <v-card>
+              <v-card-title>
+                Novo Plano de treino
+              </v-card-title>
 
-                  <v-col cols="12">
-                    <v-select
-                      :items="objectives"
-                      label="Objetivo"
-                      v-model="newTraining.objective"
-                    ></v-select>
-                  </v-col>
-
-                  <v-col cols="6">
-                    <v-menu
-                      ref="menu1"
-                      v-model="menu1"
-                      :close-on-content-click="false"
-                      transition="scale-transition"
-                      offset-y
-                      max-width="290px"
-                      min-width="290px"
-                    >
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                          :value="formatedStartDate"
-                          label="Início"
-                          prepend-icon="mdi-calendar"
-                          v-bind="attrs"
-                          v-on="on"
-                        ></v-text-field>
-                      </template>
-                      <v-date-picker
-                        v-model="newTraining.start"
-                        no-title
-                        @change="menu1 = false"
-                        locale="pt-br"
-                      ></v-date-picker>
-                    </v-menu>
-                  </v-col>
-
-                  <v-col cols="6">
-                    <v-menu
-                      ref="menu2"
-                      v-model="menu2"
-                      :close-on-content-click="false"
-                      transition="scale-transition"
-                      offset-y
-                      max-width="290px"
-                      min-width="290px"
-                    >
-                      <template v-slot:activator="{ on, attrs }">
-                        <v-text-field
-                          :value="formatedFinishDate"
-                          label="Término"
-                          prepend-icon="mdi-calendar"
-                          v-bind="attrs"
-                          v-on="on"
-                        ></v-text-field>
-                      </template>
-                      <v-date-picker
-                        v-model="newTraining.finish"
-                        no-title
-                        @change="menu2 = false"
-                        locale="pt-br"
-                      ></v-date-picker>
-                    </v-menu>
-                  </v-col>
-                </v-row>
-                <v-btn dark color="orange darken-4" @click="e6 = 2">
-                  Continuar
-                </v-btn>
-                <v-btn text @click="dialog = false">
-                  Cancelar
-                </v-btn>
-              </v-stepper-content>
-
-              <v-stepper-step
-                color="orange darken-4"
-                :complete="e6 > 2"
-                step="2"
-              >
-                Definição dos treinos, séries e exercicios
-              </v-stepper-step>
-
-              <v-stepper-content step="2">
-                <div class="d-flex justify-space-between">
-                  <p class="title">Treino</p>
-                  <v-btn icon @click="addTraining">
-                    <v-icon>mdi-plus</v-icon>
-                  </v-btn>
-                </div>
-
-                <v-expand-transition
-                  v-for="(training, index) in newTraining.trainings"
-                  :key="index"
+              <v-stepper v-model="e6" vertical>
+                <v-stepper-step
+                  color="orange darken-4"
+                  :complete="e6 > 1"
+                  step="1"
                 >
-                  <v-container>
-                    <v-row>
-                      <small class="text-center"
-                        >Preencha as informações deste treino</small
+                  Dados primários
+                </v-stepper-step>
+
+                <v-stepper-content step="1">
+                  <v-row>
+                    <v-col cols="12">
+                      <v-text-field
+                        placeholder="Nome do Plano de Treino"
+                        v-model="newTraining.name"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12">
+                      <v-select
+                        :items="objectives"
+                        label="Objetivo"
+                        v-model="newTraining.objective"
+                      ></v-select>
+                    </v-col>
+
+                    <v-col cols="6">
+                      <v-menu
+                        ref="menu1"
+                        v-model="menu1"
+                        :close-on-content-click="false"
+                        transition="scale-transition"
+                        offset-y
+                        max-width="290px"
+                        min-width="290px"
                       >
-                      <v-col cols="12">
-                        <v-select
-                          label="Dia da semana"
-                          :items="weekDays"
-                          v-model="training.weekDay"
-                        ></v-select>
-                      </v-col>
-                      <v-col cols="12">
-                        <div class="d-flex justify-space-between">
-                          <p class="subtitle">Exercícios</p>
-                          <v-btn icon x-small @click="addExercise(index)">
-                            <v-icon>mdi-plus</v-icon>
-                          </v-btn>
-                        </div>
-                        <div
-                          v-for="(exercise, index) in training.exercises"
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            :value="formatedStartDate"
+                            label="Início"
+                            prepend-icon="mdi-calendar"
+                            v-bind="attrs"
+                            v-on="on"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="newTraining.start"
+                          no-title
+                          @change="menu1 = false"
+                          locale="pt-br"
+                        ></v-date-picker>
+                      </v-menu>
+                    </v-col>
+
+                    <v-col cols="6">
+                      <v-menu
+                        ref="menu2"
+                        v-model="menu2"
+                        :close-on-content-click="false"
+                        transition="scale-transition"
+                        offset-y
+                        max-width="290px"
+                        min-width="290px"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            :value="formatedFinishDate"
+                            label="Término"
+                            prepend-icon="mdi-calendar"
+                            v-bind="attrs"
+                            v-on="on"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker
+                          v-model="newTraining.finish"
+                          no-title
+                          @change="menu2 = false"
+                          locale="pt-br"
+                        ></v-date-picker>
+                      </v-menu>
+                    </v-col>
+                  </v-row>
+                  <v-btn dark color="orange darken-4" @click="e6 = 2">
+                    Continuar
+                  </v-btn>
+                  <v-btn text @click="dialog = false">
+                    Cancelar
+                  </v-btn>
+                </v-stepper-content>
+
+                <v-stepper-step
+                  color="orange darken-4"
+                  :complete="e6 > 2"
+                  step="2"
+                >
+                  Definição dos treinos, séries e exercicios
+                </v-stepper-step>
+
+                <v-stepper-content step="2">
+                  <div class="d-flex justify-space-between">
+                    <p class="title">Treino</p>
+                    <v-btn icon @click="addTraining">
+                      <v-icon>mdi-plus</v-icon>
+                    </v-btn>
+                  </div>
+
+                  <v-expand-transition
+                    v-for="(training, index) in newTraining.trainings"
+                    :key="index"
+                  >
+                    <v-container>
+                      <v-row>
+                        <small class="text-center"
+                          >Preencha as informações deste treino</small
+                        >
+                        <v-col cols="12">
+                          <v-select
+                            label="Dia da semana"
+                            :items="weekDays"
+                            v-model="training.weekDay"
+                          ></v-select>
+                        </v-col>
+                        <v-col cols="12">
+                          <div class="d-flex justify-space-between">
+                            <p class="subtitle">Exercícios</p>
+                            <v-btn icon x-small @click="addExercise(index)">
+                              <v-icon>mdi-plus</v-icon>
+                            </v-btn>
+                          </div>
+                          <div
+                            v-for="(exercise, index) in training.exercises"
+                            :key="index"
+                          >
+                            <v-row>
+                              <v-col cols="8">
+                                <v-select
+                                  v-model="exercise.name"
+                                  label="Exercício"
+                                  :items="exercises"
+                                  item-text="name"
+                                  item-value="name"
+                                ></v-select>
+                              </v-col>
+                              <v-col cols="4">
+                                <v-select
+                                  v-model="exercise.series"
+                                  label="Série/Repetições"
+                                  :items="series"
+                                ></v-select>
+                              </v-col>
+                            </v-row>
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </v-expand-transition>
+
+                  <v-btn dark color="orange darken-4" @click="e6 = 3">
+                    Continuar
+                  </v-btn>
+                  <v-btn text @click="e6--">
+                    Voltar
+                  </v-btn>
+                </v-stepper-content>
+
+                <v-stepper-step
+                  color="orange darken-4"
+                  :complete="e6 > 3"
+                  step="3"
+                >
+                  Prévia e finalização
+                </v-stepper-step>
+
+                <v-stepper-content step="3">
+                  <small
+                    >Confira se está tudo certo com seu plano de treino.</small
+                  >
+                  <v-row>
+                    <v-col cols="12">
+                      <v-expansion-panels multiple>
+                        <v-expansion-panel
+                          v-for="(training, index) in newTraining.trainings"
                           :key="index"
                         >
-                          <v-row>
-                            <v-col cols="8">
-                              <v-select
-                                v-model="exercise.name"
-                                label="Exercício"
-                                :items="exercises"
-                                item-text="name"
-                                item-value="name"
-                              ></v-select>
-                            </v-col>
-                            <v-col cols="4">
-                              <v-select
-                                v-model="exercise.series"
-                                label="Série/Repetições"
-                                :items="series"
-                              ></v-select>
-                            </v-col>
-                          </v-row>
-                        </div>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-expand-transition>
-
-                <v-btn dark color="orange darken-4" @click="e6 = 3">
-                  Continuar
-                </v-btn>
-                <v-btn text @click="e6--">
-                  Voltar
-                </v-btn>
-              </v-stepper-content>
-
-              <v-stepper-step
-                color="orange darken-4"
-                :complete="e6 > 3"
-                step="3"
-              >
-                Prévia e finalização
-              </v-stepper-step>
-
-              <v-stepper-content step="3">
-                <small
-                  >Confira se está tudo certo com seu plano de treino.</small
-                >
-                <v-row>
-                  <v-col cols="12">
-                    <v-expansion-panels multiple>
-                      <v-expansion-panel
-                        v-for="(training, index) in newTraining.trainings"
-                        :key="index"
-                      >
-                        <v-expansion-panel-header>{{
-                          training.weekDay
-                        }}</v-expansion-panel-header>
-                        <v-expansion-panel-content>
-                          Some content
-                        </v-expansion-panel-content>
-                      </v-expansion-panel>
-                    </v-expansion-panels>
-                  </v-col>
-                </v-row>
-                <v-btn dark color="orange darken-4" @click="insertTraining">
-                  Finalizar
-                </v-btn>
-                <v-btn text @click="e6--">
-                  Voltar
-                </v-btn>
-              </v-stepper-content>
-            </v-stepper>
-          </v-card>
-        </v-dialog>
-      </v-toolbar>
-    </template>
-    <template v-slot:item.actions="{ item }">
-      <TrainingActive :training="item"></TrainingActive>
-      <TrainingInfo id="trainigInfo" :training="item"></TrainingInfo>
-      <TrainingDelete :training="item"></TrainingDelete>
-    </template>
-  </v-data-table>
+                          <v-expansion-panel-header>{{
+                            training.weekDay
+                          }}</v-expansion-panel-header>
+                          <v-expansion-panel-content>
+                            Some content
+                          </v-expansion-panel-content>
+                        </v-expansion-panel>
+                      </v-expansion-panels>
+                    </v-col>
+                  </v-row>
+                  <v-btn dark color="orange darken-4" @click="insertTraining">
+                    Finalizar
+                  </v-btn>
+                  <v-btn text @click="e6--">
+                    Voltar
+                  </v-btn>
+                </v-stepper-content>
+              </v-stepper>
+            </v-card>
+          </v-dialog>
+        </v-toolbar>
+      </template>
+      <template v-slot:item.actions="{ item }">
+        <TrainingActive :training="item"></TrainingActive>
+        <TrainingInfo :training="item"></TrainingInfo>
+        <TrainingDelete :training="item" @complete="showNotification($event)"></TrainingDelete>
+      </template>
+    </v-data-table>
+  </div>
 </template>
 
 <script>
@@ -297,7 +304,12 @@ export default {
 
   data: () => ({
     dialog: false,
-    dialogDelete: false,
+    notification: {
+      show: false,
+      text: '',
+      icon: '',
+      color: '',
+    },
     loading: false,
     startDate: null,
     finishDate: null,
@@ -384,6 +396,11 @@ export default {
       setTimeout(() => {
         this.loading = false;
       }, 2000);
+    },
+
+    showNotification(v) {
+      console.log(v)
+      this.notification = v
     }
   },
 
