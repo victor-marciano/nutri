@@ -134,7 +134,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-const DietInfo = () => import("@/components/Dashboard/DietInfo.vue");
+const DietInfo = () => import("@/components/Dashboard/Diets/DietInfo.vue");
 const TrainingInfo = () =>
   import("@/components/Dashboard/Trainings/TrainingInfo.vue");
 

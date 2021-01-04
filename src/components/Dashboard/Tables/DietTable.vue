@@ -237,50 +237,11 @@
       </v-toolbar>
     </template>
     <template v-slot:item.actions="{ item }">
-      <DietInfo :diet="newDiet"></DietInfo>
-
-      <v-btn dark x-small @click="deleteTraining(item)" color="red">
-        <v-icon small>
-          mdi-delete
-        </v-icon>
-      </v-btn>
-
-      <v-tooltip open-on-hover top>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            v-on="on"
-            v-bind="attrs"
-            dark
-            x-small
-            @click="deleteTraining(item)"
-            color="red"
-          >
-            <v-icon small>
-              mdi-marker-check
-            </v-icon>
-          </v-btn>
-        </template>
-        <span>Dieta Ativa</span>
-      </v-tooltip>
-
-      <v-tooltip open-on-hover top>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            v-on="on"
-            v-bind="attrs"
-            dark
-            x-small
-            @click="deleteTraining(item)"
-            color="red"
-          >
-            <v-icon small>
-              mdi-delete
-            </v-icon>
-          </v-btn>
-        </template>
-        <span>Remover</span>
-      </v-tooltip>
+      <DietActive :diet="item"></DietActive>
+      <DietInfo :diet="item"></DietInfo>
+      <DietDelete :diet="item"></DietDelete>
     </template>
+        
   </v-data-table>
 </template>
 
@@ -288,11 +249,15 @@
 import { db } from "../../../firebase";
 import { moment } from "moment";
 import { mapGetters } from "vuex";
-const DietInfo = () => import("@/components/Dashboard/DietInfo.vue");
+const DietInfo = () => import("@/components/Dashboard/Diets/DietInfo.vue");
+const DietActive = () => import("@/components/Dashboard/Diets/DietActive.vue");
+const DietDelete = () => import("@/components/Dashboard/Diets/DietDelete.vue");
 
 export default {
   components: {
-    DietInfo
+    DietInfo,
+    DietDelete,
+    DietActive,
   },
 
   data: () => ({
@@ -366,18 +331,6 @@ export default {
       });
       try {
         await db.collection("diets").add(formattedDiet);
-        this.$store.dispatch("fetchDiets");
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
-    async deleteDiet(item) {
-      try {
-        await db
-          .collection("diets")
-          .doc(item.uid)
-          .delete();
         this.$store.dispatch("fetchDiets");
       } catch (error) {
         console.log(error);
