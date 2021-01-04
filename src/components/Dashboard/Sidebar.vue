@@ -97,11 +97,17 @@
             </template>
 
             <v-toolbar color="green lighten-3">
-              <v-toolbar-title>Configurações</v-toolbar-title>
+              <v-toolbar-title>
+                <v-icon size="28" class="mr-2" @click="configDialog = false"
+                  >mdi-arrow-left</v-icon
+                >
+                Configurações
+              </v-toolbar-title>
             </v-toolbar>
+
             <v-card>
               <v-card-text>
-                Tema
+                <p class="body-1">Tema</p>
                 <v-switch v-model="$vuetify.theme.dark">
                   <template v-slot:label>
                     Escuro

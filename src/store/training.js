@@ -1,4 +1,4 @@
-import { db } from "../firebase";
+import { db, auth } from "../firebase";
 import moment from "../date";
 
 const trainingModule = {
@@ -58,6 +58,18 @@ const trainingModule = {
         });
       }
       return activeTraining;
+    },
+    userTrainings: (state, getters) => {
+      let userTrainings = getters.trainings.filter(
+        training => training.userId === auth.currentUser.uid
+      );
+      return userTrainings;
+    },
+    systemTrainings: (state, getters) => {
+      let systemTrainings = getters.trainings.filter(
+        training => training.system
+      );
+      return systemTrainings;
     }
   }
 };

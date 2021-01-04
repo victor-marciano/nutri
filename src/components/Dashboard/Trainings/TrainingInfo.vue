@@ -1,5 +1,9 @@
 <template>
-  <v-dialog v-model="dialog" :fullscreen="$vuetify.breakpoint.mobile">
+  <v-dialog
+    v-model="dialog"
+    :fullscreen="$vuetify.breakpoint.mobile"
+    width="500px"
+  >
     <template v-slot:activator="{ on, attrs }">
       <v-tooltip open-on-hover top activator=".trainingInfo">
         <span>Detalhes</span>
@@ -16,7 +20,7 @@
       </v-btn>
     </template>
 
-    <v-card color="white">
+    <v-card>
       <v-card-title>
         {{ training.name }}
 
@@ -28,7 +32,7 @@
       <v-card-text>
         <p>Objetivo: {{ training.objective }}</p>
         <div v-for="(series, index) in training.trainings" :key="index">
-          <h5>{{ series.weekDay }}</h5>
+          <h4 class="my-2">{{ series.weekDay }}</h4>
 
           <v-simple-table>
             <template v-slot:default>
@@ -51,19 +55,19 @@
             </template>
           </v-simple-table>
         </div>
-        <v-btn dark v-if="system" width="100%" color="green lighten-4">
-          Adicionar este treino
-        </v-btn>
+      </v-card-text>
+
+      <v-card-actions class="text-center">
+        <v-spacer></v-spacer>
         <v-btn
           dark
-          v-else
-          width="100%"
+          v-if="system"
+          :width="$vuetify.breakpoint.mobile ? '100%' : '50%'"
           color="green lighten-4"
-          @click="dialog = false"
         >
-          Voltar
+          Adicionar este treino
         </v-btn>
-      </v-card-text>
+      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>

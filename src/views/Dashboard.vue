@@ -43,6 +43,7 @@ export default {
     this.$store.dispatch("fetchFood");
     this.$store.dispatch("fetchDiets");
     this.$store.dispatch("fetchTrainings");
+    this.$store.dispatch("fetchExercises");
   }
 };
 </script>

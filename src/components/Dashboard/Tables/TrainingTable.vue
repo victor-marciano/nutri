@@ -1,7 +1,7 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="trainings"
+    :items="userTrainings"
     class="elevation-0"
     :dense="$vuetify.breakpoint.mobile"
     disable-sort
@@ -270,54 +270,9 @@
       </v-toolbar>
     </template>
     <template v-slot:item.actions="{ item }">
-      <v-dialog>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            v-on="on"
-            v-bind="attrs"
-            dark
-            x-small
-            color="success"
-            class="mx-1"
-            :disabled="item.active"
-          >
-            <v-icon small>
-              mdi-check-circle
-            </v-icon>
-          </v-btn>
-        </template>
-
-        <v-card>
-          <v-card-title
-            >Você gostaria de trocar para {{ item.name }}</v-card-title
-          >
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn>Não</v-btn>
-            <v-btn @click="setActiveTraining(item)">Sim</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-
+      <TrainingActive :training="item"></TrainingActive>
       <TrainingInfo id="trainigInfo" :training="item"></TrainingInfo>
-
-      <v-tooltip open-on-hover top>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            v-on="on"
-            v-bind="attrs"
-            dark
-            x-small
-            @click="deleteTraining(item)"
-            color="red"
-          >
-            <v-icon small>
-              mdi-delete
-            </v-icon>
-          </v-btn>
-        </template>
-        <span>Remover</span>
-      </v-tooltip>
+      <TrainingDelete :training="item"></TrainingDelete>
     </template>
   </v-data-table>
 </template>
@@ -326,11 +281,18 @@
 import { mapGetters } from "vuex";
 import { db } from "../../../firebase";
 import moment from "../../../date";
-const TrainingInfo = () => import("@/components/Dashboard/TrainingInfo.vue");
+const TrainingInfo = () =>
+  import("@/components/Dashboard/Trainings/TrainingInfo.vue");
+const TrainingDelete = () =>
+  import("@/components/Dashboard/Trainings/TrainingDelete.vue");
+const TrainingActive = () =>
+  import("@/components/Dashboard/Trainings/TrainingActive.vue");
 
 export default {
   components: {
-    TrainingInfo
+    TrainingInfo,
+    TrainingDelete,
+    TrainingActive
   },
 
   data: () => ({
@@ -399,20 +361,18 @@ export default {
         userId: this.user.uid
       });
       try {
-        await db.collection("trainings").add(formattedTraining);
-        this.dialog = false;
-        this.$store.dispatch("fetchTrainings");
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
-    async deleteTraining(item) {
-      try {
-        await db
+        const createdTraining = await db
           .collection("trainings")
-          .doc(item.uid)
-          .delete();
+          .add(formattedTraining);
+        console.log(createdTraining);
+
+        if (this.userTrainings.length === 0) {
+          db.collection("trainings")
+            .doc(createdTraining.id)
+            .update({ active: true });
+        }
+        this.dialog = false;
+
         this.$store.dispatch("fetchTrainings");
       } catch (error) {
         console.log(error);
@@ -424,30 +384,11 @@ export default {
       setTimeout(() => {
         this.loading = false;
       }, 2000);
-    },
-
-    async setActiveTraining(training) {
-      try {
-        await Promise.all([
-          db
-            .collection("trainings")
-            .doc(this.activeTraining.uid)
-            .update({ active: false }),
-          db
-            .collection("trainings")
-            .doc(training.uid)
-            .update({ active: true })
-        ]);
-
-        this.$store.dispatch("fetchTrainings");
-      } catch (error) {
-        console.log(error);
-      }
     }
   },
 
   computed: {
-    ...mapGetters(["user", "trainings", "exercises", "activeTraining"]),
+    ...mapGetters(["user", "userTrainings", "exercises", "activeTraining"]),
 
     formatedStartDate() {
       return this.newTraining.start
