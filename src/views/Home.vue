@@ -135,7 +135,10 @@
               <v-spacer></v-spacer>
 
               <TrainingInfo :training="training" system></TrainingInfo>
-              <TrainingSave :training="training" @complete="showNotification"></TrainingSave>
+              <TrainingSave
+                :training="training"
+                @complete="showNotification"
+              ></TrainingSave>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -164,16 +167,16 @@ export default {
 
   data: () => ({
     notification: {
-      text: '',
+      text: "",
       show: false,
-      icon: '',
-      color: ''
+      icon: "",
+      color: ""
     }
   }),
 
   methods: {
     showNotification(v) {
-      this.notification = v
+      this.notification = v;
     }
   },
 

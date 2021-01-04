@@ -306,7 +306,7 @@ export default {
       { text: "Término", value: "finish" },
       { text: "Ações", value: "actions", sortable: false }
     ],
-    
+
     newDiet: {
       name: "",
       objective: "",

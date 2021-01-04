@@ -43,21 +43,23 @@ export default {
     newTraining: {}
   }),
 
-  created(){
+  created() {
     this.newTraining = {
       name: this.training.name,
       objective: this.training.objective,
-      start: moment().format('DD/MM/YYYY'),
-      finish: moment().add(1, 'month').format('DD/MM/YYYY'),
+      start: moment().format("DD/MM/YYYY"),
+      finish: moment()
+        .add(1, "month")
+        .format("DD/MM/YYYY"),
       trainings: this.training.trainings,
       userId: auth.currentUser.uid
-    }
+    };
   },
 
   methods: {
     async addTrainingToUser() {
       try {
-        await db.collection("trainings").add(this.newTraining)
+        await db.collection("trainings").add(this.newTraining);
 
         this.$emit("complete", {
           show: true,
