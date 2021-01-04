@@ -6,13 +6,14 @@
   >
     <template v-slot:activator="{ on, attrs }">
       <v-btn icon v-on="on" v-bind="attrs">
-    <v-icon>mdi-book-plus-multiple-outline</v-icon>
-    </v-btn>
+        <v-icon>mdi-book-plus-multiple-outline</v-icon>
+      </v-btn>
     </template>
 
     <v-card>
       <v-card-title
-        >Você gostaria de adicionar a {{ diet.name }} para sua lista de dietas?</v-card-title
+        >Você gostaria de adicionar a {{ diet.name }} para sua lista de
+        dietas?</v-card-title
       >
       <v-card-actions>
         <v-spacer></v-spacer>

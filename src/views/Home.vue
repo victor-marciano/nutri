@@ -1,5 +1,19 @@
 <template>
   <div class="home">
+    <v-snackbar
+      app
+      elevation="10"
+      rounded="xl"
+      :timeout="3000"
+      top
+      right
+      v-model="notification.show"
+      :color="notification.color"
+    >
+      <v-icon size="24" class="mx-3">{{ notification.icon }}</v-icon>
+      {{ notification.text }}
+    </v-snackbar>
+
     <v-container>
       <v-row>
         <v-col cols="12" md="6">
@@ -121,7 +135,7 @@
               <v-spacer></v-spacer>
 
               <TrainingInfo :training="training" system></TrainingInfo>
-              <TrainingSave :training="training"></TrainingSave>
+              <TrainingSave :training="training" @complete="showNotification"></TrainingSave>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -146,6 +160,21 @@ export default {
     DietSave,
     TrainingInfo,
     TrainingSave
+  },
+
+  data: () => ({
+    notification: {
+      text: '',
+      show: false,
+      icon: '',
+      color: ''
+    }
+  }),
+
+  methods: {
+    showNotification(v) {
+      this.notification = v
+    }
   },
 
   computed: {

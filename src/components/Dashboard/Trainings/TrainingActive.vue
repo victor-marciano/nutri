@@ -1,9 +1,5 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    :fullscreen="$vuetify.breakpoint.mobile"
-    width="500px"
-  >
+  <v-dialog v-model="dialog">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         v-on="on"
@@ -61,9 +57,22 @@ export default {
             .update({ active: true })
         ]);
 
+        this.$emit("complete", {
+          show: true,
+          color: "success",
+          icon: "mdi-check-circle",
+          text: `${this.training.name} agora é o seu treino ativo`
+        });
+
+        this.dialog = false;
         this.$store.dispatch("fetchTrainings");
       } catch (error) {
-        console.log(error);
+        this.$emit("complete", {
+          show: true,
+          color: "error",
+          icon: "mdi-close",
+          text: `Falha ao trocar de treino`
+        });
       }
     }
   },

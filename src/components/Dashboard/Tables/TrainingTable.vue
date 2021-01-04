@@ -1,7 +1,16 @@
 <template>
   <div>
-    <v-snackbar app elevation="10" rounded="xl" :timeout="3000" top right v-model="notification.show" :color="notification.color">
-      <v-icon size="18" class="mx-3">{{ notification.icon }}</v-icon> 
+    <v-snackbar
+      app
+      elevation="10"
+      rounded="xl"
+      :timeout="3000"
+      top
+      right
+      v-model="notification.show"
+      :color="notification.color"
+    >
+      <v-icon size="24" class="mx-3">{{ notification.icon }}</v-icon>
       {{ notification.text }}
     </v-snackbar>
 
@@ -276,9 +285,15 @@
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
-        <TrainingActive :training="item"></TrainingActive>
+        <TrainingActive
+          :training="item"
+          @complete="showNotification($event)"
+        ></TrainingActive>
         <TrainingInfo :training="item"></TrainingInfo>
-        <TrainingDelete :training="item" @complete="showNotification($event)"></TrainingDelete>
+        <TrainingDelete
+          :training="item"
+          @complete="showNotification($event)"
+        ></TrainingDelete>
       </template>
     </v-data-table>
   </div>
@@ -306,9 +321,9 @@ export default {
     dialog: false,
     notification: {
       show: false,
-      text: '',
-      icon: '',
-      color: '',
+      text: "",
+      icon: "",
+      color: ""
     },
     loading: false,
     startDate: null,
@@ -343,7 +358,7 @@ export default {
       { text: "Término", value: "finish" },
       { text: "Ações", value: "actions", sortable: false }
     ],
-    desserts: [],
+
     series: [
       "3x10",
       "4x10",
@@ -376,13 +391,13 @@ export default {
         const createdTraining = await db
           .collection("trainings")
           .add(formattedTraining);
-        console.log(createdTraining);
 
         if (this.userTrainings.length === 0) {
           db.collection("trainings")
             .doc(createdTraining.id)
             .update({ active: true });
         }
+
         this.dialog = false;
 
         this.$store.dispatch("fetchTrainings");
@@ -399,8 +414,7 @@ export default {
     },
 
     showNotification(v) {
-      console.log(v)
-      this.notification = v
+      this.notification = v;
     }
   },
 

@@ -21,9 +21,7 @@
     </template>
 
     <v-card>
-      <v-card-title
-        >Você gostaria de trocar para {{ diet.name }}</v-card-title
-      >
+      <v-card-title>Você gostaria de trocar para {{ diet.name }}</v-card-title>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn text @click="dialog = false">Não</v-btn>
@@ -61,9 +59,21 @@ export default {
             .update({ active: true })
         ]);
 
+        this.$emit("complete", {
+          show: true,
+          color: "success",
+          icon: "mdi-check-circle",
+          text: `${this.training.name} removido com sucesso`
+        });
+
         this.$store.dispatch("fetchDiets");
       } catch (error) {
-        console.log(error);
+        this.$emit("complete", {
+          show: true,
+          color: "error",
+          icon: "mdi-close",
+          text: `Falha ao trocar Dieta`
+        });
       }
     }
   },

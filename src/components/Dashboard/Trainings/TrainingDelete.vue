@@ -1,7 +1,5 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-  >
+  <v-dialog v-model="dialog">
     <template v-slot:activator="{ on, attrs }">
       <v-btn v-on="on" v-bind="attrs" dark x-small color="red">
         <v-icon small>
@@ -49,23 +47,23 @@ export default {
           .collection("trainings")
           .doc(this.training.uid)
           .delete();
-        
-        this.$emit('complete', {
+
+        this.$emit("complete", {
           show: true,
-          color: 'success',
-          icon: 'mdi-check-circle',
+          color: "success",
+          icon: "mdi-check-circle",
           text: `${this.training.name} removido com sucesso`
-        })
+        });
 
         this.dialog = false;
         this.$store.dispatch("fetchTrainings");
       } catch (error) {
-        this.$emit('complete', {
+        this.$emit("complete", {
           show: true,
-          color: 'error',
-          icon: 'mdi-close',
+          color: "error",
+          icon: "mdi-close",
           text: `Falha ao remover plano de treino`
-        })
+        });
       }
     }
   }

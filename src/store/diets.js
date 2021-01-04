@@ -1,4 +1,5 @@
-import { db } from "../firebase";
+import { db, auth } from "../firebase";
+import moment from "../date";
 
 const dietModule = {
   state: {
@@ -28,7 +29,26 @@ const dietModule = {
   },
 
   getters: {
-    diets: state => state.diets
+    diets: state => state.diets,
+    activeDiet: (state, getters) => {
+      let activeDiet = getters.diets.find(diet => diet.active);
+      if (activeDiet) {
+        activeDiet = Object.assign(activeDiet, {
+          remaining: moment(activeDiet.finish).fromNow()
+        });
+      }
+      return activeDiet;
+    },
+    userDiets: (state, getters) => {
+      let userDiets = getters.diets.filter(
+        diet => diet.userId === auth.currentUser.uid
+      );
+      return userDiets;
+    },
+    systemDiets: (state, getters) => {
+      let systemDiets = getters.diets.filter(diet => diet.system);
+      return systemDiets;
+    }
   }
 };
 
