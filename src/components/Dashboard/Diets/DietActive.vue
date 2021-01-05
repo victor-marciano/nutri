@@ -1,8 +1,6 @@
 <template>
   <v-dialog
     v-model="dialog"
-    :fullscreen="$vuetify.breakpoint.mobile"
-    width="500px"
   >
     <template v-slot:activator="{ on, attrs }">
       <v-btn
@@ -45,13 +43,17 @@ export default {
     dialog: false
   }),
 
+  mounted() {
+    console.log(this.activeDiet)
+  },
+
   methods: {
     async setActiveDiet() {
       try {
         await Promise.all([
           db
             .collection("diets")
-            .doc(this.activediet.uid)
+            .doc(this.activeDiet.uid)
             .update({ active: false }),
           db
             .collection("diets")
@@ -59,11 +61,13 @@ export default {
             .update({ active: true })
         ]);
 
+        this.dialog = false 
+        
         this.$emit("complete", {
           show: true,
           color: "success",
           icon: "mdi-check-circle",
-          text: `${this.training.name} removido com sucesso`
+          text: `${this.diet.name} agora é a sua dieta ativa`
         });
 
         this.$store.dispatch("fetchDiets");

@@ -1,8 +1,6 @@
 <template>
   <v-dialog
     v-model="dialog"
-    :fullscreen="$vuetify.breakpoint.mobile"
-    width="500px"
   >
     <template v-slot:activator="{ on, attrs }">
       <v-btn
@@ -23,7 +21,7 @@
       <v-card-text>
         <p class="body-1">
           Deseja excluir completamente a dieta
-          <b>{{ training.name }}</b>
+          <b>{{ diet.name }}</b>
         </p>
         <small class="text--secondart">*Essa ação é irreversível.</small>
       </v-card-text>
@@ -61,7 +59,7 @@ export default {
           show: true,
           color: "success",
           icon: "mdi-check-circle",
-          text: `${this.training.name} removido com sucesso`
+          text: `${this.diet.name} removido com sucesso`
         });
 
         this.dialog = false;

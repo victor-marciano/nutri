@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" :fullscreen="$vuetify.breakpoint.mobile">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn icon v-on="on" v-bind="attrs">
+      <v-btn x-small dark color="blue" v-on="on" v-bind="attrs" class="mx-1">
         <v-icon>mdi-information-variant</v-icon>
       </v-btn>
     </template>

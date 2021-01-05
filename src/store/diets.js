@@ -19,6 +19,7 @@ const dietModule = {
         const diet = await db.collection("diets").get();
         diet.forEach(diet => {
           let dietData = diet.data();
+          dietData = Object.assign(dietData, { uid: diet.id });
           diets.push(dietData);
         });
         commit("SET_DIETS", diets);
@@ -40,10 +41,13 @@ const dietModule = {
       return activeDiet;
     },
     userDiets: (state, getters) => {
-      let userDiets = getters.diets.filter(
-        diet => diet.userId === auth.currentUser.uid
-      );
-      return userDiets;
+      if (getters.diets) {
+        let userDiets = getters.diets.filter(
+          diet => diet.userId === auth.currentUser.uid
+        );
+  
+        return userDiets;  
+      }
     },
     systemDiets: (state, getters) => {
       let systemDiets = getters.diets.filter(diet => diet.system);

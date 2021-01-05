@@ -1,13 +1,14 @@
 <template>
   <v-dialog
     v-model="dialog"
-    :fullscreen="$vuetify.breakpoint.mobile"
     :width="$vuetify.breakpoint.mobile ? '100%' : '500px'"
+    :fullscreen="$vuetify.breakpoint.mobile"
   >
     <template v-slot:activator="{ on, attrs }">
-      <v-tooltip open-on-hover activator="#btnPlusTraining">
-        <span>Novo treino</span>
+      <v-tooltip open-on-hover activator="#btnNewDiet">
+        <span>Nova dieta</span>
       </v-tooltip>
+
       <v-btn
         color="orange darken-4"
         dark
@@ -15,17 +16,16 @@
         v-bind="attrs"
         v-on="on"
         icon
-        id="btnPlusTraining"
+        id="btnNewDiet"
       >
         <v-icon>
           mdi-plus
         </v-icon>
       </v-btn>
     </template>
-
     <v-card>
       <v-card-title>
-        Novo Plano de treino
+        Nova Dieta
       </v-card-title>
 
       <v-stepper v-model="e6" vertical>
@@ -37,8 +37,8 @@
           <v-row>
             <v-col cols="12">
               <v-text-field
-                placeholder="Nome do Plano de Treino"
-                v-model="newTraining.name"
+                placeholder="Nome da Dieta"
+                v-model="newDiet.name"
               ></v-text-field>
             </v-col>
 
@@ -46,7 +46,7 @@
               <v-select
                 :items="objectives"
                 label="Objetivo"
-                v-model="newTraining.objective"
+                v-model="newDiet.objective"
               ></v-select>
             </v-col>
 
@@ -70,7 +70,7 @@
                   ></v-text-field>
                 </template>
                 <v-date-picker
-                  v-model="newTraining.start"
+                  v-model="newDiet.start"
                   no-title
                   @change="menu1 = false"
                   locale="pt-br"
@@ -98,7 +98,7 @@
                   ></v-text-field>
                 </template>
                 <v-date-picker
-                  v-model="newTraining.finish"
+                  v-model="newDiet.finish"
                   no-title
                   @change="menu2 = false"
                   locale="pt-br"
@@ -115,60 +115,49 @@
         </v-stepper-content>
 
         <v-stepper-step color="orange darken-4" :complete="e6 > 2" step="2">
-          Definição dos treinos, séries e exercicios
+          Definição das refeições e seus alimentos
         </v-stepper-step>
 
         <v-stepper-content step="2">
           <div class="d-flex justify-space-between">
-            <p class="title">Treino</p>
-            <v-btn icon @click="addTraining">
+            <p class="title">Refeições</p>
+            <v-btn icon @click="addMeal">
               <v-icon>mdi-plus</v-icon>
             </v-btn>
           </div>
 
           <v-expand-transition
-            v-for="(training, index) in newTraining.trainings"
+            v-for="(meal, index) in newDiet.meals"
             :key="index"
           >
             <v-container>
               <v-row>
                 <small class="text-center"
-                  >Preencha as informações deste treino</small
+                  >Preencha as informações desta refeição</small
                 >
                 <v-col cols="12">
-                  <v-select
-                    label="Dia da semana"
-                    :items="weekDays"
-                    v-model="training.weekDay"
-                  ></v-select>
-                </v-col>
-                <v-col cols="12">
                   <div class="d-flex justify-space-between">
-                    <p class="subtitle">Exercícios</p>
-                    <v-btn icon x-small @click="addExercise(index)">
+                    <p class="subtitle">Refeição</p>
+                    <v-btn icon x-small @click="addFoods(index)">
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
                   </div>
-                  <div
-                    v-for="(exercise, index) in training.exercises"
-                    :key="index"
-                  >
+                  <div v-for="(food, index) in meal.foods" :key="index">
                     <v-row>
                       <v-col cols="8">
                         <v-select
-                          v-model="exercise.name"
+                          v-model="food.name"
                           label="Exercício"
-                          :items="exercises"
+                          :items="foods"
                           item-text="name"
-                          item-value="name"
+                          cache-items
                         ></v-select>
                       </v-col>
                       <v-col cols="4">
-                        <v-select
-                          v-model="exercise.series"
-                          label="Série/Repetições"
-                          :items="series"
-                        ></v-select>
+                        <v-text-field
+                          placeholder="Qtd(g)"
+                          v-model="food.qtd"
+                        ></v-text-field>
                       </v-col>
                     </v-row>
                   </div>
@@ -190,25 +179,11 @@
         </v-stepper-step>
 
         <v-stepper-content step="3">
-          <small>Confira se está tudo certo com seu plano de treino.</small>
-          <v-row>
-            <v-col cols="12">
-              <v-expansion-panels multiple>
-                <v-expansion-panel
-                  v-for="(training, index) in newTraining.trainings"
-                  :key="index"
-                >
-                  <v-expansion-panel-header>{{
-                    training.weekDay
-                  }}</v-expansion-panel-header>
-                  <v-expansion-panel-content>
-                    Some content
-                  </v-expansion-panel-content>
-                </v-expansion-panel>
-              </v-expansion-panels>
-            </v-col>
-          </v-row>
-          <v-btn dark color="orange darken-4" @click="insertTraining">
+          <small>Confira se está tudo certo com sua dieta</small>
+
+          <DietInfo :diet="newDiet"></DietInfo>
+
+          <v-btn dark color="orange darken-4" @click="insertDiet">
             Finalizar
           </v-btn>
           <v-btn text @click="e6--">
@@ -221,112 +196,86 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import moment from "../../../date";
 import { db, auth } from "../../../firebase";
+import moment from "../../../date";
+import { mapGetters } from "vuex";
+const DietInfo = () => import("@/components/Dashboard/Diets/DietInfo.vue");
 
 export default {
-  name: "TrainingForm",
+  name: "DietForm",
+  components: {
+      DietInfo
+  },
   data: () => ({
     dialog: false,
-    startDate: null,
-    finishDate: null,
-    newTraining: {
-      name: "",
-      objective: "",
-      start: null,
-      finish: null,
-      trainings: [{ weekDay: "", exercises: [{ name: "", series: "" }] }]
-    },
+    menu1: false,
+    menu2: false,
+    e6: 1,
     objectives: [
       "Hipertrofia",
       "Emagrecimento",
       "Condicionamento",
       "Resistência"
     ],
-    weekDays: [
-      "Segunda Feira",
-      "Terça Feira",
-      "Quarta Feira",
-      "Quinta Feira",
-      "Sexta Feira",
-      "Sábado",
-      "Domingo"
-    ],
-    e6: 1,
 
-    series: [
-      "3x10",
-      "4x10",
-      "Até a falha",
-      "3x15",
-      "5x5",
-      "4x8",
-      "3x8",
-      "drop-set",
-      "piramide"
-    ],
-    menu1: false,
-    menu2: false
+    newDiet: {
+      name: "",
+      objective: "",
+      start: null,
+      finish: null,
+      meals: [{ name: "", time: null, foods: [{ name: "", qtd: 0 }] }]
+    }
   }),
 
   methods: {
-    addTraining() {
-      this.newTraining.trainings.push({ weekDay: "", exercises: [] });
+    addMeal() {
+      this.newDiet.meals.push({ name: "", time: null, foods: [] });
     },
 
-    addExercise(index) {
-      this.newTraining.trainings[index].exercises.push({});
+    addFoods(index) {
+      this.newDiet.meals[index].foods.push({});
     },
 
-    async insertTraining() {
-      let formattedTraining = Object.assign(this.newTraining, {
+    async insertDiet() {
+      let formattedDiet = Object.assign(this.newDiet, {
         userId: auth.currentUser.uid
       });
       try {
-        const createdTraining = await db
-          .collection("trainings")
-          .add(formattedTraining);
-
-        if (this.userTrainings.length === 0) {
-          db.collection("trainings")
-            .doc(createdTraining.id)
-            .update({ active: true });
-        }
-
-        this.$emit("submited", {
+        await db.collection("diets").add(formattedDiet);
+        this.dialog = false
+        
+        this.$emit("complete", {
           show: true,
           color: "success",
           icon: "mdi-check-circle",
-          text: `${this.newTraining.name} criado com sucesso`
+          text: `Dieta criada com sucesso`
         });
-
-        this.dialog = false;
-
-        this.$store.dispatch("fetchTrainings");
+        
+        this.$store.dispatch("fetchDiets");
       } catch (error) {
-        this.$emit("submited", {
+        this.$emit("complete", {
           show: true,
           color: "error",
           icon: "mdi-close",
-          text: `Erro ao criar treino`
+          text: `Falha ao inserir Dieta`
         });
       }
     }
   },
 
   computed: {
-    ...mapGetters(["exercises", "userTrainings"]),
+    ...mapGetters(["foods"]),
 
     formatedStartDate() {
-      return this.newTraining.start
-        ? moment(this.newTraining.start).format("DD/MM/YYYY")
+        console.log('cheguei')
+      return this.newDiet.start
+        ? moment(this.newDiet.start).format("DD/MM/YYYY")
         : null;
     },
 
     formatedFinishDate() {
-      return this.newTraining.finish
-        ? moment(this.newTraining.finish).format("DD/MM/YYYY")
+      return this.newDiet.finish
+        ? moment(this.newDiet.finish).format("DD/MM/YYYY")
         : null;
     }
   }
