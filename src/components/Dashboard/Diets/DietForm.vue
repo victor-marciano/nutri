@@ -204,7 +204,7 @@ const DietInfo = () => import("@/components/Dashboard/Diets/DietInfo.vue");
 export default {
   name: "DietForm",
   components: {
-      DietInfo
+    DietInfo
   },
   data: () => ({
     dialog: false,
@@ -242,15 +242,15 @@ export default {
       });
       try {
         await db.collection("diets").add(formattedDiet);
-        this.dialog = false
-        
+        this.dialog = false;
+
         this.$emit("complete", {
           show: true,
           color: "success",
           icon: "mdi-check-circle",
           text: `Dieta criada com sucesso`
         });
-        
+
         this.$store.dispatch("fetchDiets");
       } catch (error) {
         this.$emit("complete", {
@@ -267,7 +267,7 @@ export default {
     ...mapGetters(["foods"]),
 
     formatedStartDate() {
-        console.log('cheguei')
+      console.log("cheguei");
       return this.newDiet.start
         ? moment(this.newDiet.start).format("DD/MM/YYYY")
         : null;

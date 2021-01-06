@@ -1,7 +1,5 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-  >
+  <v-dialog v-model="dialog" :width="$vuetify.breakpoint.mobile ? '' : '500px'">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         v-on="on"
@@ -44,7 +42,7 @@ export default {
   }),
 
   mounted() {
-    console.log(this.activeDiet)
+    console.log(this.activeDiet);
   },
 
   methods: {
@@ -61,8 +59,8 @@ export default {
             .update({ active: true })
         ]);
 
-        this.dialog = false 
-        
+        this.dialog = false;
+
         this.$emit("complete", {
           show: true,
           color: "success",

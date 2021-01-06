@@ -17,59 +17,10 @@
     <v-container>
       <v-row>
         <v-col cols="12" md="6">
-          <v-card rounded="xl">
-            <v-card-title class="headline">
-              Sua dieta atual
-            </v-card-title>
-
-            <v-card-text
-              >Você não possui nenhuma dieta ativa, crie ja a sua!</v-card-text
-            >
-
-            <v-card-actions>
-              <v-btn text to="/dashboard/dietas">
-                Criar dieta
-              </v-btn>
-            </v-card-actions>
-          </v-card>
+          <ActiveDietCard></ActiveDietCard>
         </v-col>
         <v-col cols="12" md="6">
-          <v-card rounded="xl">
-            <v-card-title class="headline">
-              Seu treino atual
-            </v-card-title>
-
-            <div v-if="!activeTraining">
-              <v-card-text>
-                Você não possui nenhuma plano de treino ativo, crie ja o seu!
-              </v-card-text>
-
-              <v-card-actions>
-                <v-btn text to="/dashboard/treinos">
-                  Criar Plano de treino
-                </v-btn>
-              </v-card-actions>
-            </div>
-
-            <div v-else>
-              <v-card-text>
-                <p v-text="activeTraining.name"></p>
-                <p></p>
-                <p></p>
-              </v-card-text>
-
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-icon>
-                  mdi-clock
-                </v-icon>
-                <small class="text--secondary mx-2"
-                  >Plano de treino se encerra
-                  {{ activeTraining.remaining }}</small
-                >
-              </v-card-actions>
-            </div>
-          </v-card>
+          <ActiveTrainingCard></ActiveTrainingCard>
         </v-col>
       </v-row>
 
@@ -149,6 +100,10 @@
 
 <script>
 import { mapGetters } from "vuex";
+const ActiveTrainingCard = () =>
+  import("@/components/Dashboard/Trainings/ActiveTrainingCard.vue");
+const ActiveDietCard = () =>
+  import("@/components/Dashboard/Diets/ActiveDietCard.vue");
 const DietInfo = () => import("@/components/Dashboard/Diets/DietInfo.vue");
 const DietSave = () => import("@/components/Dashboard/Diets/DietSave.vue");
 const TrainingInfo = () =>
@@ -162,7 +117,9 @@ export default {
     DietInfo,
     DietSave,
     TrainingInfo,
-    TrainingSave
+    TrainingSave,
+    ActiveTrainingCard,
+    ActiveDietCard
   },
 
   data: () => ({

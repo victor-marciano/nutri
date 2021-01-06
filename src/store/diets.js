@@ -45,8 +45,8 @@ const dietModule = {
         let userDiets = getters.diets.filter(
           diet => diet.userId === auth.currentUser.uid
         );
-  
-        return userDiets;  
+
+        return userDiets;
       }
     },
     systemDiets: (state, getters) => {

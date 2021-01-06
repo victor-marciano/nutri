@@ -1,7 +1,5 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-  >
+  <v-dialog v-model="dialog" :width="$vuetify.breakpoint.mobile ? '' : '500px'">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         v-on="on"
