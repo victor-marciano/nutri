@@ -3,10 +3,9 @@
     <div v-if="$vuetify.breakpoint.mobile">
       <v-tabs
         v-model="tab"
-        :vertical="$vuetify.breakpoint.mdAndUp"
-        :show-arrows="$vuetify.breakpoint.mobile"
-        :grow="$vuetify.breakpoint.mobile"
-        :centered="$vuetify.breakpoint.mobile"
+        show-arrows
+        grow
+        centered
         color="green lighten-3"
       >
         <v-tab>IMC</v-tab>

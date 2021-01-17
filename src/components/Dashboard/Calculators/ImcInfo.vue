@@ -2,7 +2,7 @@
   <v-card flat :color="$vuetify.breakpoint.mdAndUp ? 'transparent' : ''">
     <v-card-title class="d-flex justify-space-between">
       O que é o IMC?
-      <v-btn icon @click="dialog = false">
+      <v-btn icon @click="closeDialog" v-show="$vuetify.breakpoint.mobile">
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-card-title>
@@ -29,7 +29,7 @@
         width="90%"
         dark
         class="green lighten-3 my-3"
-        @click="dialog = false"
+        @click="closeDialog"
       >
         Entendi!
       </v-btn>
@@ -44,6 +44,16 @@ export default {
   name: "ImcInfo",
   components: {
     ImcTable
+  },
+
+  data: () => ({
+    dialog: false
+  }),
+
+  methods: {
+    closeDialog () {
+      this.$emit('close')
+    }
   }
 };
 </script>

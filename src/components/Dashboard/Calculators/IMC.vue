@@ -1,9 +1,9 @@
 <template>
   <div>
-    <v-card height="96vh" flat color="transparent">
+    <v-card height="96vh" flat>
       <v-card-title class="d-flex justify-space-between">
         IMC
-        <v-dialog v-model="dialog" :fullscreen="$vuetify.breakpoint.mobile">
+        <v-dialog v-model="dialog" fullscreen v-if="$vuetify.breakpoint.mobile">
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-on="on"
@@ -16,7 +16,7 @@
             </v-btn>
           </template>
 
-          <ImcInfo></ImcInfo>
+          <ImcInfo @close="dialog = false"></ImcInfo>
         </v-dialog>
       </v-card-title>
 

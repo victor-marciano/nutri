@@ -1,8 +1,8 @@
 <template>
-  <v-card flat :color="$vuetify.breakpoint.mdAndUp ? 'transparent' : ''">
+  <v-card flat>
     <v-card-title class="d-flex justify-space-between">
       O que é o TMB?
-      <v-btn icon @click="dialog = false" v-show="$vuetify.breakpoint.mobile">
+      <v-btn icon @click="closeDialog" v-show="$vuetify.breakpoint.mobile">
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-card-title>
@@ -32,7 +32,7 @@
         width="90%"
         dark
         class="green lighten-3 my-3"
-        @click="dialog = false"
+        @click="closeDialog"
         v-show="$vuetify.breakpoint.mobile"
       >
         Entendi!
@@ -43,7 +43,16 @@
 
 <script>
 export default {
-  name: "TmbInfo"
+  name: "TmbInfo",
+  data: () => ({
+    dialog: false
+  }),
+
+  methods: {
+    closeDialog () {
+      this.$emit('close')
+    }
+  }
 };
 </script>
 

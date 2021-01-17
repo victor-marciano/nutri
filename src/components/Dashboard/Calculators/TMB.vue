@@ -1,11 +1,11 @@
 <template>
-  <v-card height="96vh" flat color="transparent">
+  <v-card height="96vh" flat>
     <v-card-title class="d-flex justify-space-between">
       TMB(Taxa metabólica basal)
       <v-dialog
-        v-if="$vuetify.breakpoint.mobile"
         v-model="dialog"
-        :fullscreen="$vuetify.breakpoint.mobile"
+        fullscreen
+        v-if="$vuetify.breakpoint.mobile"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn
@@ -17,7 +17,10 @@
           >
             <v-icon class="text-right">mdi-help-circle</v-icon>
           </v-btn>
+
         </template>
+        
+        <TmbInfo @close="dialog = false"></TmbInfo>
       </v-dialog>
     </v-card-title>
 
@@ -36,7 +39,7 @@
         item-text="name"
         item-value="value"
       ></v-select>
-      <v-btn width="100%" dark class="green lighten-3 my-5" @click="exec">
+      <v-btn width="100%" dark class="green lighten-2 my-5" @click="exec">
         Calcular
       </v-btn>
     </v-card-text>
@@ -48,7 +51,13 @@
 </template>
 
 <script>
+const TmbInfo = () => import('@/components/Dashboard/Calculators/TmbInfo.vue')
+
 export default {
+  components: {
+    TmbInfo
+  },
+
   data: () => ({
     dialog: false,
     result: null,

@@ -3,7 +3,7 @@
     <v-card height="96vh" flat color="transparent">
       <v-card-title class="d-flex justify-space-between">
         Peso Ideal(Lemmens)
-        <v-dialog v-model="dialog" :fullscreen="$vuetify.breakpoint.mobile">
+        <v-dialog v-model="dialog" fullscreen v-if="$vuetify.breakpoint.mobile">
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-on="on"
