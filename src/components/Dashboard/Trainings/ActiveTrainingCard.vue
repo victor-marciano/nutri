@@ -2,6 +2,8 @@
   <v-card rounded="xl" elevation="4" class="text-center">
     <v-card-title class="headline">
       Seu treino atual
+      <v-spacer></v-spacer>
+      <span class="text--secondary body-2" v-if="activeTraining">{{ activeTraining.name }}</span>
     </v-card-title>
 
     <div v-if="!activeTraining">
@@ -17,16 +19,14 @@
     </div>
 
     <div v-else>
-      <v-card-text>
-        <h4 v-text="activeTraining.name"></h4>
-      </v-card-text>
 
       <v-card-text v-if="todayTraining">
-        <h5>Treino de hoje</h5>
+        <p class="text-center"> Treino de hoje - {{ todayTraining.weekDay }}</p>
 
         <v-list-item
           v-for="exercise in todayTraining.exercises"
           :key="exercise.name"
+          dense
         >
           <v-list-item-icon>
             <v-icon>mdi-dumbbell</v-icon>

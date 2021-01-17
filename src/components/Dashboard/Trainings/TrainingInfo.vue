@@ -33,7 +33,7 @@
         <div v-for="(series, index) in training.trainings" :key="index">
           <h4 class="my-2">{{ series.weekDay }}</h4>
 
-          <v-simple-table>
+          <v-simple-table dense>
             <template v-slot:default>
               <thead>
                 <tr>
