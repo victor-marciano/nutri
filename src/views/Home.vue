@@ -14,86 +14,47 @@
       {{ notification.text }}
     </v-snackbar>
 
-    <v-container>
+    <v-container fluid>
       <v-row>
-        <v-col cols="12" md="6">
-          <ActiveDietCard></ActiveDietCard>
+        <v-col cols="12" md="7" class="mx-auto">
+          <p class="headline">Dietas populares</p>
+          <v-row>
+            <v-col cols="12" md="6" v-for="(diet, index) in systemDiets" :key="index">
+              <DietCard :diet="diet"></DietCard>
+            </v-col>
+          </v-row>
+          
+          <v-divider class="py-3"></v-divider>    
+        
+        <p class="headline">Treinos populares</p>
+
+        <v-row>
+          <v-col
+            cols="12"
+            md="4"
+            v-for="(training, index) in systemTrainings"
+            :key="index"
+          >
+            <TrainingCard :training="training"></TrainingCard>
+          </v-col>
+        </v-row>
         </v-col>
-        <v-col cols="12" md="6">
-          <ActiveTrainingCard></ActiveTrainingCard>
+        
+        <v-divider class="px-2" vertical></v-divider> 
+
+        <v-col cols="12" md="4">
+          <v-row>
+            <v-col cols="12">
+              <ActiveDietCard></ActiveDietCard>
+            </v-col>
+            <v-col cols="12">
+              <ActiveTrainingCard></ActiveTrainingCard>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
 
-      <v-divider class="py-3"></v-divider>
 
-      <p class="headline">Dietas populares</p>
-
-      <v-row>
-        <v-col cols="12" md="4" v-for="(diet, index) in diets" :key="index">
-          <v-card rounded="xl" outlined>
-            <v-card-title class="text-center">{{ diet.name }}</v-card-title>
-
-            <v-card-text>
-              <div class="d-flex justify-space-around">
-                <p class="text--secondary">Objetivo</p>
-                <span class="text--secondary"><b>Objetivo</b></span>
-              </div>
-              <div class="d-flex justify-space-around">
-                <p class="text--secondary">Calorias</p>
-                <span class="text--secondary"><b>Calorias</b></span>
-              </div>
-              <div class="d-flex justify-space-around">
-                <p class="text--secondary">Peso recomendado</p>
-                <span class="text--secondary"><b>Peso recomendado</b></span>
-              </div>
-            </v-card-text>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-
-              <DietInfo :diet="diet" system></DietInfo>
-              <DietSave :diet="diet"></DietSave>
-            </v-card-actions>
-          </v-card>
-        </v-col>
-      </v-row>
-      <v-divider class="py-3"></v-divider>
-
-      <p class="headline">Treinos populares</p>
-
-      <v-row>
-        <v-col
-          cols="12"
-          md="4"
-          v-for="(training, index) in systemTrainings"
-          :key="index"
-        >
-          <v-card rounded="xl">
-            <v-card-title>{{ training.name }}</v-card-title>
-
-            <v-card-text>
-              <v-chip class="ma-2" ripple>
-                <v-avatar left color="black">{{
-                  training.trainings.length
-                }}</v-avatar>
-                Treinos por semana
-              </v-chip>
-              <v-chip ripple class="ma-2">
-                Treino {{ training.gender || "Unissex" }}
-              </v-chip>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-
-              <TrainingInfo :training="training" system></TrainingInfo>
-              <TrainingSave
-                :training="training"
-                @complete="showNotification"
-              ></TrainingSave>
-            </v-card-actions>
-          </v-card>
-        </v-col>
-      </v-row>
     </v-container>
   </div>
 </template>
@@ -104,20 +65,15 @@ const ActiveTrainingCard = () =>
   import("@/components/Dashboard/Trainings/ActiveTrainingCard.vue");
 const ActiveDietCard = () =>
   import("@/components/Dashboard/Diets/ActiveDietCard.vue");
-const DietInfo = () => import("@/components/Dashboard/Diets/DietInfo.vue");
-const DietSave = () => import("@/components/Dashboard/Diets/DietSave.vue");
-const TrainingInfo = () =>
-  import("@/components/Dashboard/Trainings/TrainingInfo.vue");
-const TrainingSave = () =>
-  import("@/components/Dashboard/Trainings/TrainingSave.vue");
+const DietCard = () => import("@/components/Dashboard/Diets/DietCard.vue");
+const TrainingCard = () =>
+  import("@/components/Dashboard/Trainings/TrainingCard.vue");
 
 export default {
   name: "Home",
   components: {
-    DietInfo,
-    DietSave,
-    TrainingInfo,
-    TrainingSave,
+    DietCard,
+    TrainingCard,
     ActiveTrainingCard,
     ActiveDietCard
   },
@@ -138,7 +94,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["user", "diets", "systemTrainings", "activeTraining"])
+    ...mapGetters(["user", "systemDiets", "systemTrainings", "activeTraining"])
   }
 };
 </script>

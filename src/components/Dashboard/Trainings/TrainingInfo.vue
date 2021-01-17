@@ -10,11 +10,10 @@
       </v-tooltip>
 
       <v-btn
-        x-small
-        color="info"
+        icon
         v-on="on"
         v-bind="attrs"
-        class="trainingInfo mr-1"
+        class="trainingInfo"
       >
         <v-icon>mdi-information-variant</v-icon>
       </v-btn>

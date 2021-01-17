@@ -96,9 +96,9 @@
               </v-list-item>
             </template>
 
-            <v-toolbar color="green lighten-3">
+            <v-toolbar>
               <v-toolbar-title>
-                <v-icon size="28" class="mr-2" @click="configDialog = false"
+                <v-icon size="28" class="mr-2" color="green lighten-3" @click="configDialog = false"
                   >mdi-arrow-left</v-icon
                 >
                 Configurações

@@ -4,13 +4,10 @@
       <v-btn
         v-on="on"
         v-bind="attrs"
-        dark
-        x-small
-        color="success"
-        class="mx-1"
+        icon
         :disabled="training.active"
       >
-        <v-icon small>
+        <v-icon>
           mdi-check-circle
         </v-icon>
       </v-btn>

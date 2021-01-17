@@ -155,14 +155,9 @@
                     <v-text-field
                       v-model="qtd[index]"
                       placeholder="Quantidade(g)"
+                      
                     >
                     </v-text-field>
-
-                    <v-spacer></v-spacer>
-
-                    <v-btn text color="secondary" icon>
-                      <v-icon>mdi-flag</v-icon>
-                    </v-btn>
                   </v-card-actions>
                 </v-expansion-panel-content>
               </v-expansion-panel>

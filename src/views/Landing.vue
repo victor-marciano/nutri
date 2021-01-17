@@ -18,17 +18,17 @@
       </v-btn>
     </v-fab-transition>
 
-    <!-- <v-img src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg" :height="500"></v-img> -->
-    <div class="presentation d-flex align-center">
+    <div class="presentation d-flex">
       <v-container>
         <v-row>
           <v-col cols="12" md="6">
+            <v-img
+              src="../assets/6569.jpg"
+              :height="$vuetify.breakpoint.mobile ? 200 : 400"
+            ></v-img>
+          </v-col>
+          <v-col cols="12" md="6">
             <v-sheet light class="transparent text-center py-5">
-              <v-img
-                src="../assets/fullLogo.png"
-                width="250"
-                class="mx-auto"
-              ></v-img>
               <br />
               <p class="body-2 text--secondary">
                 Somos a tecnologia impactando positivamente na sua saúde e
@@ -45,12 +45,6 @@
                 Saiba mais
               </v-btn>
             </v-sheet>
-          </v-col>
-          <v-col cols="12" md="6">
-            <v-img
-              src="../assets/6569.jpg"
-              :height="$vuetify.breakpoint.mobile ? 200 : 400"
-            ></v-img>
           </v-col>
         </v-row>
       </v-container>

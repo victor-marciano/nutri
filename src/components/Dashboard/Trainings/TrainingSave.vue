@@ -1,22 +1,19 @@
 <template>
-  <v-dialog v-model="dialog">
+  <v-dialog v-model="dialog" :width="$vuetify.breakpoint.mobile ? '' : '500px'">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
-        color="green"
-        light
-        dark
-        x-small
+        icon
         v-on="on"
         v-bind="attrs"
         class="mx-1"
       >
-        <v-icon>mdi-clipboard-plus-outlined</v-icon>
+        <v-icon>mdi-plus</v-icon>
       </v-btn>
     </template>
 
     <v-card>
       <v-card-title
-        >Você gostaria de adicionar <b>{{ training.name }}</b> para sua lista de
+        >Você gostaria de adicionar <b> {{ training.name }} </b> para sua lista de
         Plano de treinos?</v-card-title
       >
       <v-card-actions>

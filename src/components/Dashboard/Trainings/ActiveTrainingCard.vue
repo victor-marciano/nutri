@@ -1,5 +1,5 @@
 <template>
-  <v-card rounded="xl">
+  <v-card rounded="xl" elevation="4" class="text-center">
     <v-card-title class="headline">
       Seu treino atual
     </v-card-title>
@@ -25,25 +25,25 @@
         <h5>Treino de hoje</h5>
 
         <v-list-item
-            v-for="exercise in todayTraining.exercises"
-            :key="exercise.name"
+          v-for="exercise in todayTraining.exercises"
+          :key="exercise.name"
         >
-            <v-list-item-icon>
-                <v-icon>mdi-dumbbell</v-icon>
-            </v-list-item-icon>
+          <v-list-item-icon>
+            <v-icon>mdi-dumbbell</v-icon>
+          </v-list-item-icon>
 
-            <v-list-item-title>{{ exercise.name }}</v-list-item-title>
+          <v-list-item-title>{{ exercise.name }}</v-list-item-title>
 
-            <v-list-item-subtitle class="text-right">
+          <v-list-item-subtitle class="text-right">
             {{ exercise.series }}
-            </v-list-item-subtitle>
+          </v-list-item-subtitle>
         </v-list-item>
-
       </v-card-text>
 
-        <v-card-text v-else>
-            <p>Hoje você não treina. Dia de descansar!</p>
-        </v-card-text>
+      <v-card-text v-else>
+        <v-img contain :aspect-ratio="7/3" class="mb-5" :src="require('@/assets/001-bedroom.svg')"></v-img>
+        <p class="text--secondary">Hoje você não treina. Dia de descansar!</p>
+      </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-icon>
@@ -59,6 +59,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+
 export default {
   name: "ActiveTrainingCard",
 

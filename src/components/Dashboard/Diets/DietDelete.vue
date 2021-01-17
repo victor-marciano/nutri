@@ -4,12 +4,10 @@
       <v-btn
         v-on="on"
         v-bind="attrs"
-        dark
-        x-small
+        icon
         @click="deleteDiet"
-        color="red"
       >
-        <v-icon small>
+        <v-icon>
           mdi-delete
         </v-icon>
       </v-btn>

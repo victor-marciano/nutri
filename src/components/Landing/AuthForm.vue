@@ -10,6 +10,7 @@
       v-model="password"
       outlined
       placeholder="Senha"
+      type="password"
       dense
     ></v-text-field>
     <v-btn :loading="loading" width="100%" small type="submit">Entrar</v-btn>
