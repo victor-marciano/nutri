@@ -5,7 +5,6 @@
         v-on="on"
         v-bind="attrs"
         icon
-        @click="deleteDiet"
       >
         <v-icon>
           mdi-delete
@@ -45,7 +44,6 @@ export default {
   methods: {
     async deleteDiet() {
       try {
-        console.log(this.diet.uid);
         await db
           .collection("diets")
           .doc(this.diet.uid)

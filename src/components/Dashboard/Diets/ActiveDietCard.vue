@@ -2,6 +2,8 @@
   <v-card rounded="xl" elevation="4" class="text-center">
       <v-card-title class="headline">
         Sua dieta atual
+        <v-spacer></v-spacer>
+      <span class="text--secondary body-2" v-if="activeDiet">{{ activeDiet.name }}</span>
       </v-card-title>
 
       <div v-if="!activeDiet">

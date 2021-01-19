@@ -142,15 +142,57 @@
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
                   </div>
+                  <div>
+                    <v-row>
+
+                      <v-col cols="7">
+                          <v-text-field
+                            placeholder="Nome da refeição"
+                            v-model="meal.name"
+                          ></v-text-field>
+                      </v-col>
+                      <v-col cols="5">
+                          <v-menu
+                          v-model="menu3[index]"
+                          :close-on-content-click="false"
+                          :nudge-right="40"
+                          transition="scale-transition"
+                          offset-y
+                          max-width="290px"
+                          min-width="290px"
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-text-field
+                              label="Horário"
+                              :value="meal.time"
+                              prepend-icon="mdi-clock-time-four-outline"
+                              readonly
+                              v-bind="attrs"
+                              v-on="on"
+                            ></v-text-field>
+                          </template>
+                          <v-time-picker
+                            v-if="menu3[index]"
+                            v-model="meal.time"
+                            full-width
+                            @change="menu3[index] = false"
+                            format="24hr"
+                            color="green lighten-2"
+                          ></v-time-picker>
+                        </v-menu>
+                      </v-col>
+                    </v-row>
+                  </div>
                   <div v-for="(food, index) in meal.foods" :key="index">
                     <v-row>
                       <v-col cols="8">
                         <v-select
-                          v-model="food.name"
-                          label="Exercício"
+                          v-model="food.data"
+                          label="Alimento"
                           :items="foods"
                           item-text="name"
                           cache-items
+                          return-object
                         ></v-select>
                       </v-col>
                       <v-col cols="4">
@@ -210,6 +252,7 @@ export default {
     dialog: false,
     menu1: false,
     menu2: false,
+    menu3: [],
     e6: 1,
     objectives: [
       "Hipertrofia",
@@ -223,13 +266,13 @@ export default {
       objective: "",
       start: null,
       finish: null,
-      meals: [{ name: "", time: null, foods: [{ name: "", qtd: 0 }] }]
+      meals: [{ name: "", time: null, foods: [{ data: {}, qtd: 0 }] }]
     }
   }),
 
   methods: {
     addMeal() {
-      this.newDiet.meals.push({ name: "", time: null, foods: [] });
+      this.newDiet.meals.push({ name: "", time: null, foods: [{ data: {}, qtd: 0 }] });
     },
 
     addFoods(index) {
@@ -240,6 +283,9 @@ export default {
       let formattedDiet = Object.assign(this.newDiet, {
         userId: auth.currentUser.uid
       });
+
+      console.log(this.newDiet)
+      console.log(formattedDiet)
       try {
         await db.collection("diets").add(formattedDiet);
         this.dialog = false;
@@ -267,7 +313,6 @@ export default {
     ...mapGetters(["foods"]),
 
     formatedStartDate() {
-      console.log("cheguei");
       return this.newDiet.start
         ? moment(this.newDiet.start).format("DD/MM/YYYY")
         : null;

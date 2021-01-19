@@ -17,6 +17,12 @@
         </v-icon>
         Treino {{ training.gender || "Unissex" }}
     </v-chip>
+    <v-chip ripple class="ma-2">
+        <v-icon class="mr-2">
+            {{ trainingTypeIcon.icon }}
+        </v-icon>
+        {{ training.type }}
+    </v-chip>
     </v-card-text>
     <v-card-actions>
         <v-chip
@@ -24,6 +30,7 @@
       color="orange darken-3"
       text-color="white"
       x-small
+      v-if="training.editorChoice"
     >
       <b>Escolha do editor</b>
       <v-icon right size="12">
@@ -58,7 +65,11 @@ export default {
     },
 
     data: () => ({
-        gender: ''
+        gender: '',
+        types: [
+            { name: 'Musculação', icon: 'mdi-weight-kilogram' },
+            { name: 'Aeróbico', icon: 'mdi-run-fast' },
+        ]
     }),
 
     mounted() {
@@ -74,6 +85,10 @@ export default {
             } else {
                 return 'mdi-gender-male-female'
             }
+        },
+
+        trainingTypeIcon () {
+            return this.types.find(type => this.training.type === type.name)
         }
 
     }
