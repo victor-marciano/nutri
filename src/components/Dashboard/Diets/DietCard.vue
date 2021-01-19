@@ -3,16 +3,16 @@
     <v-card-title class="text-center">{{ diet.name }}</v-card-title>
 
     <v-card-subtitle>
-      <div>
+      <div class="d-flex justify-start">
         <v-rating
           color="orange darken-3"
           background-color="orange darken-3"
-          empty-icon="$ratingFull"
-          half-increments
+          readonly
           small
           dense
+          :value="diet.rate"
         ></v-rating>
-        (1000)
+        <span>({{ diet.rate }}) - {{ diet.votes }} votos</span>
       </div>
     </v-card-subtitle>
 
@@ -54,7 +54,7 @@
     </v-card-text>
 
     <v-card-actions>
-      <DietRate></DietRate>
+      <DietRate :diet="diet"></DietRate>
       <v-spacer></v-spacer>
 
       <DietInfo :diet="diet" system></DietInfo>

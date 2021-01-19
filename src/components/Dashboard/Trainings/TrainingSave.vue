@@ -68,7 +68,7 @@ export default {
           show: true,
           color: "error",
           icon: "mdi-close",
-          text: `Falha ao adicionar Dieta`
+          text: `Falha ao adicionar Treino`
         });
       }
     }

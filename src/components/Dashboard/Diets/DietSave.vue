@@ -25,7 +25,8 @@
 </template>
 
 <script>
-import { db } from "../../../firebase";
+import { db, auth } from "../../../firebase";
+import moment from "../../../date";
 
 export default {
   name: "dietActive",
@@ -34,24 +35,47 @@ export default {
   },
 
   data: () => ({
-    dialog: false
+    dialog: false,
+    newDiet: {}
   }),
+
+  created() {
+    this.newDiet = {
+      name: this.diet.name,
+      objective: this.diet.objective,
+      start: moment().format("DD/MM/YYYY"),
+      finish: moment()
+        .add(1, "month")
+        .format("DD/MM/YYYY"),
+      meals: this.diet.meals,
+      userId: auth.currentUser.uid
+    };
+  },
 
   methods: {
     async addDietToUser() {
       try {
-        await Promise.all([
-          db
-            .collection("diets")
-            .doc(this.activediet.uid)
-            .update({ active: false })
-        ]);
+        await db.collection("diets").add(this.newDiet);
+
+        this.$emit("complete", {
+          show: true,
+          color: "success",
+          icon: "mdi-check-circle",
+          text: `${this.newDiet.name} adicionado com sucesso`
+        });
+
+        this.dialog = false;
 
         this.$store.dispatch("fetchDiets");
       } catch (error) {
-        console.log(error);
+        this.$emit("complete", {
+          show: true,
+          color: "error",
+          icon: "mdi-close",
+          text: `Falha ao adicionar Dieta`
+        });
       }
-    }
+    }    
   }
 };
 </script>
