@@ -23,8 +23,26 @@
       </div>
 
       <div v-else>
+        <v-card-text v-if="nextMeal">
+          <span class="body-2">Proxima refeição</span>
+          <p class="text--secondary">{{ nextMealRemaining }} você deverá consumir os seguintes alimentos:</p>
+          
+          <v-simple-table height="100px" dense>
+            <template v-slot:default>
+              <tbody>
+                <tr v-for="food in nextMeal.foods" :key="food.name">
+                  <td>{{ food.qtd }}g de {{ food.data.name }}</td>
+                  <td>{{ (food.data.kcal * (food.qtd / 100)).toFixed(0)}}kcal</td>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+
+        </v-card-text>
+
+        <v-divider inset class="mx-auto"></v-divider>
+
         <v-card-text>
-          <h5>Próxima refeição</h5>
 
         </v-card-text>
 
@@ -43,6 +61,8 @@
 
 <script>
 import { mapGetters } from "vuex";
+import moment from "../../../date";
+
 export default {
   name: "ActiveDietCard",
 
@@ -50,7 +70,11 @@ export default {
     ...mapGetters(["activeDiet"]),
 
     nextMeal() {
-      return 1;
+      return this.activeDiet.meals.find(meal =>  moment(meal.time, 'h:mm').isAfter())
+    },
+
+    nextMealRemaining() {
+      return moment(this.nextMeal.time, 'h:mm').fromNow()
     }
   }
 };

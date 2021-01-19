@@ -18,7 +18,7 @@
       </v-card-title>
 
       <v-card-text>
-        <div v-for="(meal, index) in diet.meals" :key="index">
+        <div v-for="(meal, index) in diet.meals" :key="index" class="my-5">
           <h5>{{ meal.name }} - {{ meal.time }}</h5>
 
           <v-simple-table dense>
