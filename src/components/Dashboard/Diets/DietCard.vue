@@ -3,14 +3,17 @@
     <v-card-title class="text-center">{{ diet.name }}</v-card-title>
     
     <v-card-subtitle>
-        <v-rating
-            color="orange darken-3"
-            background-color="orange darken-3"
-            empty-icon="$ratingFull"
-            half-increments
-            small
-            dense
-        ></v-rating>
+        <div>
+            <v-rating
+                color="orange darken-3"
+                background-color="orange darken-3"
+                empty-icon="$ratingFull"
+                half-increments
+                small
+                dense
+            ></v-rating>
+            (1000)
+        </div>
     </v-card-subtitle>
 
     <v-card-subtitle>Descrição da dieta Descrição da dieta Descrição da dieta Descrição da dieta Descrição da dieta Descrição da dieta Descrição da dieta Descrição da dieta Descrição da dieta </v-card-subtitle>
@@ -49,6 +52,7 @@
     </v-card-text>
 
     <v-card-actions>
+        <DietRate></DietRate>
         <v-spacer></v-spacer>
 
         <DietInfo :diet="diet" system></DietInfo>
@@ -60,12 +64,14 @@
 <script>
 const DietInfo = () => import('@/components/Dashboard/Diets/DietInfo.vue')
 const DietSave = () => import('@/components/Dashboard/Diets/DietSave.vue')
+const DietRate = () => import('@/components/Dashboard/Diets/DietRate.vue')
 
 export default {
     name: 'DietCard',
     components: {
         DietInfo,
-        DietSave
+        DietSave,
+        DietRate
     },
 
     props: {

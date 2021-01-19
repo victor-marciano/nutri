@@ -17,7 +17,7 @@
     <v-container fluid>
       <v-row>
         <v-col cols="12" md="7" class="mx-auto">
-          <p class="headline">Dietas populares</p>
+          <p class="headline">Dietas prontas</p>
           <v-row>
             <v-col cols="12" md="6" v-for="(diet, index) in systemDiets" :key="index">
               <DietCard :diet="diet"></DietCard>
@@ -26,7 +26,7 @@
           
           <v-divider class="py-3"></v-divider>    
         
-        <p class="headline">Treinos populares</p>
+        <p class="headline">Fichas de treino prontas</p>
 
         <v-row>
           <v-col

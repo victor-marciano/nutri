@@ -13,9 +13,9 @@
     </v-chip>
     <v-chip ripple class="ma-2">
         <v-icon class="mr-2">
-            {{ trainingGenderIcon }}
+            {{ trainingGender.icon }}
         </v-icon>
-        Treino {{ training.gender || "Unissex" }}
+        Treino {{ trainingGender.name }}
     </v-chip>
     <v-chip ripple class="ma-2">
         <v-icon class="mr-2">
@@ -65,26 +65,20 @@ export default {
     },
 
     data: () => ({
-        gender: '',
+        genders: [
+            { name: 'Masculino', icon: 'mdi-gender-male' },
+            { name: 'Feminino', icon: 'mdi-gender-female' }
+        ],
+
         types: [
             { name: 'Musculação', icon: 'mdi-weight-kilogram' },
             { name: 'Aeróbico', icon: 'mdi-run-fast' },
         ]
     }),
 
-    mounted() {
-        this.gender = this.training.gender
-    },
-
     computed: {
-        trainingGenderIcon (){
-            if (this.gender === 'Masculino') {
-                return 'mdi-gender-male'
-            } else if (this.gender === 'Feminino') {
-                return 'mdi-gender-female'
-            } else {
-                return 'mdi-gender-male-female'
-            }
+        trainingGender (){
+            return this.genders.find(gender => this.training.gender === gender.name) || { name: 'Unissex', icon: 'mdi-gender-male-female'}
         },
 
         trainingTypeIcon () {

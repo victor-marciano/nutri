@@ -186,14 +186,17 @@
                   <div v-for="(food, index) in meal.foods" :key="index">
                     <v-row>
                       <v-col cols="8">
-                        <v-select
+                        <v-autocomplete
                           v-model="food.data"
                           label="Alimento"
                           :items="foods"
                           item-text="name"
                           cache-items
                           return-object
-                        ></v-select>
+                          no-data-text="Nenhum alimento cadastrado"
+                          append-icon
+                          single-line
+                        ></v-autocomplete>
                       </v-col>
                       <v-col cols="4">
                         <v-text-field

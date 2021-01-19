@@ -60,63 +60,47 @@ const db = firebase.firestore();
 //   });
 
 const training = {
-  name: "Treino ABCDE (Avançado)",
+  name: "Treino Feminino Iniciante",
   objective: "Hipertrofia",
-  genero: "Masculino",
+  genero: "Feminino",
   start: null,
   finish: null,
+  system: true,
   trainings: [
     {
       weekDay: "Segunda Feira",
       exercises: [
-        { name: "Supino Reto", series: "4x6" },
-        { name: "Supino Inclinado", series: "4x6" },
-        { name: "Supino Declinado", series: "Até a falha" },
-        { name: "Crossover", series: "4x8" },
-        { name: "Crucifixo Reto", series: "4x6" }
-      ]
-    },
-    {
-      weekDay: "Terça Feira",
-      exercises: [
-        { name: "Barra Fixa", series: "4x8" },
-        { name: "Remada Curvada", series: "4x8" },
-        { name: "Remada Sentada", series: "4x10" },
-        { name: "Pullover", series: "4x10" },
-        { name: "Levantamento Terra", series: "4x10" }
+        { name: "Agachamento Livre", series: "3x10" },
+        { name: "Stiff", series: "4x6" },
+        { name: "Passada", series: "Até a falha" },
+        { name: "Flexora", series: "4x8" },
+        { name: "Extensora", series: "4x6" },
+        { name: "Ponte com Barra", series: "4x6" }
       ]
     },
     {
       weekDay: "Quarta Feira",
       exercises: [
-        { name: "Agachamento Livre", series: "4x6" },
-        { name: "Leg Press", series: "4x6" },
-        { name: "Stiff", series: "Até a falha" },
-        { name: "Extensora", series: "4x8" },
-        { name: "Flexora", series: "4x6" }
-      ]
-    },
-    {
-      weekDay: "Quinta Feira",
-      exercises: [
-        { name: "Desenvolvimento Sentado", series: "4x8" },
-        { name: "Desenvolvimento Arnold", series: "4x8" },
+        { name: "Supino Reto Máquina", series: "4x8" },
+        { name: "Pulldown", series: "4x8" },
+        { name: "Desenvolvimento Haltéres", series: "4x10" },
         { name: "Elevação Lateral", series: "4x10" },
-        { name: "Encolhimento Barra", series: "4x10" },
-        { name: "Encolhimento com haltéres", series: "4x10" }
+        { name: "Tríceps Corda", series: "4x10" },
+        { name: "Rosca Alternada", series: "4x10" },
+        { name: "Panturrilha no Leg Press", series: "4x10" },
       ]
     },
     {
       weekDay: "Sexta Feira",
       exercises: [
-        { name: "Paralelas", series: "4x8" },
-        { name: "Tríceps Francês", series: "4x8" },
-        { name: "Tríceps Pulley", series: "4x10" },
-        { name: "Rosca Direta", series: "4x10" },
-        { name: "Rosca Concentrada", series: "4x10" },
-        { name: "Rosca Martelo", series: "4x10" }
+        { name: "Agachamento Livre", series: "3x10" },
+        { name: "Stiff", series: "4x6" },
+        { name: "Passada", series: "Até a falha" },
+        { name: "Flexora", series: "4x8" },
+        { name: "Extensora", series: "4x6" },
+        { name: "Ponte com Barra", series: "4x6" }
       ]
-    }
+    },
   ]
 };
 
