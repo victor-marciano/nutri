@@ -46,13 +46,25 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="food in meal.foods" :key="food.data.name" class="text-center">
+                <tr
+                  v-for="food in meal.foods"
+                  :key="food.data.name"
+                  class="text-center"
+                >
                   <td>{{ food.data.name }}</td>
                   <td class="font-weight-bold">{{ food.qtd }}g</td>
-                  <td class="font-weight-bold">{{ (food.data.kcal * (food.qtd / 100)).toFixed(0) }}kcal</td>
-                  <td class="font-weight-bold">{{ (food.data.carbs * (food.qtd / 100)).toFixed(0) }}g</td>
-                  <td class="font-weight-bold">{{ (food.data.protein * (food.qtd / 100)).toFixed(0) }}g</td>
-                  <td class="font-weight-bold">{{ (food.data.fats * (food.qtd / 100)).toFixed(0) }}g</td>
+                  <td class="font-weight-bold">
+                    {{ (food.data.kcal * (food.qtd / 100)).toFixed(0) }}kcal
+                  </td>
+                  <td class="font-weight-bold">
+                    {{ (food.data.carbs * (food.qtd / 100)).toFixed(0) }}g
+                  </td>
+                  <td class="font-weight-bold">
+                    {{ (food.data.protein * (food.qtd / 100)).toFixed(0) }}g
+                  </td>
+                  <td class="font-weight-bold">
+                    {{ (food.data.fats * (food.qtd / 100)).toFixed(0) }}g
+                  </td>
                 </tr>
               </tbody>
             </template>

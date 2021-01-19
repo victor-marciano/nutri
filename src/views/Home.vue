@@ -19,28 +19,33 @@
         <v-col cols="12" md="7" class="mx-auto">
           <p class="headline">Dietas prontas</p>
           <v-row>
-            <v-col cols="12" md="6" v-for="(diet, index) in systemDiets" :key="index">
+            <v-col
+              cols="12"
+              md="6"
+              v-for="(diet, index) in systemDiets"
+              :key="index"
+            >
               <DietCard :diet="diet"></DietCard>
             </v-col>
           </v-row>
-          
-          <v-divider class="py-3"></v-divider>    
-        
-        <p class="headline">Fichas de treino prontas</p>
 
-        <v-row>
-          <v-col
-            cols="12"
-            md="4"
-            v-for="(training, index) in systemTrainings"
-            :key="index"
-          >
-            <TrainingCard :training="training"></TrainingCard>
-          </v-col>
-        </v-row>
+          <v-divider class="py-3"></v-divider>
+
+          <p class="headline">Fichas de treino prontas</p>
+
+          <v-row>
+            <v-col
+              cols="12"
+              md="4"
+              v-for="(training, index) in systemTrainings"
+              :key="index"
+            >
+              <TrainingCard :training="training"></TrainingCard>
+            </v-col>
+          </v-row>
         </v-col>
-        
-        <v-divider class="px-2" vertical></v-divider> 
+
+        <v-divider class="px-2" vertical></v-divider>
 
         <v-col cols="12" md="4">
           <v-row>
@@ -53,8 +58,6 @@
           </v-row>
         </v-col>
       </v-row>
-
-
     </v-container>
   </div>
 </template>

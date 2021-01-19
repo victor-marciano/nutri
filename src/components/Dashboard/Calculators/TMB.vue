@@ -2,11 +2,7 @@
   <v-card height="96vh" flat>
     <v-card-title class="d-flex justify-space-between">
       TMB(Taxa metabólica basal)
-      <v-dialog
-        v-model="dialog"
-        fullscreen
-        v-if="$vuetify.breakpoint.mobile"
-      >
+      <v-dialog v-model="dialog" fullscreen v-if="$vuetify.breakpoint.mobile">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             v-on="on"
@@ -17,9 +13,8 @@
           >
             <v-icon class="text-right">mdi-help-circle</v-icon>
           </v-btn>
-
         </template>
-        
+
         <TmbInfo @close="dialog = false"></TmbInfo>
       </v-dialog>
     </v-card-title>
@@ -51,7 +46,7 @@
 </template>
 
 <script>
-const TmbInfo = () => import('@/components/Dashboard/Calculators/TmbInfo.vue')
+const TmbInfo = () => import("@/components/Dashboard/Calculators/TmbInfo.vue");
 
 export default {
   components: {

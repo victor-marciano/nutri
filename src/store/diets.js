@@ -32,7 +32,9 @@ const dietModule = {
   getters: {
     diets: state => state.diets,
     activeDiet: (state, getters) => {
-      let activeDiet = getters.diets ? getters.diets.find(diet => diet.active) : false
+      let activeDiet = getters.diets
+        ? getters.diets.find(diet => diet.active)
+        : false;
       if (activeDiet) {
         activeDiet = Object.assign(activeDiet, {
           remaining: moment(activeDiet.finish).fromNow()
@@ -50,7 +52,9 @@ const dietModule = {
       }
     },
     systemDiets: (state, getters) => {
-      let systemDiets = getters.diets ? getters.diets.filter(diet => diet.system) : false
+      let systemDiets = getters.diets
+        ? getters.diets.filter(diet => diet.system)
+        : false;
       return systemDiets;
     }
   }

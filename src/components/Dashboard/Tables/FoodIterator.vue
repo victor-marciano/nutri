@@ -155,7 +155,6 @@
                     <v-text-field
                       v-model="qtd[index]"
                       placeholder="Quantidade(g)"
-                      
                     >
                     </v-text-field>
                   </v-card-actions>

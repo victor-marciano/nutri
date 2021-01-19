@@ -25,12 +25,7 @@
     </v-card-text>
 
     <v-card-actions class="d-flex justify-center">
-      <v-btn
-        width="90%"
-        dark
-        class="green lighten-3 my-3"
-        @click="closeDialog"
-      >
+      <v-btn width="90%" dark class="green lighten-3 my-3" @click="closeDialog">
         Entendi!
       </v-btn>
     </v-card-actions>
@@ -51,8 +46,8 @@ export default {
   }),
 
   methods: {
-    closeDialog () {
-      this.$emit('close')
+    closeDialog() {
+      this.$emit("close");
     }
   }
 };

@@ -3,7 +3,9 @@
     <v-card-title class="headline">
       Seu treino atual
       <v-spacer></v-spacer>
-      <span class="text--secondary body-2" v-if="activeTraining">{{ activeTraining.name }}</span>
+      <span class="text--secondary body-2" v-if="activeTraining">{{
+        activeTraining.name
+      }}</span>
     </v-card-title>
 
     <div v-if="!activeTraining">
@@ -19,9 +21,8 @@
     </div>
 
     <div v-else>
-
       <v-card-text v-if="todayTraining">
-        <p class="text-center"> Treino de hoje - {{ todayTraining.weekDay }}</p>
+        <p class="text-center">Treino de hoje - {{ todayTraining.weekDay }}</p>
 
         <v-list-item
           v-for="exercise in todayTraining.exercises"
@@ -41,7 +42,12 @@
       </v-card-text>
 
       <v-card-text v-else>
-        <v-img contain :aspect-ratio="7/3" class="mb-5" :src="require('@/assets/001-bedroom.svg')"></v-img>
+        <v-img
+          contain
+          :aspect-ratio="7 / 3"
+          class="mb-5"
+          :src="require('@/assets/001-bedroom.svg')"
+        ></v-img>
         <p class="text--secondary">Hoje você não treina. Dia de descansar!</p>
       </v-card-text>
       <v-card-actions>

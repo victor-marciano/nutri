@@ -1,13 +1,7 @@
 <template>
   <div class="calculators">
     <div v-if="$vuetify.breakpoint.mobile">
-      <v-tabs
-        v-model="tab"
-        show-arrows
-        grow
-        centered
-        color="green lighten-3"
-      >
+      <v-tabs v-model="tab" show-arrows grow centered color="green lighten-3">
         <v-tab>IMC</v-tab>
         <v-tab>TMB</v-tab>
         <v-tab>Gasto calórico</v-tab>

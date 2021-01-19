@@ -144,15 +144,14 @@
                   </div>
                   <div>
                     <v-row>
-
                       <v-col cols="7">
-                          <v-text-field
-                            placeholder="Nome da refeição"
-                            v-model="meal.name"
-                          ></v-text-field>
+                        <v-text-field
+                          placeholder="Nome da refeição"
+                          v-model="meal.name"
+                        ></v-text-field>
                       </v-col>
                       <v-col cols="5">
-                          <v-menu
+                        <v-menu
                           v-model="menu3[index]"
                           :close-on-content-click="false"
                           :nudge-right="40"
@@ -275,7 +274,11 @@ export default {
 
   methods: {
     addMeal() {
-      this.newDiet.meals.push({ name: "", time: null, foods: [{ data: {}, qtd: 0 }] });
+      this.newDiet.meals.push({
+        name: "",
+        time: null,
+        foods: [{ data: {}, qtd: 0 }]
+      });
     },
 
     addFoods(index) {
@@ -287,8 +290,8 @@ export default {
         userId: auth.currentUser.uid
       });
 
-      console.log(this.newDiet)
-      console.log(formattedDiet)
+      console.log(this.newDiet);
+      console.log(formattedDiet);
       try {
         await db.collection("diets").add(formattedDiet);
         this.dialog = false;

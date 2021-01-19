@@ -9,12 +9,7 @@
         <span>Detalhes</span>
       </v-tooltip>
 
-      <v-btn
-        icon
-        v-on="on"
-        v-bind="attrs"
-        class="trainingInfo"
-      >
+      <v-btn icon v-on="on" v-bind="attrs" class="trainingInfo">
         <v-icon>mdi-information-variant</v-icon>
       </v-btn>
     </template>

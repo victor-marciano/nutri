@@ -87,7 +87,7 @@ const training = {
         { name: "Elevação Lateral", series: "4x10" },
         { name: "Tríceps Corda", series: "4x10" },
         { name: "Rosca Alternada", series: "4x10" },
-        { name: "Panturrilha no Leg Press", series: "4x10" },
+        { name: "Panturrilha no Leg Press", series: "4x10" }
       ]
     },
     {
@@ -100,7 +100,7 @@ const training = {
         { name: "Extensora", series: "4x6" },
         { name: "Ponte com Barra", series: "4x6" }
       ]
-    },
+    }
   ]
 };
 

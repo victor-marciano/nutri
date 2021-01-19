@@ -49,8 +49,8 @@ export default {
   }),
 
   methods: {
-    closeDialog () {
-      this.$emit('close')
+    closeDialog() {
+      this.$emit("close");
     }
   }
 };
