@@ -12,7 +12,8 @@
           dense
           :value="diet.rate"
         ></v-rating>
-        <span>({{ diet.rate }}) - {{ diet.votes }} votos</span>
+        <span v-if="diet.rate">({{ diet.rate }}) - {{ diet.votes }} votos</span>
+        <span v-else class="ml-2">Sem avaliações</span>
       </div>
     </v-card-subtitle>
 

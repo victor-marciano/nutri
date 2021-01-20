@@ -1,26 +1,33 @@
 <template>
-  <v-card shaped elevation="4">
+  <v-card shaped class="mx-auto" elevation="4" :width="$vuetify.breakpoint.mobile ? '300px' : ''">
     <v-card-title>{{ training.name }}</v-card-title>
 
-    <v-card-text>
-      <v-chip class="ma-2" ripple>
-        <v-icon class="mr-2">
-          mdi-dumbbell
-        </v-icon>
-        {{ training.trainings.length }} Treinos por semana
-      </v-chip>
-      <v-chip ripple class="ma-2">
-        <v-icon class="mr-2">
-          {{ trainingGender.icon }}
-        </v-icon>
-        Treino {{ trainingGender.name }}
-      </v-chip>
-      <v-chip ripple class="ma-2">
-        <v-icon class="mr-2">
-          {{ trainingTypeIcon.icon }}
-        </v-icon>
-        {{ training.type }}
-      </v-chip>
+    <v-card-text class="text-center">
+        <p>
+        <v-chip class="ma-2" ripple>
+            <v-icon class="mr-2">
+            mdi-dumbbell
+            </v-icon>
+            {{ training.trainings.length }} Treinos por semana
+        </v-chip>
+
+        </p>
+        <p>
+        <v-chip ripple class="ma-2">
+            <v-icon class="mr-2">
+            {{ trainingGender.icon }}
+            </v-icon>
+            Treino {{ trainingGender.name }}
+        </v-chip>
+        </p>
+        <p>
+            <v-chip ripple class="ma-2">
+                <v-icon class="mr-2">
+                {{ trainingTypeIcon.icon }}
+                </v-icon>
+                {{ training.type }}
+            </v-chip>
+        </p>
     </v-card-text>
     <v-card-actions>
       <v-chip

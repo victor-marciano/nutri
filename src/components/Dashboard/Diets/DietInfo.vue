@@ -70,10 +70,6 @@
             </template>
           </v-simple-table>
         </div>
-
-        <v-btn dark v-if="system" width="100%" color="green lighten-4">
-          Adicionar esta dieta
-        </v-btn>
       </v-card-text>
     </v-card>
   </v-dialog>
