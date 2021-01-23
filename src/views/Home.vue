@@ -15,6 +15,29 @@
     </v-snackbar>
 
     <v-container fluid>
+        <v-banner
+          single-line
+          v-model="banner"
+        >
+          <v-icon
+            slot="icon"
+            color="green lighten-2"
+            size="36"
+          >
+            mdi-virus
+          </v-icon>
+          Devido a pandemia, recomendamos os treinos em casa. Cuide da sua saúde e da saúde seus entes queridos!
+
+          <template v-slot:actions>
+            <v-btn
+              color="orange darken-3"
+              text
+              @click="banner = false"
+            >
+              Fechar
+            </v-btn>
+          </template>
+        </v-banner>
       <v-row>
         <v-col cols="12" md="7" class="mx-auto">
           <p class="headline">Dietas prontas</p>
@@ -87,7 +110,8 @@ export default {
       show: false,
       icon: "",
       color: ""
-    }
+    },
+    banner: true
   }),
 
   methods: {
