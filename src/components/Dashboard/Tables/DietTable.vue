@@ -55,6 +55,7 @@
           @complete="showNotification($event)"
         ></DietActive>
         <DietInfo :diet="item"></DietInfo>
+        <DietExport :diet="item"></DietExport>
         <DietDelete
           :diet="item"
           @complete="showNotification($event)"
@@ -70,13 +71,15 @@ const DietInfo = () => import("@/components/Dashboard/Diets/DietInfo.vue");
 const DietActive = () => import("@/components/Dashboard/Diets/DietActive.vue");
 const DietDelete = () => import("@/components/Dashboard/Diets/DietDelete.vue");
 const DietForm = () => import("@/components/Dashboard/Diets/DietForm.vue");
+const DietExport = () => import("@/components/Dashboard/Diets/DietExport.vue");
 
 export default {
   components: {
     DietInfo,
     DietDelete,
     DietActive,
-    DietForm
+    DietForm,
+    DietExport
   },
 
   data: () => ({
