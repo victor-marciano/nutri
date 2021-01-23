@@ -59,6 +59,7 @@
           @complete="showNotification($event)"
         ></TrainingActive>
         <TrainingInfo :training="item"></TrainingInfo>
+        <TrainingExport :training="item"></TrainingExport>
         <TrainingDelete
           :training="item"
           @complete="showNotification($event)"
@@ -79,13 +80,16 @@ const TrainingDelete = () =>
   import("@/components/Dashboard/Trainings/TrainingDelete.vue");
 const TrainingActive = () =>
   import("@/components/Dashboard/Trainings/TrainingActive.vue");
+const TrainingExport = () =>
+  import("@/components/Dashboard/Trainings/TrainingExport.vue");
 
 export default {
   components: {
     TrainingInfo,
     TrainingDelete,
     TrainingActive,
-    TrainingForm
+    TrainingForm,
+    TrainingExport
   },
 
   data: () => ({
