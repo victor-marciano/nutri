@@ -50,20 +50,20 @@ const trainingModule = {
   getters: {
     trainings: state => state.trainings,
     exercises: state => state.exercises,
+    userTrainings: (state, getters) => {
+      let userTrainings = getters.trainings.filter(
+        training => training.userId === auth.currentUser.uid
+        );
+        return userTrainings;
+      },
     activeTraining: (state, getters) => {
-      let activeTraining = getters.trainings.find(training => training.active);
+      let activeTraining = getters.userTrainings.find(training => training.active);
       if (activeTraining) {
         activeTraining = Object.assign(activeTraining, {
           remaining: moment(activeTraining.finish).fromNow()
         });
       }
       return activeTraining;
-    },
-    userTrainings: (state, getters) => {
-      let userTrainings = getters.trainings.filter(
-        training => training.userId === auth.currentUser.uid
-      );
-      return userTrainings;
     },
     systemTrainings: (state, getters) => {
       let systemTrainings = getters.trainings.filter(
