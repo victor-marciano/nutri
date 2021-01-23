@@ -119,12 +119,6 @@
         </v-stepper-step>
 
         <v-stepper-content step="2">
-          <div class="d-flex justify-space-between">
-            <p class="title">Refeições</p>
-            <v-btn icon @click="addMeal">
-              <v-icon>mdi-plus</v-icon>
-            </v-btn>
-          </div>
 
           <v-expand-transition
             v-for="(meal, index) in newDiet.meals"
@@ -138,9 +132,15 @@
                 <v-col cols="12">
                   <div class="d-flex justify-space-between">
                     <p class="subtitle">Refeição</p>
-                    <v-btn icon x-small @click="addFoods(index)">
-                      <v-icon>mdi-plus</v-icon>
-                    </v-btn>
+                    
+                    <div>
+                      <v-btn icon @click="addMeal">
+                        <v-icon>mdi-plus</v-icon>
+                      </v-btn>
+                      <v-btn icon @click="removeMeal(index)" :disabled="index === 0">
+                        <v-icon>mdi-close</v-icon>
+                      </v-btn>
+                    </div>
                   </div>
                   <div>
                     <v-row>
@@ -182,9 +182,9 @@
                       </v-col>
                     </v-row>
                   </div>
-                  <div v-for="(food, index) in meal.foods" :key="index">
+                  <div v-for="(food, foodIndex) in meal.foods" :key="foodIndex">
                     <v-row>
-                      <v-col cols="8">
+                      <v-col cols="7">
                         <v-autocomplete
                           v-model="food.data"
                           label="Alimento"
@@ -197,11 +197,19 @@
                           single-line
                         ></v-autocomplete>
                       </v-col>
-                      <v-col cols="4">
+                      <v-col cols="3">
                         <v-text-field
                           placeholder="Qtd(g)"
                           v-model="food.qtd"
                         ></v-text-field>
+                      </v-col>
+                      <v-col cols="1" class="d-inline-flex my-auto">
+                          <v-btn icon x-small @click="addFoods(index)">
+                            <v-icon>mdi-plus</v-icon>
+                          </v-btn>
+                          <v-btn icon x-small @click="removeFoods(index, foodIndex)" :disabled="foodIndex === 0">
+                            <v-icon>mdi-close</v-icon>
+                          </v-btn>
                       </v-col>
                     </v-row>
                   </div>
@@ -210,7 +218,7 @@
             </v-container>
           </v-expand-transition>
 
-          <v-btn dark color="orange darken-4" @click="e6 = 3">
+          <v-btn id="finishDietButton" dark color="orange darken-4" @click="e6 = 3">
             Continuar
           </v-btn>
           <v-btn text @click="e6--">
@@ -283,6 +291,14 @@ export default {
 
     addFoods(index) {
       this.newDiet.meals[index].foods.push({});
+    },
+    
+    removeMeal(index) {
+      this.newDiet.meals.splice(index, 1)
+    },
+
+    removeFoods(index, foodIndex) {
+      this.newDiet.meals[index].foods.splice(foodIndex, 1);
     },
 
     async insertDiet() {

@@ -17,11 +17,10 @@
       </div>
     </v-card-subtitle>
 
-    <v-card-subtitle
-      >Descrição da dieta Descrição da dieta Descrição da dieta Descrição da
-      dieta Descrição da dieta Descrição da dieta Descrição da dieta Descrição
-      da dieta Descrição da dieta
-    </v-card-subtitle>
+    <v-card-text class="diet-description" 
+      >
+      {{ diet.description }}
+    </v-card-text>
 
     <v-card-text>
       <v-divider></v-divider>
@@ -126,4 +125,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+  .diet-description {
+      overflow-y: auto !important;
+      height: 100px;
+  }
+</style>

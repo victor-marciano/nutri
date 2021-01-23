@@ -119,12 +119,6 @@
         </v-stepper-step>
 
         <v-stepper-content step="2">
-          <div class="d-flex justify-space-between">
-            <p class="title">Treino</p>
-            <v-btn icon @click="addTraining">
-              <v-icon>mdi-plus</v-icon>
-            </v-btn>
-          </div>
 
           <v-expand-transition
             v-for="(training, index) in newTraining.trainings"
@@ -132,9 +126,18 @@
           >
             <v-container>
               <v-row>
-                <small class="text-center"
-                  >Preencha as informações deste treino</small
-                >
+                <div class="d-flex justify-space-between">
+                  <p class="mr-5">Preencha as informações deste treino</p>
+
+                  <div>
+                    <v-btn icon @click="addTraining">
+                      <v-icon>mdi-plus</v-icon>
+                    </v-btn>
+                    <v-btn icon @click="removeTraining(index)">
+                      <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                  </div>
+                </div>
                 <v-col cols="12">
                   <v-select
                     label="Dia da semana"
@@ -145,16 +148,13 @@
                 <v-col cols="12">
                   <div class="d-flex justify-space-between">
                     <p class="subtitle">Exercícios</p>
-                    <v-btn icon x-small @click="addExercise(index)">
-                      <v-icon>mdi-plus</v-icon>
-                    </v-btn>
                   </div>
                   <div
-                    v-for="(exercise, index) in training.exercises"
-                    :key="index"
+                    v-for="(exercise, exerciseIndex) in training.exercises"
+                    :key="exerciseIndex"
                   >
                     <v-row>
-                      <v-col cols="8">
+                      <v-col cols="6">
                         <v-select
                           v-model="exercise.name"
                           label="Exercício"
@@ -169,6 +169,14 @@
                           label="Série/Repetições"
                           :items="series"
                         ></v-select>
+                      </v-col>
+                      <v-col cols="1" class="d-inline-flex my-auto">
+                          <v-btn icon x-small @click="addExercise(index)">
+                            <v-icon>mdi-plus</v-icon>
+                          </v-btn>
+                          <v-btn icon x-small @click="removeExercise(index, exerciseIndex)">
+                            <v-icon>mdi-close</v-icon>
+                          </v-btn>
                       </v-col>
                     </v-row>
                   </div>
@@ -277,6 +285,14 @@ export default {
 
     addExercise(index) {
       this.newTraining.trainings[index].exercises.push({});
+    },
+    
+    removeTraining(index) {
+      this.newTraining.trainings.splice(index, 1);
+    },
+
+    removeExercise(index, exerciseIndex) {
+      this.newTraining.trainings[index].exercises.splice(exerciseIndex, 1);
     },
 
     async insertTraining() {
