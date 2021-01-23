@@ -51,6 +51,7 @@
           </v-btn>
 
           <TrainingForm @submited="showNotification($event)"></TrainingForm>
+          <TrainingGenerator></TrainingGenerator>
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
@@ -82,6 +83,8 @@ const TrainingActive = () =>
   import("@/components/Dashboard/Trainings/TrainingActive.vue");
 const TrainingExport = () =>
   import("@/components/Dashboard/Trainings/TrainingExport.vue");
+const TrainingGenerator = () =>
+  import("@/components/Dashboard/Trainings/TrainingGenerator.vue");
 
 export default {
   components: {
@@ -89,7 +92,8 @@ export default {
     TrainingDelete,
     TrainingActive,
     TrainingForm,
-    TrainingExport
+    TrainingExport,
+    TrainingGenerator
   },
 
   data: () => ({
