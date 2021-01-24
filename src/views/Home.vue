@@ -16,7 +16,7 @@
 
     <v-container fluid>
         <v-banner
-          single-line
+          :single-line="!$vuetify.breakpoint.mobile"
           v-model="banner"
         >
           <v-icon
